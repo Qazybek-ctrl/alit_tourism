@@ -1,8 +1,8 @@
 package db
 
 import (
-	"fmt"
 	"log"
+	"os"
 
 	"alit-tourism-backend/internal/models"
 	"gorm.io/driver/postgres"
@@ -12,18 +12,19 @@ import (
 var DB *gorm.DB
 
 func Connect() {
-	dsn := "host=localhost user=postgres password=1234 dbname=alit_tourism port=5433 sslmode=disable"
-	database, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
-	if err != nil {
-		log.Fatal("❌ Ошибка подключения к базе:", err)
+	dsn := os.Getenv("DATABASE_URL")
+	if dsn == "" {
+		dsn = "host=127.0.0.1 user=alit_user password=Musin123! dbname=alit_tourism port=5432 sslmode=disable"
 	}
-	fmt.Println("✅ Подключение к базе успешно!")
 
-	err = database.AutoMigrate(&models.User{})
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
-		log.Fatal("❌ Ошибка миграции:", err)
+		log.Fatalf("Ошибка подключения к базе данных: %v", err)
 	}
-	fmt.Println("✅ Таблица users готова!")
 
-	DB = database
+	if err := db.AutoMigrate(&models.User{}); err != nil {
+		log.Fatalf("Ошибка миграции базы данных: %v", err)
+	}
+
+	DB = db
 }
