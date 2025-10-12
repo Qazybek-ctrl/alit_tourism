@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import api from "../../api";
+import api from "../../Api";
 import { useNavigate } from "react-router-dom";
 
 export default function ProfilePage() {

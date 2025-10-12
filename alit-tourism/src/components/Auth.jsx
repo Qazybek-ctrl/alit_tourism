@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { User, Lock } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import api from "../api";
+import api from "../Api";
 import toast from "react-hot-toast";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
