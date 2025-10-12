@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import ailtLogo from "../assets/ailt.png";
 import phoneIcon from "../assets/phone.png";
 import emailIcon from "../assets/email.png";
-import api from "../api";
+import api from "../Api";
 import { User } from "lucide-react";
 
 export default function Header() {
