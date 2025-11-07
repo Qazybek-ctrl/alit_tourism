@@ -12,10 +12,13 @@ import (
 
 var DB *gorm.DB
 
-func Connect() {
+// Musin123!
+// alit-user
+// 5432
+func Connect() *gorm.DB {
 	dsn := os.Getenv("DATABASE_URL")
 	if dsn == "" {
-		dsn = "host=127.0.0.1 user=alit_user password=1234 dbname=alit_tourism port=5432 sslmode=disable"
+		dsn = "host=127.0.0.1 user=postgres password=1234 dbname=alit_tourism port=5433 sslmode=disable"
 	}
 
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
@@ -23,9 +26,14 @@ func Connect() {
 		log.Fatalf("Ошибка подключения к базе данных: %v", err)
 	}
 
-	if err := db.AutoMigrate(&models.User{}); err != nil {
+	if err := db.AutoMigrate(
+		&models.User{},
+		&models.VisaInvitationForm{},
+		&models.UserGuestForm{},
+	); err != nil {
 		log.Fatalf("Ошибка миграции базы данных: %v", err)
 	}
 
 	DB = db
+	return db
 }

@@ -1,39 +1,80 @@
 import heroImage from "../assets/hero.png";
 import planeIcon from "../assets/plane.png";
 import verifiedIcon from "../assets/verified.png";
+import { MessageCircle } from "lucide-react";
 
 export default function Hero() {
   return (
-    <section
-      className="relative w-full h-screen bg-cover bg-center flex items-center"
-      style={{ backgroundImage: `url(${heroImage})` }}
-    >
-      <div className="absolute inset-0 bg-black/40"></div>
+    <section className="relative w-full h-[74vh] sm:h-[90vh] lg:h-screen flex items-center justify-center px-4 lg:px-0">
+      <div
+        className="relative w-full h-[70vh] lg:h-screen bg-cover bg-center flex items-center
+               rounded-2xl lg:rounded-none overflow-hidden"
+        style={{ backgroundImage: `url(${heroImage})` }}
+      >
+        {/* Затемнение */}
+        <div className="absolute inset-0 bg-black/50 lg:bg-black/40 rounded-2xl lg:rounded-none"></div>
 
-      <div className="relative text-left text-white max-w-3xl ml-12 lg:ml-[350px] -translate-y-7">
-        <div className="flex items-end gap-4 mb-4">
-          <h1 className="text-7xl md:text-9xl leading-tight">From Visa</h1>
-          <img
-            src={planeIcon}
-            alt="Plane Icon"
-            className="w-14 h-14 md:w-20 md:h-20 object-contain -translate-y-1"
-          />
+        {/* Контент: на мобильке центрируем по ширине (mx-6), на десктопе смещаем влево lg:ml-[350px] */}
+        <div className="relative text-left text-white max-w-3xl mx-6 lg:ml-[350px] lg:mx-0 -translate-y-6 lg:-translate-y-7 z-10">
+          <div className="flex items-end gap-2 sm:gap-3 mb-1 lg:gap-4 lg:mb-4">
+            <h1 className="text-[12vw] sm:text-5xl md:text-7xl lg:text-7xl leading-tight text-gotham font-[500]">
+              From Visa
+            </h1>
+            <img
+              src={planeIcon}
+              alt="Plane Icon"
+              className="w-[45px] h-[50px] sm:w-[60px] sm:h-[60px] lg:w-[90px] lg:h-[90px] object-contain -translate-y-2 sm:-translate-y-3"
+            />
+          </div>
+
+          <h1 className="text-[12vw] sm:text-5xl md:text-7xl lg:text-7xl mb-4 lg:mb-8 leading-tight text-gotham font-[500]">
+            to Adventure
+          </h1>
+
+          <div className="flex flex-wrap items-center gap-3 lg:gap-4 mb-6">
+            <p className="text-[6vw] sm:text-2xl md:text-4xl lg:text-4xl font-[400] text-gotham">
+              Your Trusted Partner in Kazakhstan
+            </p>
+            <img
+              src={verifiedIcon}
+              alt="Decor Icon"
+              className="hidden sm:block w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 object-contain"
+            />
+          </div>
+
+          {/* Discover — только на мобильных, под текстом, по центру */}
+          <div className="flex justify-center lg:hidden">
+            <button
+              className="
+                w-[90%] sm:w-[60%] md:w-[45%]
+                h-[60px] sm:h-[65px]
+                bg-[#F4EBE2] text-[#22324A] 
+                text-[20px]
+                font-medium text-gotham
+                rounded-[10px] shadow-md
+                hover:scale-105 transition-transform
+              "
+            >
+              Discover Tours
+            </button>
+          </div>
+
+          {/* Кнопка сообщения — внутри блока, правый-нижний угол блока, только на мобилке */}
         </div>
-
-        <h1 className="text-7xl md:text-9xl mb-8 leading-tight">
-          to Adventure
-        </h1>
-
-        <div className="flex items-center gap-4">
-          <p className="text-3xl md:text-4xl font-medium">
-            Your Trusted Partner in Kazakhstan
-          </p>
-          <img
-            src={verifiedIcon}
-            alt="Decor Icon"
-            className="w-12 h-12 md:w-14 md:h-14 object-contain"
-          />
-        </div>
+        <button
+          className="
+              absolute bottom-10 right-10
+              w-14 h-14
+              bg-[#F4EBE2] text-[#22324A]
+              rounded-full shadow-lg
+              flex items-center justify-center
+              hover:scale-110 transition-transform
+              lg:hidden
+            "
+          aria-label="Chat"
+        >
+          <MessageCircle size={26} />
+        </button>
       </div>
     </section>
   );

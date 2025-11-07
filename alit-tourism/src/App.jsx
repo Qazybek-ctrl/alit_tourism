@@ -12,6 +12,11 @@ import Immigrant from "./components/pages/visa/Immigrant";
 import TourPage from "./components/pages/tour/TourPage";
 import AuthPage from "./components/Auth";
 import ProfilePage from "./components/profile/ProfilePage";
+import QuestionnaireForm from "./components/pages/forms/QuestionnaireForm";
+import GuestForm from "./components/pages/forms/GuestForm";
+import PaymentForm from "./components/pages/forms/PaymentForm";
+import AdminPanel from "./components/admin/AdminPanel";
+import TravelTips from "./components/pages/TravelTips";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -23,33 +28,45 @@ function ScrollToTop() {
   return null;
 }
 
+function Layout() {
+  const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith("/admin");
+
+  return (
+    <div className="flex flex-col min-h-screen">
+      {/* Показываем Header и Footer, кроме /admin */}
+      {!isAdminRoute && <Header />}
+
+      <main className="flex-1">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/auth" element={<AuthPage />} />
+          <Route path="/admin" element={<AdminPanel />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/visa" element={<VisaServices />} />
+          <Route path="/visa/tourism" element={<Tourism />} />
+          <Route path="/visa/work" element={<Work />} />
+          <Route path="/visa/business" element={<Business />} />
+          <Route path="/visa/immigrant" element={<Immigrant />} />
+          <Route path="/tours/:id" element={<TourPage />} />
+          <Route path="/kazakhstan" element={<KazakhstanTour />} />
+          <Route path="/form/questionnaire" element={<QuestionnaireForm />} />
+          <Route path="/form/guest" element={<GuestForm />} />
+          <Route path="/form/payment" element={<PaymentForm />} />
+          <Route path="/travel/tips" element={<TravelTips />} />
+        </Routes>
+      </main>
+
+      {!isAdminRoute && <Footer />}
+    </div>
+  );
+}
+
 export default function App() {
   return (
     <Router>
       <ScrollToTop />
-
-      <div className="flex flex-col min-h-screen">
-        <Header />
-
-        <main className="flex-1">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/auth" element={<AuthPage />} />
-            <Route path="/profile" element={<ProfilePage />} />
-            <Route path="/visa" element={<VisaServices />} />
-            <Route path="/visa/tourism" element={<Tourism />} />
-            <Route path="/visa/work" element={<Work />} />
-            <Route path="/visa/business" element={<Business />} />
-            <Route path="/visa/immigrant" element={<Immigrant />} />
-            <Route path="/tours/:id" element={<TourPage />} />
-            <Route path="/kazakhstan" element={<KazakhstanTour />} />
-            <Route path="/blog" element={<div className="text-center py-20 text-3xl">Travel Tips Blog Page</div>} />
-            <Route path="/insurance" element={<div className="text-center py-20 text-3xl">Insurance Page</div>} />
-          </Routes>
-        </main>
-
-        <Footer />
-      </div>
+      <Layout />
     </Router>
   );
 }

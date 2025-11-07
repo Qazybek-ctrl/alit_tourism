@@ -35,3 +35,16 @@
     @apply font-gotham tracking-[-0.03em];
   }
 }
+
+.input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  margin-top: 4px;
+}
+label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 2px;
+}
