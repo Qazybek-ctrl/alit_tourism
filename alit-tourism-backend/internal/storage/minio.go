@@ -3,6 +3,7 @@ package storage
 import (
 	"context"
 	"log"
+	"os"
 	"time"
 
 	"github.com/minio/minio-go/v7"
@@ -15,14 +16,13 @@ var (
 )
 
 func InitMinIO() {
-	MinioEndpoint = "localhost:9000" // ✅ теперь её можно использовать в контроллерах
-	accessKeyID := "admin"
-	secretAccessKey := "secret123"
-	useSSL := false
+	MinioEndpoint = os.Getenv("MINIO_ENDPOINT")
+	accessKeyID := os.Getenv("MINIO_ACCESS_KEY")
+	secretAccessKey := os.Getenv("MINIO_SECRET_KEY")
 
 	client, err := minio.New(MinioEndpoint, &minio.Options{
 		Creds:  credentials.NewStaticV4(accessKeyID, secretAccessKey, ""),
-		Secure: useSSL,
+		Secure: false,
 	})
 	if err != nil {
 		log.Fatalf("❌ Ошибка подключения к MinIO: %v", err)
