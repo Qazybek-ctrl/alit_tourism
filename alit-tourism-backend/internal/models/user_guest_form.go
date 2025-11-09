@@ -8,6 +8,7 @@ type UserGuestForm struct {
 	gorm.Model
 
 	UserID uint `json:"user_id" gorm:"not null;index"`
+	TourID uint `json:"tour_id"`
 
 	FullName           string `json:"full_name"`
 	CountryOfResidence string `json:"country_of_residence"`

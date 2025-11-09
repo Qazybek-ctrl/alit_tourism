@@ -56,8 +56,7 @@ func CreateVisaInvitationForm(c *gin.Context) {
 	form.PhoneNumber = c.PostForm("phoneNumber")
 	form.EmailAddress = c.PostForm("emailAddress")
 	form.WorkPlace = c.PostForm("workPlace")
-
-	fmt.Println(c.PostForm("dateOfBirth"))
+	form.VisaInvitationType = c.PostForm("visaInvitationType")
 
 	// Обработка дат
 	form.DateOfBirth = parseDate(c.PostForm("dateOfBirth"))
@@ -78,13 +77,13 @@ func CreateVisaInvitationForm(c *gin.Context) {
 		}
 		defer openedFile.Close()
 
-		// ✅ Загружаем файл в MinIO
+		// Загружаем файл в MinIO
 		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 		defer cancel()
 
-		uploadInfo, err := storage.MinioClient.PutObject(
+		_, err = storage.MinioClient.PutObject(
 			ctx,
-			"alit-tourism", // ✅ имя твоего bucket
+			"alit-tourism",
 			fileName,
 			openedFile,
 			file.Size,
@@ -95,9 +94,16 @@ func CreateVisaInvitationForm(c *gin.Context) {
 			return
 		}
 
-		// Формируем URL
-		fileURL := fmt.Sprintf("http://%s/%s/%s", storage.MinioEndpoint, uploadInfo.Bucket, uploadInfo.Key)
-		form.PassportURL = fileURL
+		// Сохраняем только имя файла в базе
+		form.PassportURL = fileName
+
+		// Можно вернуть полный URL клиенту
+		fileURL := fmt.Sprintf("http://%s/%s/%s", storage.MinioEndpoint, "alit-tourism", fileName)
+		c.JSON(http.StatusOK, gin.H{
+			"message":  "Файл загружен",
+			"fileName": fileName,
+			"fileURL":  fileURL,
+		})
 	}
 
 	// 💾 Сохраняем в базу
@@ -126,4 +132,3 @@ func parseDate(value string) time.Time {
 	}
 	return time.Time{}
 }
-

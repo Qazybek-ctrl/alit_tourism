@@ -42,6 +42,8 @@ func main() {
 
 	r := gin.Default()
 
+	r.SetTrustedProxies([]string{"127.0.0.1", "::1"})
+
 	r.Use(cors.New(cors.Config{
 		AllowOrigins: []string{
 			"http://localhost:5173",

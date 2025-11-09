@@ -49,7 +49,7 @@ export default function AuthPage() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-50">
+    <div className="flex items-center justify-center h-[70vh] md:min-h-screen bg-gray-50">
       <div className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md font-gotham font-[300]">
         <div className="flex mb-6">
           <button

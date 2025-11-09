@@ -33,7 +33,7 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-50">
+    <div className="flex items-center justify-center h-[70vh] md:min-h-screen bg-gray-50">
       <div className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md text-center">
         <h2 className="text-2xl font-semibold mb-6">Ваш профиль</h2>
         <div className="space-y-4 text-left">

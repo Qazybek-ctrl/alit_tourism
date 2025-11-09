@@ -1,4 +1,5 @@
 export const stepTitles = {
+  1: "Check visa-free eligibility",
   2: "Obtain invitation",
   3: "Gather documents",
   4: "Submit visa application",
@@ -8,6 +9,7 @@ export const stepTitles = {
 };
 
 export const stepDescriptions = {
+  1: "You may not need a visa at all.",
   2: "Coordinated through Kazakhstan’s local migration service or government body.",
   3: "Passport, proof of funds, invitation, and application form.",
   4: "At the Kazakh embassy/consulate in your home country.",

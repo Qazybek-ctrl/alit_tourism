@@ -6,6 +6,8 @@ import (
 	db "alit-tourism-backend/internal/database"
 	"alit-tourism-backend/internal/models"
 
+	"strconv"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -25,6 +27,15 @@ func CreateUserGuestForm(c *gin.Context) {
 	}
 
 	form.UserID = userID
+
+	tourIDStr := c.PostForm("tourId")
+	tourID, err := strconv.ParseUint(tourIDStr, 10, 64)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid tour id"})
+		return
+	}
+	
+	form.TourID = uint(tourID)
 
 	lang := c.PostForm("language")
 	if lang == "" || lang == "Other" {
