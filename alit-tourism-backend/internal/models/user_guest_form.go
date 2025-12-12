@@ -10,6 +10,7 @@ type UserGuestForm struct {
 	UserID uint `json:"user_id" gorm:"not null;index"`
 	TourID uint `json:"tour_id"`
 
+	TourType           string `json:"tour_type"`
 	FullName           string `json:"full_name"`
 	CountryOfResidence string `json:"country_of_residence"`
 	Language           string `json:"language"`

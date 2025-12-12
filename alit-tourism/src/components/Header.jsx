@@ -1,41 +1,28 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState, useContext } from "react";
 import ailtLogo from "../assets/ailt.png";
 import phoneIcon from "../assets/phone.png";
 import emailIcon from "../assets/email.png";
-import api from "../Api";
+import { AuthContext } from "../utility/AuthContext";
 import { User, Menu, X } from "lucide-react";
 
 export default function Header() {
   const location = useLocation();
   const navigate = useNavigate();
-
-  const [user, setUser] = useState(null);
+  const { user, setUser } = useContext(AuthContext);
   const [menuOpen, setMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      api
-        .get("/profile", {
-          headers: { Authorization: `Bearer ${token}` },
-        })
-        .then((res) => setUser(res.data))
-        .catch(() => setUser(null));
-    }
-  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
     setUser(null);
     navigate("/");
   };
 
   const linkClasses = (path) =>
-    `relative transition-all duration-200 ${
-      location.pathname === path
-        ? "font-bold after:absolute after:left-0 after:-bottom-1 after:w-full after:h-[2px] after:bg-[#22324A]"
-        : "hover:text-blue-500"
+    `relative transition-all duration-200 ${location.pathname === path
+      ? "font-[500] after:absolute after:left-0 after:-bottom-1 after:w-full after:h-[2px] after:bg-[#22324A]"
+      : "hover:text-blue-500"
     }`;
 
   return (
@@ -58,7 +45,7 @@ export default function Header() {
           <Link to="/kazakhstan" className={linkClasses("/kazakhstan")}>
             Kazakhstan Tour
           </Link>
-          <Link to="/travel/tips" className={linkClasses("/blog")}>
+          <Link to="/travel/tips" className={linkClasses("/travel/tips")}>
             Travel Tips Blog
           </Link>
         </nav>
@@ -67,16 +54,13 @@ export default function Header() {
         <div className="flex items-center gap-4">
           {/* Контакты (только для десктопа) */}
           <div className="hidden lg:flex items-center gap-6 text-[#22324A] font-gotham">
-            <div className="flex items-start gap-2">
+            <div className="flex items-center gap-2">
               <img
                 src={phoneIcon}
                 alt="Phone"
-                className="w-5 h-5 mt-1 object-contain"
+                className="w-5 h-5 object-contain"
               />
-              <div className="flex flex-col text-[16px] leading-tight">
-                <span>+7 (701) 123-45-67</span>
-                <span>+7 (727) 765-43-21</span>
-              </div>
+              <span className="text-[16px]">+7 (707) 111-84-24</span>
             </div>
 
             <div className="flex items-center gap-2">
@@ -85,7 +69,7 @@ export default function Header() {
                 alt="Email"
                 className="w-5 h-5 object-contain"
               />
-              <span className="text-[16px]">info@myvisa.my</span>
+              <span className="text-[16px]">ailt.toursim@gmail.com</span>
             </div>
           </div>
 
@@ -166,9 +150,8 @@ export default function Header() {
             Travel Tips Blog
           </Link>
           <div className="flex flex-col items-center gap-1 mt-2 text-[15px]">
-            <span>+7 (701) 123-45-67</span>
-            <span>+7 (727) 765-43-21</span>
-            <span>info@myvisa.my</span>
+            <span>+7 (707) 111-84-24</span>
+            <span>ailt.toursim@gmail.com</span>
           </div>
           {!user ? (
             <button

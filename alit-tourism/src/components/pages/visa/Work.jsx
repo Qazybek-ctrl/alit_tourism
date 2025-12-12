@@ -1,6 +1,5 @@
 import React from "react";
-import { stepTitles, stepDescriptions } from "../../helper/helper";
-import mcbookPng from "../../../assets/mcbook.png";
+import { workStepTitles, workStepDescriptions } from "../../helper/helper";
 import globallightPng from "../../../assets/icons/global_light.png";
 import pointPng from "../../../assets/icons/point-in.png";
 import timePng from "../../../assets/icons/time.png";
@@ -13,12 +12,11 @@ import handglobalPng from "../../../assets/icons/handglobal.png";
 import extensionPng from "../../../assets/icons/extension.png";
 import avaPng from "../../../assets/icons/ava.png";
 import billPng from "../../../assets/icons/bill.png";
-import countryPng from "../../../assets/icons/country.png";
 import infoPng from "../../../assets/icons/info.png";
 import letterPng from "../../../assets/icons/letter.png";
 import bagPng from "../../../assets/icons/bag.png";
 import downplanePng from "../../../assets/icons/downplane.png";
-import airportPng from "../../../assets/airport.png";
+import workImage from "../../../assets/work.png";
 import toast from "react-hot-toast";
 import {useNavigate} from "react-router-dom";
 
@@ -30,9 +28,10 @@ export default function Work() {
         if (isAuthenticated) {
             navigate(`/form/questionnaire?visaInvitationType=work`);
         } else {
-            toast.error("You need to log in before booking", {
+            toast.error("Please authorize in before booking", {
                 duration: 5000
             });
+            localStorage.setItem("redirectAfterAuth", window.location.pathname);
             navigate("/auth");
         }
     };
@@ -48,9 +47,9 @@ export default function Work() {
 
                 {/* Фото */}
                 <img
-                    src={mcbookPng}
+                    src={workImage}
                     alt="Tourist Visa"
-                    className="w-full h-[200px] md:w-[1000px] md:h-[420px] rounded-[15px] md:rounded-[20px] object-cover mb-10 md:mb-16"
+                    className="w-full h-[200px] md:w-[1000px] md:h-[420px] rounded-[15px] md:rounded-[20px] object-cover object-[center_85%] mb-10 md:mb-16"
                 />
 
                 <h1 className="text-[#22324A] text-[24px] md:text-[35px] font-semibold text-left">
@@ -281,10 +280,10 @@ export default function Work() {
                                 {/* Текст справа */}
                                 <div className="bg-white p-3 rounded-lg ml-4 flex-1">
                                     <p className="text-[#22324A] text-[16px] text-gotham leading-tight font-[500]">
-                                        {stepTitles[num]}
+                                        {workStepTitles[num]}
                                     </p>
                                     <p className="text-[#22324A] text-gotham font-[300] leading-tight text-[11px] mt-1">
-                                        {stepDescriptions[num]}
+                                        {workStepDescriptions[num]}
                                     </p>
                                 </div>
                             </div>
@@ -295,10 +294,10 @@ export default function Work() {
                     <div className="hidden md:flex items-start justify-center mt-5 gap-[20px]">
                         <div className="bg-white p-3 rounded-lg w-[120px] h-[200px] text-left">
                             <p className="mt-3 text-[#22324A] text-[16px] text-gotham leading-tight font-[500]">
-                                Check visa-free eligibility
+                                Job offer
                             </p>
                             <p className="text-[#22324A] text-gotham font-[300] leading-tight text-[11px] mt-1">
-                                You may not need a visa at all.
+                                Secure employment with a Kazakhstani company.
                             </p>
                         </div>
 
@@ -308,10 +307,10 @@ export default function Work() {
                                 className="bg-white p-3 rounded-lg w-[120px] h-[200px] text-left"
                             >
                                 <p className="mt-3 text-[#22324A] text-[16px] text-gotham leading-tight font-[500]">
-                                    {stepTitles[num]}
+                                    {workStepTitles[num]}
                                 </p>
                                 <p className="text-[#22324A] text-gotham font-[300] leading-tight text-[11px] mt-1">
-                                    {stepDescriptions[num]}
+                                    {workStepDescriptions[num]}
                                 </p>
                             </div>
                         ))}

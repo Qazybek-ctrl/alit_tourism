@@ -1,6 +1,5 @@
 import React from "react";
-import { stepTitles, stepDescriptions } from "../../helper/helper";
-import twopeoplePng from "../../../assets/twopeople.png";
+import { businessStepTitles, businessStepDescriptions } from "../../helper/helper";
 import globallightPng from "../../../assets/icons/global_light.png";
 import docPng from "../../../assets/icons/doc.png";
 import calendarPng from "../../../assets/icons/calendar.png";
@@ -10,10 +9,9 @@ import avaPng from "../../../assets/icons/ava.png";
 import billPng from "../../../assets/icons/bill.png";
 import bedPng from "../../../assets/icons/bed.png";
 import ticketPng from "../../../assets/icons/ticket.png";
-import infoPng from "../../../assets/icons/info.png";
-import airportPng from "../../../assets/airport.png";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import businessImage from "../../../assets/business.png";
 
 export default function Business() {
     const navigate = useNavigate();
@@ -23,9 +21,10 @@ export default function Business() {
         if (isAuthenticated) {
             navigate(`/form/questionnaire?visaInvitationType=business`);
         } else {
-            toast.error("You need to log in before booking", {
+            toast.error("Please authorize before booking", {
                 duration: 5000
             });
+            localStorage.setItem("redirectAfterAuth", window.location.pathname);
             navigate("/auth");
         }
     };
@@ -33,16 +32,16 @@ export default function Business() {
     return (
         <div className="min-h-screen flex flex-col items-center bg-white py-5 md:py-16">
             <div className="w-full md:w-[1135px] bg-[#F6F6F6] rounded-[20px] md:rounded-[30px] px-5 md:px-20 py-8 md:py-12 flex flex-col">
-                    {/* Заголовок */}
+                {/* Заголовок */}
                 <h1 className="mb-6 md:mb-8 text-[#22324A] text-[24px] md:text-[35px] font-semibold text-left">
                     Business Visas (B1, B2, B3) to Kazakhstan
                 </h1>
 
                 {/* Фото */}
                 <img
-                    src={twopeoplePng}
+                    src={businessImage}
                     alt="Tourist Visa"
-                    className="w-full h-[200px] md:w-[1000px] md:h-[420px] rounded-[15px] md:rounded-[20px] object-cover mb-10 md:mb-16"
+                    className="w-full h-[200px] md:w-[1000px] md:h-[420px] rounded-[15px] md:rounded-[20px] object-cover object-[center_25%] mb-10 md:mb-16"
                 />
 
 
@@ -76,7 +75,7 @@ export default function Business() {
                         <div className="px-6 flex flex-col gap-1 mb-10">
                             <h3 className="text-[#22324A] text-[25px] font-semibold">Validity</h3>
                             <p className="text-[#22324A] text-[15px] md:text-[20px] font-gotham font-[400] leading-tight">
-                                Up to 60 days per entry, can be single
+                                Up to <span className="font-semibold">60 days</span> per entry, can be single
                             </p>
                         </div>
                     </div>
@@ -129,26 +128,28 @@ export default function Business() {
                     Who Needs a B12 Visa?
                 </h1>
 
-                <p className="mt-5 text-[15px] text-[#22324A] md:text-[20px] font-[400] font-gotham tracking-[-0.03em]">You need a Kazakhstan Business Visa (B1, B2, or B3) if:</p>
+                <p className="mt-5 text-[15px] text-[#22324A] md:text-[20px] font-[400] font-gotham tracking-[-0.03em]">
+                    You need a Kazakhstan Business Visa (B1, B2, or B3) if:
+                </p>
                 <div className="flex flex-col gap-4 text-[#22324A] mt-5">
                     <div className="flex items-center gap-3">
                         <img src={docPng} alt="icon" className="w-12 h-12 mt-1" />
                         <p className="text-[15px] md:text-[20px] font-[400] font-gotham tracking-[-0.03em]">
-                            You are invited by a Kazakh company, organization, or event organizer.
+                            You are invited by a <span className="font-semibold">Kazakh company, organization, or event organizer.</span>
                         </p>
                     </div>
 
                     <div className="flex items-center gap-3">
                         <img src={calendarPng} alt="icon" className="w-12 h-12 mt-1" />
                         <p className="text-[15px] md:text-[20px] font-[400] font-gotham tracking-[-0.03em]">
-                            You will attend business meetings, negotiations, or events.
+                            You will <span className="font-semibold">attend business meetings, negotiations, or events in Kazakhstan</span>.
                         </p>
                     </div>
 
                     <div className="flex items-center gap-3">
                         <img src={globallightPng} alt="icon" className="w-12 h-12 mt-1" />
                         <p className="text-[15px] md:text-[20px] font-[400] font-gotham tracking-[-0.03em]">
-                            You need to stay in Kazakhstan for business-related purposes but not employment.
+                            You need to stay in Kazakhstan for <span className="font-semibold">business-related purposes but not employment.</span>
                         </p>
                     </div>
                 </div>
@@ -221,7 +222,7 @@ export default function Business() {
                             </div>
                         </div>
 
-                        {[2, 3, 4, 5, 6, 7].map((num) => (
+                        {[2, 3, 4, 5, 6].map((num) => (
                             <React.Fragment key={num}>
                                 <div className="h-[1px] bg-[#22324A]/50 w-[100px]"></div>
                                 <div className="flex flex-col items-center">
@@ -235,21 +236,20 @@ export default function Business() {
 
                     {/* Мобильный таймлайн */}
                     <div className="flex flex-col items-start w-full md:hidden mt-5 relative">
-                        {[1, 2, 3, 4, 5, 6, 7].map((num, index) => (
+                        {[1, 2, 3, 4, 5, 6].map((num, index) => (
                             <div key={num} className="flex items-start mb-6 relative">
                                 {/* Линия между элементами */}
-                                {index !== 6 && (
+                                {index !== 5 && (
                                     <div className="absolute left-[19px] top-[40px] w-[2px] h-full bg-[#22324A]/50 z-0"></div>
                                 )}
 
                                 {/* Кружочек */}
                                 <div className="relative z-10 flex-shrink-0  mt-2">
                                     <div
-                                        className={`w-10 h-10 flex items-center justify-center rounded-full ${
-                                            index === 0
+                                        className={`w-10 h-10 flex items-center justify-center rounded-full ${index === 0
                                                 ? 'bg-[#22324A] text-white'
                                                 : 'bg-[#D9D9D9] text-[#22324A]'
-                                        }`}
+                                            }`}
                                     >
                                         {index === 0 ? '✓' : num}
                                     </div>
@@ -258,10 +258,10 @@ export default function Business() {
                                 {/* Текст справа */}
                                 <div className="bg-white p-3 rounded-lg ml-4 flex-1">
                                     <p className="text-[#22324A] text-[16px] text-gotham leading-tight font-[500]">
-                                        {stepTitles[num]}
+                                        {businessStepTitles[num]}
                                     </p>
                                     <p className="text-[#22324A] text-gotham font-[300] leading-tight text-[11px] mt-1">
-                                        {stepDescriptions[num]}
+                                        {businessStepDescriptions[num]}
                                     </p>
                                 </div>
                             </div>
@@ -272,23 +272,23 @@ export default function Business() {
                     <div className="hidden md:flex items-start justify-center mt-5 gap-[20px]">
                         <div className="bg-white p-3 rounded-lg w-[120px] h-[200px] text-left">
                             <p className="mt-3 text-[#22324A] text-[16px] text-gotham leading-tight font-[500]">
-                                Check visa-free eligibility
+                                Obtain invitation
                             </p>
                             <p className="text-[#22324A] text-gotham font-[300] leading-tight text-[11px] mt-1">
-                                You may not need a visa at all.
+                                Your Kazakh business partner/organization registers an invitation with the Migration Service of Kazakhstan.
                             </p>
                         </div>
 
-                        {[2, 3, 4, 5, 6, 7].map((num) => (
+                        {[2, 3, 4, 5, 6].map((num) => (
                             <div
                                 key={num}
                                 className="bg-white p-3 rounded-lg w-[120px] h-[200px] text-left"
                             >
                                 <p className="mt-3 text-[#22324A] text-[16px] text-gotham leading-tight font-[500]">
-                                    {stepTitles[num]}
+                                    {businessStepTitles[num]}
                                 </p>
                                 <p className="text-[#22324A] text-gotham font-[300] leading-tight text-[11px] mt-1">
-                                    {stepDescriptions[num]}
+                                    {businessStepDescriptions[num]}
                                 </p>
                             </div>
                         ))}
@@ -298,18 +298,18 @@ export default function Business() {
                 <div className="mt-12 w-full max-w-[975px] bg-white rounded-[20px] mx-auto flex flex-col px-6 md:px-10 py-8">
                     <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 md:gap-10">
                         {/* Левая колонка — текст */}
-                        <div className="flex flex-col gap-3 w-full md:max-w-[500px]">
+                        <div className="flex flex-col gap-3 w-full ">
                             <h1 className="text-[#22324A] text-[24px] md:text-[35px] font-semibold text-left tracking-[-0.03em] mb-4">
-                                Important Notes for Workers
+                                Important Notes for Business Travelers
                             </h1>
                             <p className="text-[15px] md:text-[20px] text-[#22324A] font-[400] font-gotham tracking-[-0.03em] leading-tight">
-                                A business visa does not allow you to work in Kazakhstan — for employment, you need a Work Visa (C3).
+                                A business visa <span className="font-semibold">does not allow you to work</span> in Kazakhstan — for employment, you need a <span className="font-semibold">Work Visa (C3)</span>.
                             </p>
                             <p className="text-[15px] md:text-[20px] text-[#22324A] font-[400] font-gotham tracking-[-0.03em] leading-tight">
-                                Carry your invitation copy and business documents while traveling.
+                                Carry your <span className="font-semibold">invitation copy and business documents</span> while traveling.
                             </p>
                             <p className="text-[15px] md:text-[20px] text-[#22324A] font-[400] font-gotham tracking-[-0.03em] leading-tight">
-                                Migration registration is required within 3 business days of arrival (often automatic at major airports).
+                                <span className="font-semibold">Migration registration</span> is required within <span className="font-semibold">3 business days of arrival</span> (often automatic at major airports).
                             </p>
                             <p className="text-[15px] md:text-[20px] text-[#22324A] font-[400] font-gotham tracking-[-0.03em] leading-tight">
                                 Overstaying your visa can result in fines and entry bans.
@@ -317,15 +317,6 @@ export default function Business() {
                             <p className="text-[15px] md:text-[20px] text-[#22324A] font-[400] font-gotham tracking-[-0.03em]">
                                 Travel and health insurance is highly recommended.
                             </p>
-                        </div>
-
-                        {/* Правая колонка — фото */}
-                        <div className="w-full md:w-[300px] h-[300px] bg-[#F6F6F6] rounded-[20px] p-4 flex items-center justify-center">
-                            <img
-                                src={infoPng}
-                                alt="More info"
-                                className="w-[150px] h-auto rounded-[15px] object-cover"
-                            />
                         </div>
                     </div>
                 </div>

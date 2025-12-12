@@ -1,15 +1,15 @@
-import {useState} from "react";
-import {useParams, useNavigate} from "react-router-dom";
-import {ChevronLeft, ChevronRight} from "lucide-react";
+import { useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import toast from "react-hot-toast";
 import bagPng from "../../../assets/icons/bag1.png";
 import oiuPng from "../../../assets/oiu.png";
-import {Tours} from "../../helper/ImageHelper.jsx"
+import { Tours } from "../../helper/ImageHelper.jsx"
 
 export default function TourPage() {
     const navigate = useNavigate();
     const isAuthenticated = !!localStorage.getItem("token"); // пример проверки
-    const {id} = useParams();
+    const { id } = useParams();
     const [currentIndex, setCurrentIndex] = useState(0);
     const currentTour = Tours.find((Tour) => Tour.id === Number(id));
     if (!currentTour) {
@@ -32,7 +32,9 @@ export default function TourPage() {
         if (isAuthenticated) {
             navigate(`/form/guest?id=${id}`);
         } else {
-            toast.error("You need to log in before booking", {
+            // Save current page URL to redirect back after authentication
+            localStorage.setItem("redirectAfterAuth", window.location.pathname);
+            toast.error("Please authorize before booking", {
                 duration: 4000
             });
             navigate("/auth");
@@ -46,6 +48,8 @@ export default function TourPage() {
         setCurrentIndex((p) => (p === 0 ? slides.length - 1 : p - 1));
     const next = () =>
         setCurrentIndex((p) => (p === slides.length - 1 ? 0 : p + 1));
+
+    console.log("currentTour:", currentTour);
 
     return (
         <div className="min-h-screen flex flex-col items-center bg-white py-8 px-4 sm:py-16 sm:px-0 text-gotham">
@@ -61,7 +65,7 @@ export default function TourPage() {
                     {/* Большой блок */}
                     <div
                         className={`rounded-[16px] h-[150px] sm:h-[500px] overflow-hidden 
-      ${photos.length > 1 ? "w-full sm:w-[75%]" : "w-full sm:w-full"}`}
+                        ${photos.length > 1 ? "w-full sm:w-[75%]" : "w-full sm:w-full"}`}
                     >
                         <img
                             src={photos[0]}
@@ -125,12 +129,12 @@ export default function TourPage() {
                     </p>
 
                     <div className="flex flex-col items-center sm:items-start">
-            <span className="text-[#22324A]/50 text-[16px] sm:text-[20px] text-gotham">
-              Price
-            </span>
+                        <span className="text-[#22324A]/50 text-[16px] sm:text-[20px] text-gotham">
+                            Price
+                        </span>
                         <span className="text-[#22324A] text-[24px] sm:text-[32px] text-gotham font-[500]">
-              From {currentTour.price}
-            </span>
+                            From {currentTour.price}
+                        </span>
                     </div>
 
                     <button
@@ -146,10 +150,10 @@ export default function TourPage() {
                     <h1 className="mt-10 sm:mt-20 text-[#22324A] text-2xl sm:text-[38px] font-[500] text-gotham mb-4 text-center sm:text-left">
                         {currentTour.bestOfTitle}
                     </h1>}
-                {currentTour.bestOfDescription  &&
-                    <p className="mt-10 text-gotham font-[400] text-[#22324A]/70 leading-tight text-[16px] sm:text-[18px] text-center sm:text-left">
-                        {currentTour.bestOfDescription}
-                    </p>}
+                {currentTour.bestOfDescription &&
+                    <p className="whitespace-pre-line mt-10 text-gotham font-[400] text-[#22324A]/70 leading-tight text-[16px] sm:text-[18px] text-center sm:text-left"
+                        dangerouslySetInnerHTML={{ __html: currentTour.bestOfDescription }}
+                    />}
 
                 {/* Информация о туре и туристе */}
                 <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-8">
@@ -206,8 +210,107 @@ export default function TourPage() {
                     </div>
                 </div>
 
+                {currentTour?.prices && (
+                    <div className="mt-10">
+                        <div className="bg-white rounded-[15px] overflow-hidden">
+                            {/* Table Header */}
+                            <div className="bg-[#22324A] py-6">
+                                <h1 className="text-white text-2xl sm:text-[38px] font-[500] text-gotham text-center">
+                                    Price List
+                                </h1>
+                            </div>
+
+                            {/* Table Body */}
+                            <table className="w-full">
+                                <thead>
+                                    <tr className="border-b border-gray-200">
+                                        <th className="text-center px-6 py-4 text-[#22324A] text-lg sm:text-xl font-[500] text-gotham">
+                                            Number of people
+                                        </th>
+                                        <th className="text-left px-6 py-4 text-[#22324A] text-lg sm:text-xl font-[500] text-gotham">
+                                            Price
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {currentTour.prices.map((price, i) => (
+                                        <tr key={i} className="border-b border-gray-200 last:border-b-0">
+                                            <td className="px-6 py-4 text-[#22324A] text-base text-center sm:text-lg text-gotham">
+                                                {price.peopleCount} people
+                                            </td>
+                                            <td className="px-6 py-4 text-[#22324A] text-xl sm:text-2xl font-[500] text-gotham">
+                                                {price.price}
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                )}
+
+                {currentTour?.priceList && currentTour.priceList.map((item, i) => (
+                    <div className="mt-10">
+                        <div className="bg-white rounded-[15px] overflow-hidden">
+                            {/* Table Header */}
+                            {item.type && <div className='bg-[#22324A] p-6'>
+                                <h1 className="text-white text-2xl sm:text-[38px] font-[500] text-gotham text-left">
+                                    {item.type}
+                                </h1>
+                            </div>}
+
+                            {item.accommodation && <div className={`bg-[#22324A] px-6 pb-4 ${item.type ? '' : 'pt-6'
+                                }`}>
+                                <p className="whitespace-pre-line text-white text-[15px] sm:text-xl font-[400] text-left">
+                                    {item.accommodation}
+                                </p>
+                            </div>}
+
+                            {/* Table Body */}
+                            <table className="w-full">
+                                <thead>
+                                    <tr className="border-b border-gray-200">
+                                        <th className="text-center px-6 py-4 text-[#22324A] text-lg sm:text-xl font-[500] text-gotham">
+                                            Number of people
+                                        </th>
+                                        <th className="text-left px-6 py-4 text-[#22324A] text-lg sm:text-xl font-[500] text-gotham">
+                                            {item.priceTitle ? item.priceTitle : "Price"}
+                                        </th>
+                                        {
+                                            item.secondPriceTitle && (
+                                                <th className="text-left px-6 py-4 text-[#22324A] text-lg sm:text-xl font-[500] text-gotham">
+                                                    {item.secondPriceTitle}
+                                                </th>
+                                            )
+                                        }
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {item.prices.map((price, i) => (
+                                        <tr key={i} className="border-b border-gray-200 last:border-b-0">
+                                            <td className="px-6 py-4 text-[#22324A] text-base text-center sm:text-lg text-gotham">
+                                                {price.peopleCount} people
+                                            </td>
+                                            <td className="px-6 py-4 text-[#22324A] text-xl sm:text-2xl font-[500] text-gotham">
+                                                {price.price}
+                                            </td>
+                                            {
+                                                item.secondPrices && (
+                                                    <td key={i} className="px-6 py-4 text-[#22324A] text-xl sm:text-2xl font-[500] text-gotham">
+                                                        {item.secondPrices[i].price}
+                                                    </td>
+                                                )
+                                            }
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                ))}
+
                 {/* Highlights */}
-                {currentTour.highlightsTitle  &&
+                {currentTour.highlightsTitle &&
                     <h1 className="text-[#22324A] text-2xl sm:text-[38px] font-[500] text-gotham mt-10 text-center sm:text-left">
                         {currentTour.highlightsTitle}
                     </h1>
@@ -220,7 +323,7 @@ export default function TourPage() {
                                 key={i}
                                 className="bg-white rounded-[20px] p-6 flex flex-col items-center sm:items-start text-center sm:text-left"
                             >
-                                <img src={oiuPng} alt="icon" className="w-10 h-10" loading="lazy"/>
+                                <img src={oiuPng} alt="icon" className="w-10 h-10" loading="lazy" />
                                 <p className="mt-4 font-gotham font-[500] text-[#22324A] text-[18px]">
                                     {text}
                                 </p>
@@ -249,14 +352,14 @@ export default function TourPage() {
                                 onClick={prev}
                                 className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white shadow-md p-2 rounded-full"
                             >
-                                <ChevronLeft className="w-5 h-5 text-[#22324A]"/>
+                                <ChevronLeft className="w-5 h-5 text-[#22324A]" />
                             </button>
 
                             <button
                                 onClick={next}
                                 className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white shadow-md p-2 rounded-full"
                             >
-                                <ChevronRight className="w-5 h-5 text-[#22324A]"/>
+                                <ChevronRight className="w-5 h-5 text-[#22324A]" />
                             </button>
 
                             {/* лента слайдов */}
@@ -293,7 +396,13 @@ export default function TourPage() {
                 {currentTour.itinerary && currentTour.itinerary.map(item => (
                     <div
                         className="w-full max-w-[400px] sm:max-w-[600px]  mt-10 bg-white rounded-[20px] p-6 sm:p-10">
-                        <div className="relative">
+                        {item.title && <p className="px-4 text-base sm:text-xl text-[#22324A] font-[500] tracking-[-0.01em] leading-tight">
+                            {item.title}
+                        </p>}
+                        {item.description && <p className="px-4 text-base sm:text-xl text-[#12324A]/60 font-[500] tracking-[-0.01em] leading-tight">
+                            {item.description}
+                        </p>}
+                        <div className="relative mt-4">
                             <div className="absolute left-[17px] top-2 bottom-10 w-[2px] bg-gray-300"></div>
                             <div className="flex flex-col gap-8">
                                 {item.steps.map((step, i) => (
@@ -322,10 +431,10 @@ export default function TourPage() {
     );
 }
 
-function IncludeList({icon, title, items}) {
+function IncludeList({ icon, title, items }) {
     return (
         <div className="flex items-start gap-4">
-            <img src={icon} alt="icon" loading="lazy" className="w-10 h-10 sm:w-12 sm:h-12"/>
+            <img src={icon} alt="icon" loading="lazy" className="w-10 h-10 sm:w-12 sm:h-12" />
             <div>
                 <span className="text-[#22324A]/50 text-[11px]">{title}</span>
                 {items.map((item, i) => (

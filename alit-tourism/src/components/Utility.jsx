@@ -1,36 +1,43 @@
-import {useState, useEffect} from "react";
-import {useNavigate, Link} from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import flagandstreet from "../assets/flagandstreet.png";
 import almaty from "../assets/images/places/Almaty.webp";
 import mapandred from "../assets/mapandred.png";
 import oiuIcon from "../assets/oiu.png";
 import arrowIcon from "../assets/arrow.png";
 import starIcon from "../assets/star.png";
-import airportImage from "../assets/airport.png";
-import mcbookImage from "../assets/mcbook.png";
-import twopeopleImage from "../assets/twopeople.png";
-import btrkImage from "../assets/btrk.png";
+import KokZhailau from "../assets/images/places/Kok Zhailau Almaty.png";
+import businessImage from "../assets/business.png";
+import workImage from "../assets/work.png";
+import businessImmigrantImage from "../assets/businessImmigrant.jpg";
 import graphIcon from "../assets/blocks/graph.png";
 import paperIcon from "../assets/blocks/paper.png";
 import ppIcon from "../assets/blocks/pp.png";
 import ssIcon from "../assets/blocks/ss.png";
-import kainImage from "../assets/blocks/kain.png";
-import kolsayImage from "../assets/blocks/kolsay.png";
-import charynImage from "../assets/blocks/charyn.png";
-import biglakeImage from "../assets/blocks/biglake.png";
+import kainImage from "../assets/images/places/Kaiyndy lake.jpeg";
+import kolsayImage from "../assets/images/places/kolsay.png";
+import charynImage from "../assets/images/places/charyn.png";
+import biglakeImage from "../assets/images/places/biglake.png";
 import WeatherModal from "./modals/WeatherModal.jsx";
 import ReviewModal from "./modals/ReviewModal.jsx";
 import PhotoViewModal from "./modals/PhotoViewModal.jsx";
 
+const tours = [
+    { id: 1, img: kolsayImage, title: "Kolsay Lake", days: "5 days" },
+    { id: 8, img: charynImage, title: "Charyn Canyon", days: "3 days" },
+    { id: 6, img: biglakeImage, title: "Big Almaty Lake", days: "1 week" },
+    { id: 1, img: kainImage, title: "Kaindy Lake", days: "5 days" }]
+
 export default function Explore() {
-    const [weather, setWeather] = useState({temperature: 0, condition: "Sunny"});
+    const [weather, setWeather] = useState({ temperature: 0, condition: "Sunny" });
     const [isOpen, setIsOpen] = useState(false);
     const [isOpenReview, setIsOpenReview] = useState(false);
     const [isOpenPhoto, setIsOpenPhoto] = useState(false);
     const navigate = useNavigate();
+    console.log("weather:", weather)
 
     useEffect(() => {
-        fetch("https://api.open-meteo.com/v1/forecast?latitude=43.15&longitude=76.95&hourly=apparent_temperature&models=best_match&current=temperature_2m,relative_humidity_2m,rain,wind_speed_10m,apparent_temperature,snowfall&timezone=auto&forecast_days=1")
+        fetch("https://api.open-meteo.com/v1/forecast?latitude=43.15&longitude=76.95&hourly=apparent_temperature&models=best_match&current=temperature_2m,relative_humidity_2m,rain,wind_speed_10m,apparent_temperature,snowfall&timezone=auto&forecast_days=2")
             .then((res) => res.json())
             .then((data) => {
                 const current = data.current;
@@ -50,27 +57,10 @@ export default function Explore() {
             .catch((err) => console.error(err));
     }, []);
 
-    return (<section className="w-full py-0 sm:py-24 bg-white text-center text-gotham">
-        <p className="font-medium text-[30px] sm:text-[40px] leading-[100%] tracking-[-0.03em] text-[#22324A] flex items-center justify-center">
-            Explore Monthly
-            <img loading="lazy"
-                src={oiuIcon}
-                alt="Oiu Icon"
-                className="ml-2 w-12 h-12 object-contain"
-            />
-        </p>
-
+    return (<section className="w-full py-0 sm:py-0 bg-white text-center text-gotham">
         <h2 className="font-medium text-[40px] sm:text-[80px] leading-[70px] sm:leading-[130px] text-gotham text-[#22324A]">
             We Recommend
         </h2>
-
-        <p className="font-normal text-[30px] sm:text-[60px] leading-[100%] tracking-[-0.03em] text-[#22324A]">
-            Destinations Every Month
-        </p>
-
-        <p className="mt-5 md:mt-10 font-medium text-[15px] sm:text-[50px] leading-[100%] tracking-[-0.03em] text-[#C5C8CB]">
-            explore tours in Kazakh landscape
-        </p>
 
         <div
             className="mt-5 flex flex-col md:flex-row justify-center items-center md:items-end gap-6 px-6 sm:px-12 md:px-32 md:mt-16">
@@ -121,14 +111,14 @@ export default function Explore() {
                     className="absolute top-3 right-4 w-[50px] h-[50px] rounded-full flex items-center justify-center bg-white/20 backdrop-blur-sm cursor-pointer"
                     onClick={() => setIsOpen(true)}
                 >
-                    <img loading="lazy" src={arrowIcon} alt="arrow" className="w-5 h-5 object-contain"/>
+                    <img loading="lazy" src={arrowIcon} alt="arrow" className="w-5 h-5 object-contain" />
                 </div>
 
                 {/* Основная погода */}
                 <div
                     className="absolute bottom-4 md:bottom-8 left-4 text-[#FFFFFF] tracking-[-0.03em] flex items-end leading-none">
                     <span className="font-normal text-gotham md:font-bold text-[24px] md:text-[48px]">
-                      {weather.temperature}°
+                        {weather.temperature}°
                     </span>
                     <span className="font-[500] text-[24px] ml-2">{weather.condition}</span>
                 </div>
@@ -149,7 +139,7 @@ export default function Explore() {
                     className="absolute top-3 right-4 w-[50px] h-[50px] rounded-full flex items-center justify-center bg-white/40 backdrop-blur-sm cursor-pointer"
                     onClick={() => setIsOpenReview(true)}
                 >
-                    <img loading="lazy" src={arrowIcon} alt="arrow" className="w-5 h-5 object-contain"/>
+                    <img loading="lazy" src={arrowIcon} alt="arrow" className="w-5 h-5 object-contain" />
                 </div>
 
                 <div
@@ -162,7 +152,7 @@ export default function Explore() {
                         />
                         <span className="font-[500] md:font-bold text-[30px] md:text-[50px] leading-none">
                             4,8k
-                          </span>
+                        </span>
                     </div>
 
                     <p className="font-[400] md:font-medium text-[11px] md:text-[20px]">
@@ -170,13 +160,13 @@ export default function Explore() {
                     </p>
                 </div>
 
-                {isOpenReview && (<ReviewModal onClose={() => setIsOpenReview(false)}/>)}
+                {isOpenReview && (<ReviewModal onClose={() => setIsOpenReview(false)} />)}
             </div>
 
             {/* Карточка 4 */}
             <div className="relative w-[95%] md:w-[210px] h-[100px] md:h-[460px] flex-shrink-0">
                 <div className="absolute top-3 right-4 w-[50px] h-[50px] rounded-full flex items-center justify-center bg-white/20 backdrop-blur-sm cursor-pointer"
-                     onClick={() => setIsOpenPhoto(true)} >
+                    onClick={() => setIsOpenPhoto(true)} >
                     <img loading="lazy"
                         src={arrowIcon}
                         alt="arrow"
@@ -201,7 +191,7 @@ export default function Explore() {
                         <p className="font-[500] text-[30px]">New Places</p>
                     </div>
                 </div>
-                {isOpenPhoto && (<PhotoViewModal onClose={() => setIsOpenPhoto(false)}/>)}
+                {isOpenPhoto && (<PhotoViewModal onClose={() => setIsOpenPhoto(false)} />)}
             </div>
         </div>
 
@@ -220,9 +210,10 @@ export default function Explore() {
             <div className="flex flex-col items-center gap-3">
                 <div
                     className="relative w-[170px] md:w-[250px] h-[170px] md:h-[250px] rounded-[20px] cursor-pointer"
+                    onClick={() => navigate("/visa/tourism")}
                 >
                     <img loading="lazy"
-                        src={btrkImage}
+                        src={KokZhailau}
                         alt="square-1"
                         className="w-full h-full rounded-[20px] object-cover"
                     />
@@ -240,17 +231,18 @@ export default function Explore() {
                 <div className="flex justify-between w-full px-2 items-center">
                     <span className="text-[#22324A] text-lg font-medium">Tourism</span>
                     <span className="bg-[#F4EBE2] text-[#22324A] text-sm font-semibold px-2 py-1 rounded-md">
-              B12
-            </span>
+                        B12
+                    </span>
                 </div>
             </div>
 
             <div className="flex flex-col items-center gap-3">
                 <div
                     className="relative w-[170px] md:w-[250px] h-[170px] md:h-[250px] rounded-[20px] cursor-pointer"
+                    onClick={() => navigate("/visa/work")}
                 >
                     <img loading="lazy"
-                        src={mcbookImage}
+                        src={workImage}
                         alt="square-2"
                         className="w-full h-full rounded-[20px] object-cover"
                     />
@@ -276,11 +268,12 @@ export default function Explore() {
             <div className="flex flex-col items-center gap-3">
                 <div
                     className="relative w-[170px] md:w-[250px] h-[170px] md:h-[250px] rounded-[20px] cursor-pointer"
+                    onClick={() => navigate("/visa/business")}
                 >
 
 
                     <img loading="lazy"
-                        src={twopeopleImage}
+                        src={businessImage}
                         alt="square-3"
                         className="w-full h-full rounded-[20px] object-cover"
                     />
@@ -302,8 +295,8 @@ export default function Explore() {
                             key={code}
                             className="bg-[#F4EBE2] text-[#22324A] text-sm font-semibold px-2 py-1 rounded-md"
                         >
-                  {code}
-                </span>))}
+                            {code}
+                        </span>))}
                     </div>
                 </div>
             </div>
@@ -312,9 +305,10 @@ export default function Explore() {
                 <div
                     className={`relative w-[170px] md:w-[250px] h-[170px] md:h-[250px] rounded-[20px] cursor-pointer transition-transform duration-300 
                             `}
+                    onClick={() => navigate("/visa/immigrant")}
                 >
                     <img loading="lazy"
-                        src={airportImage}
+                        src={businessImmigrantImage}
                         alt="square-4"
                         className="w-full h-full rounded-[20px] object-cover"
                     />
@@ -330,12 +324,12 @@ export default function Explore() {
                 </div>
 
                 <div className="flex justify-between w-full px-2 items-center">
-            <span className="text-[#22324A] text-lg font-medium">
-              Business Immigrant
-            </span>
+                    <span className="text-[#22324A] text-lg font-medium">
+                        Business Immigrant
+                    </span>
                     <span className="bg-[#F4EBE2] text-[#22324A] text-sm font-semibold px-2 py-1 rounded-md">
-              C5
-            </span>
+                        C5
+                    </span>
                 </div>
             </div>
         </div>
@@ -353,10 +347,10 @@ export default function Explore() {
         <div className="bg-[#F4F4F4] rounded-[15px] py-10 px-2 mx-5 md:px-10 mt-10 md:mt-20 mb-10">
             {/* Заголовок */}
             <div className="flex items-center justify-center gap-0 md:gap-2 mb-5 md:mb-10">
-          <span
-              className="text-[#22324A] text-[25px] md:text-[65px] font-[500] md:font-semibold text-left md:text-center">
-            Top-Recommended Tours
-          </span>
+                <span
+                    className="text-[#22324A] text-[25px] md:text-[65px] font-[500] md:font-semibold text-left md:text-center">
+                    Top-Recommended Tours
+                </span>
                 <img loading="lazy"
                     src={oiuIcon}
                     alt="icon"
@@ -368,19 +362,11 @@ export default function Explore() {
             <div className="flex justify-center">
                 <div
                     className="flex overflow-x-auto md:overflow-x-visible gap-2 md:gap-6 px-2 md:px-0 scrollbar-hide md:justify-center">
-                    {[{img: kolsayImage, title: "Kolsay Lake", days: "5 days"}, {
-                        img: charynImage,
-                        title: "Charyn Canyon",
-                        days: "3 days"
-                    }, {img: biglakeImage, title: "Big Almaty Lake", days: "1 week"}, {
-                        img: kainImage,
-                        title: "Kaindy Lake",
-                        days: "5 days"
-                    },].map((tour, i) => (<div
+                    {tours.map((tour, i) => (<div
                         key={i}
                         className="flex-shrink-0 flex flex-col items-start w-[200px] md:w-[300px]"
                     >
-                        <div
+                        <div onClick={() => navigate(`/tours/${tour.id}`)}
                             className="relative w-[200px] md:w-full h-[200px] md:h-[300px] rounded-[15px] md:rounded-[30px] border border-[#C5C8CB] overflow-hidden">
                             <img loading="lazy"
                                 src={tour.img}

@@ -63,7 +63,7 @@ const WeatherModal = ({weather, hourly, city, onClose}) => {
                 {/* Кнопка закрытия */}
                 <button
                     onClick={onClose}
-                    className="mt-6 w-full md:w-auto px-6 py-3 bg-blue-500 text-white font-bold rounded-xl self-center"
+                    className="mt-6 w-full md:w-auto px-6 py-3 bg-[#22324A] text-[#F4EBE2] font-[500] rounded-xl self-center"
                 >
                     Close
                 </button>

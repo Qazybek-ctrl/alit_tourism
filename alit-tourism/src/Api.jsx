@@ -1,4 +1,5 @@
 import axios from "axios";
+import { handleApiError } from "./utility/handleApiError";
 
 const baseURL =
   process.env.NODE_ENV === "production"
@@ -22,8 +23,11 @@ api.interceptors.response.use(
   (error) => {
     if (error.response && error.response.status === 401) {
       localStorage.removeItem("token");
+      localStorage.removeItem("user");
       window.location.href = "/auth";
     }
+
+    handleApiError(error);
     return Promise.reject(error);
   }
 );

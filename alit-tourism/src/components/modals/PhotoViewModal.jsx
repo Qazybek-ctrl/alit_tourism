@@ -16,7 +16,7 @@ import Kaiyndy from "../../assets/images/places/Kaiyndy lake.jpeg";
 import Katon from "../../assets/images/places/Katon Karagay National Park.jpg";
 import Keruen from "../../assets/images/places/Keruen Saray Turkestan.jpg";
 import KokTobe from "../../assets/images/places/Kok Tobe.jpg";
-import KokZhailau from "../../assets/images/places/Kok Zhailau Almaty.jpg";
+import KokZhailau from "../../assets/images/places/Kok Zhailau Almaty.png";
 import Kolsay from "../../assets/images/places/Kolsay lakes.webp";
 import Medeu from "../../assets/images/places/Medeu.jpg";
 import Shymbulak from "../../assets/images/places/Shymbulak Ski resort.jpg";

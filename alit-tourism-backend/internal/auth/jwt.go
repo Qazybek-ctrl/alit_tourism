@@ -13,7 +13,7 @@ var jwtKey []byte
 func init() {
 	secret := os.Getenv("JWT_SECRET")
 	if secret == "" {
-		secret = "super-secret-key-change-me"
+		secret = "super-secret-key-here"
 	}
 	jwtKey = []byte(secret)
 }
@@ -24,8 +24,9 @@ func GenerateToken(userID uint, expiryHours int) (string, error) {
 		"exp":     time.Now().Add(time.Hour * time.Duration(expiryHours)).Unix(),
 		"iat":     time.Now().Unix(),
 	}
+
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	return token.SignedString(jwtKey)
+	return token.SignedString(JWTKey)  // <-- используем ключ из keys.go
 }
 
 func ParseToken(tokenStr string) (jwt.MapClaims, error) {
@@ -33,8 +34,9 @@ func ParseToken(tokenStr string) (jwt.MapClaims, error) {
 		if _, ok := t.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, errors.New("unexpected signing method")
 		}
-		return jwtKey, nil
+		return JWTKey, nil 
 	})
+
 	if err != nil {
 		return nil, err
 	}

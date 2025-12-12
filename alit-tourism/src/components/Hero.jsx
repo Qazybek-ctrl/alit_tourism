@@ -42,7 +42,6 @@ export default function Hero() {
             />
           </div>
 
-          {/* Discover — только на мобильных, под текстом, по центру */}
           <div className="flex justify-center lg:hidden">
             <button
               className="
@@ -54,27 +53,14 @@ export default function Hero() {
                 rounded-[10px] shadow-md
                 hover:scale-105 transition-transform
               "
+              onClick={() => {
+                window.location.href = "/kazakhstan";
+              }}
             >
               Discover Tours
             </button>
           </div>
-
-          {/* Кнопка сообщения — внутри блока, правый-нижний угол блока, только на мобилке */}
         </div>
-        <button
-          className="
-              absolute bottom-10 right-10
-              w-14 h-14
-              bg-[#F4EBE2] text-[#22324A]
-              rounded-full shadow-lg
-              flex items-center justify-center
-              hover:scale-110 transition-transform
-              lg:hidden
-            "
-          aria-label="Chat"
-        >
-          <MessageCircle size={26} />
-        </button>
       </div>
     </section>
   );

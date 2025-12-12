@@ -27,12 +27,12 @@ func LoginHandler(c *gin.Context) {
 
 	var user models.User
 	if err := db.DB.Where("phone_number = ?", cleanPhone).First(&user).Error; err != nil {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "invalid credentials"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "User with this phone number not found"})
 		return
 	}
 
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(input.Password)); err != nil {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "incorrect password"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "incorrect password"})
 		return
 	}
 
@@ -63,35 +63,57 @@ type RegisterInput struct {
 func RegisterHandler(c *gin.Context) {
 	var input RegisterInput
 	if err := c.ShouldBindJSON(&input); err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
 	cleanPhone := utils.FormatPhoneNumber(input.PhoneNumber)
 
+	// Проверка на существующий номер
 	var existing models.User
 	if err := db.DB.Where("phone_number = ?", cleanPhone).First(&existing).Error; err == nil {
-		c.JSON(400, gin.H{"error": "номер телефона уже зарегистрирован"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "номер телефона уже зарегистрирован"})
 		return
 	}
 
+	// Хеширование пароля
 	hashed, err := bcrypt.GenerateFromPassword([]byte(input.Password), bcrypt.DefaultCost)
 	if err != nil {
-		c.JSON(500, gin.H{"error": "could not hash password"})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "could not hash password"})
 		return
 	}
 
+	// Создаем пользователя
 	user := models.User{
 		FirstName:   input.FirstName,
 		Surname:     input.Surname,
 		PhoneNumber: cleanPhone,
 		Password:    string(hashed),
+		Role:        "user", // Default role
 	}
 
 	if err := db.DB.Create(&user).Error; err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(201, gin.H{"message": "user created"})
+	// -------------------------
+	// 🔥 Генерируем токен как в логине
+	// -------------------------
+	token, err := auth.GenerateToken(user.ID, 720)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "could not generate token"})
+		return
+	}
+
+	// Отправляем как в LoginHandler
+	c.JSON(http.StatusCreated, gin.H{
+		"token": token,
+		"user": gin.H{
+			"id":           user.ID,
+			"firstname":    user.FirstName,
+			"surname":      user.Surname,
+			"phone_number": user.PhoneNumber,
+		},
+	})
 }

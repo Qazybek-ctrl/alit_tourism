@@ -156,7 +156,7 @@ export default function QuestionnaireForm() {
         <form
             className="max-w-3xl mx-auto p-6 space-y-6 text-gotham text-[#22324A]  bg-[#FFFFFF] md:bg-[#F6F6F6] rounded-[30px] my-8">
             <h1 className="text-[#22324A] text-[38px] font-[500] text-gotham mb-6 text-center">
-                Questionnaire for Visa Invitation
+                Questionnaire for Kazakhstan Visa Invitation
             </h1>
 
             {/* ФИО */}

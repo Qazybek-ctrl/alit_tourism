@@ -12,19 +12,8 @@ import (
 )
 
 func CreateUserGuestForm(c *gin.Context) {
+	userID := c.GetUint("userID")
 	var form models.UserGuestForm
-
-	userIDValue, exists := c.Get("userID")
-	if !exists {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "Пользователь не найден в токене"})
-		return
-	}
-
-	userID, ok := userIDValue.(uint)
-	if !ok {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "Некорректный идентификатор пользователя"})
-		return
-	}
 
 	form.UserID = userID
 
@@ -34,7 +23,7 @@ func CreateUserGuestForm(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid tour id"})
 		return
 	}
-	
+
 	form.TourID = uint(tourID)
 
 	lang := c.PostForm("language")
@@ -50,6 +39,7 @@ func CreateUserGuestForm(c *gin.Context) {
 	form.TripInterests = trip
 
 	form.FullName = c.PostForm("fullName")
+	form.TourType = c.PostForm("tourType")
 	form.CountryOfResidence = c.PostForm("countryOfResidence")
 
 	form.VisitPlan = c.PostForm("visitPlan")
@@ -67,4 +57,16 @@ func CreateUserGuestForm(c *gin.Context) {
 		"message": "Анкета успешно сохранена",
 		"data":    form,
 	})
+}
+
+func GetUserGuestForms(c *gin.Context) {
+	userID := c.GetUint("userID")
+	var forms []models.UserGuestForm
+
+	if err := db.DB.Where("user_id = ?", userID).Order("created_at DESC").Find(&forms).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error fetching forms"})
+		return
+	}
+
+	c.JSON(http.StatusOK, forms)
 }

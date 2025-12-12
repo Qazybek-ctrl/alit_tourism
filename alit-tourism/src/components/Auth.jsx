@@ -1,14 +1,19 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { User, Lock } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import api from "../Api";
 import toast from "react-hot-toast";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
+import { AuthContext } from "../utility/AuthContext";
 
 export default function AuthPage() {
   const navigate = useNavigate();
+
+  const { user, setUser } = useContext(AuthContext);
   const [isLogin, setIsLogin] = useState(true);
+  const [loading, setLoading] = useState(false);
+
   const [formData, setFormData] = useState({
     phoneNumber: "",
     password: "",
@@ -22,45 +27,69 @@ export default function AuthPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
+      let res;
+
       if (isLogin) {
-        const res = await api.post("/login", {
+        res = await api.post("/login", {
           phone_number: formData.phoneNumber,
           password: formData.password,
         });
-        localStorage.setItem("token", res.data.token);
+
         toast.success("Успешный вход!");
-        window.location.href = "/profile";
       } else {
-        await api.post("/register", {
+        res = await api.post("/register", {
           phone_number: formData.phoneNumber,
           password: formData.password,
           firstname: formData.firstname,
           surname: formData.surname,
         });
+
         toast.success("Регистрация прошла успешно!");
-        setIsLogin(true);
-        window.location.href = "/profile";
       }
+
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("user", JSON.stringify(res.data.user));
+      setUser(res.data.user);
+
+      // Check if there's a redirect URL saved before auth
+      const redirectUrl = localStorage.getItem("redirectAfterAuth");
+      if (redirectUrl) {
+        localStorage.removeItem("redirectAfterAuth");
+        navigate(redirectUrl);
+      } else {
+        navigate("/profile");
+      }
+
     } catch (err) {
-      toast.error(err.response?.data?.error || "Ошибка запроса");
+      // ошибки обрабатывает интерцептор
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="flex items-center justify-center h-[70vh] md:min-h-screen bg-gray-50">
       <div className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md font-gotham font-[300]">
+
+        {/* TAB SWITCH */}
         <div className="flex mb-6">
           <button
-            className={`flex-1 py-2 rounded-l-2xl ${isLogin ? "bg-[#f4ebe2] text-[#22324A]" : "bg-white border-2 border-[#f4ebe2] hover:bg-[#f4ebe2]/30 transition"
+            className={`flex-1 py-2 rounded-l-2xl ${isLogin
+              ? "bg-[#f4ebe2] text-[#22324A]"
+              : "bg-white border-2 border-[#f4ebe2] hover:bg-[#f4ebe2]/30 transition"
               }`}
             onClick={() => setIsLogin(true)}
           >
             Authorization
           </button>
+
           <button
-            className={`flex-1 py-2 rounded-r-2xl  ${!isLogin ? "bg-[#f4ebe2] text-[#22324A] " : "bg-white border-2 border-[#f4ebe2] hover:bg-[#f4ebe2]/30 transition"
+            className={`flex-1 py-2 rounded-r-2xl ${!isLogin
+              ? "bg-[#f4ebe2] text-[#22324A]"
+              : "bg-white border-2 border-[#f4ebe2] hover:bg-[#f4ebe2]/30 transition"
               }`}
             onClick={() => setIsLogin(false)}
           >
@@ -68,7 +97,10 @@ export default function AuthPage() {
           </button>
         </div>
 
+        {/* FORM */}
         <form className="space-y-4" onSubmit={handleSubmit}>
+
+          {/* FIRSTNAME & SURNAME */}
           {!isLogin && (
             <>
               <div className="flex items-center border rounded-xl px-3">
@@ -97,20 +129,21 @@ export default function AuthPage() {
             </>
           )}
 
-          {/* ✅ Телефон с react-phone-input-2 */}
+          {/* PHONE INPUT */}
           <div>
             <PhoneInput
-              country={"kz"} // по умолчанию Казахстан 🇰🇿
+              country={"kz"}
               value={formData.phoneNumber}
               onChange={(value) =>
                 setFormData({ ...formData, phoneNumber: value })
               }
               inputClass="!w-full !h-11 !pl-12 !rounded-xl !border !outline-none"
               buttonClass="!rounded-l-xl"
-              disableCountryGuess={true}
+              disableCountryGuess
             />
           </div>
 
+          {/* PASSWORD */}
           <div className="flex items-center border rounded-xl px-3">
             <Lock className="text-gray-500" size={18} />
             <input
@@ -123,11 +156,17 @@ export default function AuthPage() {
             />
           </div>
 
+          {/* SUBMIT BUTTON */}
           <button
             type="submit"
-            className="w-full bg-[#f4ebe2] text-black py-2 rounded-xl hover:bg-[#f4ebe2]/70 transition"
+            disabled={loading}
+            className="w-full bg-[#f4ebe2] text-black py-2 rounded-xl hover:bg-[#f4ebe2]/70 transition disabled:opacity-50"
           >
-            {isLogin ? "Войти" : "Зарегистрироваться"}
+            {loading
+              ? "Подождите..."
+              : isLogin
+                ? "Войти"
+                : "Зарегистрироваться"}
           </button>
         </form>
       </div>

@@ -17,19 +17,8 @@ import (
 
 // CreateVisaInvitationForm — обработчик создания анкеты визового приглашения
 func CreateVisaInvitationForm(c *gin.Context) {
+	userID := c.GetUint("userID")
 	var form models.VisaInvitationForm
-
-	userIDValue, exists := c.Get("userID")
-	if !exists {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "Пользователь не найден в токене"})
-		return
-	}
-
-	userID, ok := userIDValue.(uint)
-	if !ok {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "Некорректный идентификатор пользователя"})
-		return
-	}
 
 	form.UserID = userID
 
@@ -131,4 +120,16 @@ func parseDate(value string) time.Time {
 		}
 	}
 	return time.Time{}
+}
+
+func GetUserVisaForms(c *gin.Context) {
+	userID := c.GetUint("userID")
+	var forms []models.VisaInvitationForm
+
+	if err := db.DB.Where("user_id = ?", userID).Order("created_at DESC").Find(&forms).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error fetching forms"})
+		return
+	}
+
+	c.JSON(http.StatusOK, forms)
 }

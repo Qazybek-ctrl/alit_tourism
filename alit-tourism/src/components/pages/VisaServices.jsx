@@ -1,41 +1,45 @@
 import { Link } from "react-router-dom";
-import airportImage from "../../assets/airport.png";
-import mcbookImage from "../../assets/mcbook.png";
-import twopeopleImage from "../../assets/twopeople.png";
-import btrkImage from "../../assets/btrk.png";
+import workImage from "../../assets/work.png";
+import kokZhailauImage from "../../assets/images/places/Kok Zhailau Almaty.png";
 import graphIcon from "../../assets/blocks/graph.png";
 import paperIcon from "../../assets/blocks/paper.png";
 import ppIcon from "../../assets/blocks/pp.png";
 import ssIcon from "../../assets/blocks/ss.png";
+import businessImage from "../../assets/business.png";
+import businessImmigrantImage from "../../assets/businessImmigrant.jpg";
 
 const visaBlocks = [
     {
-        img: btrkImage,
+        img: kokZhailauImage,
         title: "Tourism",
         type: "B12",
         link: "/visa/tourism",
         imgColor: "#F4EBE2F2",
+        icon: ppIcon
     },
     {
-        img: mcbookImage,
+        img: workImage,
         title: "Work",
         type: "C3",
         link: "/visa/work",
         imgColor: "#795743F2",
+        icon: ssIcon
     },
     {
-        img: twopeopleImage,
+        img: businessImage,
         title: "Business",
         type: "B1, B2, B3",
         link: "/visa/business",
         imgColor: "#5C88CBF2",
+        icon: graphIcon
     },
     {
-        img: airportImage,
+        img: businessImmigrantImage,
         title: "Business Immigrant",
         type: "C5",
         link: "/visa/immigrant",
         imgColor: "#22324AF2",
+        icon: paperIcon
     },
 ];
 
@@ -55,20 +59,11 @@ export default function VisaServices() {
                         >
                             {/* Иконка */}
                             <div
-                                className={`absolute top-5 md:top-2 right-4 w-[50px] h-[50px] md:w-[70px] md:h-[70px] rounded-[10px] md:rounded-[20px] ${
-                                    index === 0 ? "bg-white" : "bg-white/20"
-                                } md:bg-[#F4EBE2] shadow-md flex items-center justify-center pointer-events-none text-center z-20`}
+                                className={`absolute top-5 md:top-2 right-4 w-[50px] h-[50px] md:w-[70px] md:h-[70px] rounded-[10px] md:rounded-[20px] ${index === 0 ? "bg-white" : "bg-white/20"
+                                    } md:bg-[#F4EBE2] shadow-md flex items-center justify-center pointer-events-none text-center z-20`}
                             >
                                 <img
-                                    src={
-                                        index === 0
-                                            ? ppIcon
-                                            : index === 1
-                                                ? ssIcon
-                                                : index === 2
-                                                    ? graphIcon
-                                                    : paperIcon
-                                    }
+                                    src={block.icon}
                                     alt="Icon"
                                     className="w-6 h-6 md:w-9 md:h-9 object-contain"
                                 />
@@ -82,13 +77,12 @@ export default function VisaServices() {
                                 <img
                                     src={block.img}
                                     alt={block.title}
-                                    className={`w-full h-full object-cover ${
-                                        index === 0
-                                            ? "object-[center_9%]"
+                                    className={`w-full h-full object-cover ${index === 0
+                                            ? "object-[center_10%]"
                                             : index === 1
                                                 ? "object-[center_70%]"
                                                 : "object-center"
-                                    }`}
+                                        }`}
                                 />
                                 <div
                                     className="absolute inset-0"
@@ -96,21 +90,19 @@ export default function VisaServices() {
                                 ></div>
                                 <div className="absolute top-12 left-7 right-3 z-20">
                                     <h2
-                                        className={`text-[24px] font-[400] ${
-                                            index === 0 ? "text-[#22324A]" : "text-white"
-                                        } leading-tight drop-shadow-md`}
+                                        className={`text-[24px] font-[400] ${index === 0 ? "text-[#22324A]" : "text-white"
+                                            } leading-tight drop-shadow-md`}
                                     >
                                         {block.title}
                                     </h2>
                                     <span
-                                        className={`inline-block mt-3 ${
-                                            index === 0
+                                        className={`inline-block mt-3 ${index === 0
                                                 ? "bg-white text-[#22324A]"
                                                 : "bg-white/20 text-[#FFFFFF]"
-                                        } text-[13px] font-[400] px-8 py-2 rounded-[10px]`}
+                                            } text-[13px] font-[400] px-8 py-2 rounded-[10px]`}
                                     >
-                    {block.type}
-                  </span>
+                                        {block.type}
+                                    </span>
                                 </div>
                             </Link>
 
@@ -119,25 +111,28 @@ export default function VisaServices() {
                                 <img
                                     src={block.img}
                                     alt={block.title}
-                                    className={`w-full h-full object-cover ${
-                                        index === 0
-                                            ? "object-[center_9%]"
+                                    className={`w-full h-full object-cover ${index === 0
+                                            ? "object-[center_18%]"
                                             : index === 1
                                                 ? "object-[center_70%]"
-                                                : "object-center"
-                                    }`}
+                                                : index === 2
+                                                    ? "object-[center_92%]"
+                                                    : index === 3
+                                                        ? "object-[center_35%]"
+                                                        : "object-center"
+                                        }`}
                                 />
                             </div>
 
                             {/* Контент под фото (десктоп) */}
                             <div className="hidden md:flex items-center justify-between flex-1 mt-5">
                                 <div className="flex items-center gap-3">
-                                    <h2 className="text-[#22324A] text-2xl font-bold">
+                                    <h2 className="text-[#22324A] text-2xl font-[500]">
                                         {block.title}
                                     </h2>
                                     <span className="bg-[#F4EBE2] text-[#22324A] text-[25px] font-bold px-3 py-1 rounded-md">
-                    {block.type}
-                  </span>
+                                        {block.type}
+                                    </span>
                                 </div>
 
                                 <Link

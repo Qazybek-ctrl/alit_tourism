@@ -1,0 +1,160 @@
+{
+  "tours": [
+    {
+      "id": 1,
+      "srcKey": "tour1",
+      "title": "Kolsai & Kaindy Lakes With Canyons Day Tour",
+      "duration": "Day Tour",
+      "photoKeys": ["Kolsay1", "KaiyndyLake", "Charyn", "Mountain"],
+      "price": "$440",
+      "highlightsTitle": "Highlights",
+      "bestOfTitle": "Best of Almaty in 1 Day – Lakes & Canyons Tour",
+      "bestOfDescription": "If you have only one day to explore, this tour is the perfect way to see the region's top natural wonders. In just a day, you'll visit Charyn Canyon, Black Canyon and Kolsai Lake. Travel in a small group for a friendly atmosphere, enjoy the comfort, and be guided by an English-speaking expert who knows the best photo spots. Along the way, taste traditional Kazakh cuisine in a remote mountain village.",
+      "youWillVisitTitle": "Discover the breathtaking beauty of Kazakhstan in one unforgettable day!",
+      "slides": [
+        {
+          "imageKey": "Kolsay1",
+          "description": "Kolsai Lakes – Known as the 'Pearls of the Tien Shan,' these crystal-clear mountain lakes are surrounded by pine forests and snow-capped peaks."
+        },
+        {
+          "imageKey": "Charyn",
+          "description": "Charyn Canyon – Often called the 'Grand Canyon of Central Asia,' with dramatic red rock formations and breathtaking views."
+        },
+        {
+          "imageKey": "KaiyndyLake",
+          "description": "Almaty City – Kazakhstan's cultural hub with cozy coffee shops, mountain views, and lively streets full of art and music."
+        }
+      ],
+      "highlights": [
+        "3 top natural attractions in 1 day",
+        "Small, friendly international group",
+        "Comfortable travel & plenty of photo stops",
+        "Local food & hospitality experience"
+      ],
+      "touristInfo": [
+        {
+          "iconKey": "yesPng",
+          "title": "Included",
+          "texts": [
+            "English-speaking guide",
+            "Comfortable transportation",
+            "All entry fees"
+          ]
+        },
+        {
+          "iconKey": "noPng",
+          "title": "Not Included",
+          "texts": ["Boating", "Horse riding", "Lunch"]
+        },
+        {
+          "iconKey": "bagPng",
+          "title": "What to Bring",
+          "texts": [
+            "Comfortable walking shoes",
+            "Weather/Season-appropriate",
+            "Hat & Sunglasses",
+            "Drinking water & snacks",
+            "Camera or power bank",
+            "Medicine if necessary",
+            "Positive energy & good mood!"
+          ]
+        }
+      ],
+      "tourInfo": [
+        {
+          "iconKey": "pinPng",
+          "title": "Starting / Ending Point",
+          "texts": ["Almaty City"]
+        },
+        {
+          "iconKey": "flagPng",
+          "title": "Total Distance",
+          "texts": ["~660 km round trip"]
+        },
+        {
+          "iconKey": "clockPng",
+          "title": "Duration",
+          "texts": ["~17 hours"]
+        },
+        {
+          "iconKey": "timerPng",
+          "title": "Start Time",
+          "texts": ["06:00 AM (Almaty)"]
+        },
+        {
+          "iconKey": "cloudPng",
+          "title": "Season",
+          "texts": ["Year-round"]
+        },
+        {
+          "iconKey": "circlePng",
+          "title": "Language",
+          "texts": ["English"]
+        },
+        {
+          "iconKey": "smilePng",
+          "title": "Activities",
+          "texts": [
+            "Sightseeing",
+            "Walking",
+            "National Cuisine Tasting",
+            "Boating",
+            "Hiking",
+            "Horse Riding (optional)"
+          ]
+        }
+      ],
+      "itinerary": [
+        {
+          "steps": [
+            {
+              "title": "09:00",
+              "description": "Pick-up from your hotel/meeting point and departure."
+            },
+            {
+              "title": "09:30",
+              "description": "Explore the lively Green Bazaar, a perfect place to experience local culture and shop for souvenirs."
+            },
+            {
+              "title": "10:45",
+              "description": "Stroll through Panfilov Park and visit the stunning wooden Zenkov Cathedral"
+            },
+            {
+              "title": "12:20",
+              "description": "Stop at Republic Square, the historical and cultural heart of Almaty"
+            },
+            {
+              "title": "13:00",
+              "description": "Enjoy a delicious lunch at a local restaurant"
+            },
+            {
+              "title": "14:15",
+              "description": "Discover Kazakhstan's rich heritage at the Statel Museum"
+            },
+            {
+              "title": "16:00",
+              "description": "Take memorable photos at the Palace of the Republic"
+            },
+            {
+              "title": "16:30",
+              "description": "Ride up to Kok-Tobe Mountain and admire breathtaking panoramic views of the city"
+            },
+            {
+              "title": "19:00",
+              "description": "Conclude the day with a traditional Kazakh dinner, tasting authentic national dishes"
+            }
+          ],
+          "underText": "The order of visits may be adjusted, or certain sites skipped, depending on seasonal changes, weather conditions, or other factors beyond our control. The route can be adjusted or expanded to suit your preferences. If there's an attraction you'd like to visit that isn't included in the program, simply let us know — we'll do our best to make it happen and provide you with all the available options."
+        }
+      ],
+      "prices": [
+        { "peopleCount": 2, "price": "$230" },
+        { "peopleCount": 3, "price": "$250" },
+        { "peopleCount": 4, "price": "$270" },
+        { "peopleCount": 5, "price": "$300" },
+        { "peopleCount": 6, "price": "$320" },
+        { "peopleCount": 7, "price": "$350" }
+      ]
+    }
+  ]
+}

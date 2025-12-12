@@ -13,22 +13,18 @@ export default function About() {
           <div className="flex flex-col justify-between items-start text-[#000000] text-gotham text-[12px] sm:text-xl lg:text-2xl leading-snug lg:leading-tight">
             <div className="max-w-[600px]">
               <p className="font-light">
-                <span className="font-normal">AILT Tourism -</span> is a licensed and registered
-                tourism company in Kazakhstan.
+                <span className="font-normal">AILT Tourism</span> is a licensed and registered tourism company in Kazakhstan.
+              </p>
+              <p className="font-light">
+                We offer a full range of services, including visa support (business, tourist, and work visas), insurance services, organizing memorable tours, and we provide comprehensive MICE tourism services.
               </p>
               <p className="mb-6 font-light">
-                We offer a full range of services, including visa support (business, tourist, and work visas),
-                organizing memorable tours, and providing insurance services.
+                Alongside MICE tourism, we also create unforgettable leisure tours across Kazakhstan, combining culture, nature, and adventure.
               </p>
 
               <p className="font-medium">Safety is Our Top Priority</p>
               <p className="mb-6 font-light">
-                Your safety and comfort are at the heart of our tours. Our team is made up of
-                <span className="font-medium"> certified guides</span>, trained to deliver the highest level of service both in the
-                city and in nature. They are skilled in{" "}
-                <span className="font-medium">guided tours, landscape navigation, and mountain trekking</span>,
-                ensuring you feel confident and supported throughout your journey. In addition, all our guides are{" "}
-                <span className="font-medium">certified in first aid</span>, so you can enjoy your experience with peace of mind.
+                Your safety and comfort are at the heart of our tours. Our team consists of certified guides trained to provide the highest level of service both in urban and natural environments. Skilled in guided tours, landscape navigation, and mountain trekking, they ensure you feel supported at every step. In addition, all our guides are certified in first aid, giving you peace of mind as you enjoy your journey.
               </p>
             </div>
 
