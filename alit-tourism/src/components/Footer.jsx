@@ -1,6 +1,6 @@
-import ailtLogo from "../assets/ailt.png";
-import tiktokLogo from "../assets/tiktok.png";
-import {Instagram, Facebook, Linkedin} from "lucide-react";
+const ailtLogo = "/ailt.png";
+const tiktokLogo = "/tiktok.png";
+import { Instagram, Facebook, Linkedin } from "lucide-react";
 
 export default function Footer() {
     return (
@@ -14,7 +14,7 @@ export default function Footer() {
                     />
                 </div>
 
-                <div>
+                {/* <div>
                     <h3 className="mb-4 font-semibold">Learn More</h3>
                     <ul className="flex flex-col gap-2 text-[13px]">
                         <li><a href="#" className="hover:underline opacity-70">About Lift</a></li>
@@ -24,7 +24,7 @@ export default function Footer() {
                         <li><a href="#" className="hover:underline opacity-70">Jobs</a></li>
                         <li><a href="#" className="hover:underline opacity-70">Privacy Policy</a></li>
                     </ul>
-                </div>
+                </div> */}
 
                 <div>
                     <h3 className="mb-4 font-semibold">Tickets & Booking</h3>

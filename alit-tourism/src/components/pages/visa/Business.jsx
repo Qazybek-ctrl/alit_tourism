@@ -1,17 +1,18 @@
 import React from "react";
 import { businessStepTitles, businessStepDescriptions } from "../../helper/helper";
-import globallightPng from "../../../assets/icons/global_light.png";
-import docPng from "../../../assets/icons/doc.png";
-import calendarPng from "../../../assets/icons/calendar.png";
-import listPng from "../../../assets/icons/list.png";
-import globalPng from "../../../assets/icons/global.png";
-import avaPng from "../../../assets/icons/ava.png";
-import billPng from "../../../assets/icons/bill.png";
-import bedPng from "../../../assets/icons/bed.png";
-import ticketPng from "../../../assets/icons/ticket.png";
+// Images from public folder
+const globallightPng = "/icons/global_light.png";
+const docPng = "/icons/doc.png";
+const calendarPng = "/icons/calendar.png";
+const listPng = "/icons/list.png";
+const globalPng = "/icons/global.png";
+const avaPng = "/icons/ava.png";
+const billPng = "/icons/bill.png";
+const bedPng = "/icons/bed.png";
+const ticketPng = "/icons/ticket.png";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import businessImage from "../../../assets/business.png";
+const businessImage = "/business.webp";
 
 export default function Business() {
     const navigate = useNavigate();
@@ -125,7 +126,7 @@ export default function Business() {
 
 
                 <h1 className="mt-10 text-[#22324A] text-[24px] md:text-[35px] font-semibold text-left tracking-[-0.03em]">
-                    Who Needs a B12 Visa?
+                    Who Needs a B1, B2 or B3 Visa?
                 </h1>
 
                 <p className="mt-5 text-[15px] text-[#22324A] md:text-[20px] font-[400] font-gotham tracking-[-0.03em]">
@@ -247,8 +248,8 @@ export default function Business() {
                                 <div className="relative z-10 flex-shrink-0  mt-2">
                                     <div
                                         className={`w-10 h-10 flex items-center justify-center rounded-full ${index === 0
-                                                ? 'bg-[#22324A] text-white'
-                                                : 'bg-[#D9D9D9] text-[#22324A]'
+                                            ? 'bg-[#22324A] text-white'
+                                            : 'bg-[#D9D9D9] text-[#22324A]'
                                             }`}
                                     >
                                         {index === 0 ? '✓' : num}

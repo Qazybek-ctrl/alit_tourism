@@ -1,4 +1,4 @@
-import certificateImg from "../assets/certificate.png"; // твоя картинка сертификата
+const certificateImg = "/certificate.png";
 
 export default function About() {
   return (

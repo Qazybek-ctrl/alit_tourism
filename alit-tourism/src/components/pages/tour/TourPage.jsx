@@ -2,8 +2,9 @@ import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import toast from "react-hot-toast";
-import bagPng from "../../../assets/icons/bag1.png";
-import oiuPng from "../../../assets/oiu.png";
+// Images from public folder
+const bagPng = "/icons/bag1.png";
+const oiuPng = "/oiu.png";
 import { Tours } from "../../helper/ImageHelper.jsx"
 
 export default function TourPage() {

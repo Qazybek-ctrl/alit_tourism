@@ -1,24 +1,25 @@
 import React from "react";
-import globallightPng from "../../../assets/icons/global_light.png";
-import pointPng from "../../../assets/icons/point-in.png";
-import timePng from "../../../assets/icons/time.png";
-import verifyPng from "../../../assets/icons/verify.png";
-import docPng from "../../../assets/icons/doc.png";
-import calendarPng from "../../../assets/icons/calendar.png";
-import listPng from "../../../assets/icons/list.png";
-import globalPng from "../../../assets/icons/global.png";
-import avaPng from "../../../assets/icons/ava.png";
-import billPng from "../../../assets/icons/bill.png";
-import coinsPng from "../../../assets/icons/coins.png";
-import cardPng from "../../../assets/icons/card.png";
-import letterPng from "../../../assets/icons/letter.png";
-import littlebagPng from "../../../assets/icons/littlebag.png";
-import ticketPng from "../../../assets/icons/ticket.png";
-import bedPng from "../../../assets/icons/bed.png";
+// Images from public folder
+const globallightPng = "/icons/global_light.png";
+const pointPng = "/icons/point-in.png";
+const timePng = "/icons/time.png";
+const verifyPng = "/icons/verify.png";
+const docPng = "/icons/doc.png";
+const calendarPng = "/icons/calendar.png";
+const listPng = "/icons/list.png";
+const globalPng = "/icons/global.png";
+const avaPng = "/icons/ava.png";
+const billPng = "/icons/bill.png";
+const coinsPng = "/icons/coins.png";
+const cardPng = "/icons/card.png";
+const letterPng = "/icons/letter.png";
+const littlebagPng = "/icons/littlebag.png";
+const ticketPng = "/icons/ticket.png";
+const bedPng = "/icons/bed.png";
 import { stepTitles, stepDescriptions } from "../../helper/helper";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import businessImmigrantImage from "../../../assets/businessImmigrant.jpg";
+const businessImmigrantImage = "/businessImmigrant.jpg";
 
 export default function Immigrant() {
     const navigate = useNavigate();
@@ -61,7 +62,7 @@ export default function Immigrant() {
                 </p>
 
                 <h1 className="mt-10 text-[#22324A] text-[24px] md:text-[35px]   font-[500] text-left">
-                    Key Facts About the C3 Visa
+                    Key Facts About the C5 Visa
                 </h1>
 
                 <div className="mt-10 flex flex-col md:flex-row justify-between gap-2 md:gap-6">
@@ -140,7 +141,7 @@ export default function Immigrant() {
 
 
                 <h1 className="mt-10 text-[#22324A] text-[24px] md:text-[35px]   font-[500] text-left">
-                    Who Needs a B12 Visa?
+                    Who Needs a C5 Visa?
                 </h1>
 
                 <p className="mt-5 text-[#22324A] text-[15px] md:text-[20px] font-[400] font-gotham tracking-[-0.03em]">

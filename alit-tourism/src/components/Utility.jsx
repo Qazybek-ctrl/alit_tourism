@@ -1,23 +1,25 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import flagandstreet from "../assets/flagandstreet.png";
-import almaty from "../assets/images/places/Almaty.webp";
-import mapandred from "../assets/mapandred.png";
-import oiuIcon from "../assets/oiu.png";
-import arrowIcon from "../assets/arrow.png";
-import starIcon from "../assets/star.png";
-import KokZhailau from "../assets/images/places/Kok Zhailau Almaty.png";
-import businessImage from "../assets/business.png";
-import workImage from "../assets/work.png";
-import businessImmigrantImage from "../assets/businessImmigrant.jpg";
-import graphIcon from "../assets/blocks/graph.png";
-import paperIcon from "../assets/blocks/paper.png";
-import ppIcon from "../assets/blocks/pp.png";
-import ssIcon from "../assets/blocks/ss.png";
-import kainImage from "../assets/images/places/Kaiyndy lake.jpeg";
-import kolsayImage from "../assets/images/places/kolsay.png";
-import charynImage from "../assets/images/places/charyn.png";
-import biglakeImage from "../assets/images/places/biglake.png";
+
+const flagandstreet = "/flagandstreet.webp";
+const review = "/review.jpg";
+const almaty = "/images/places/Almaty.webp";
+const mapandred = "/mapandred.png";
+const oiuIcon = "/oiu.png";
+const arrowIcon = "/arrow.png";
+const starIcon = "/star.png";
+const KokZhailau = "/images/places/Kok Zhailau Almaty.webp";
+const businessImage = "/business.webp";
+const workImage = "/work.webp";
+const businessImmigrantImage = "/businessImmigrant.jpg";
+const graphIcon = "/blocks/graph.png";
+const paperIcon = "/blocks/paper.png";
+const ppIcon = "/blocks/pp.png";
+const ssIcon = "/blocks/ss.png";
+const kainImage = "/images/places/Kaiyndy lake.jpeg";
+const kolsayImage = "/images/places/kolsay.webp";
+const charynImage = "/images/places/charyn.webp";
+const biglakeImage = "/images/places/biglake.webp";
 import WeatherModal from "./modals/WeatherModal.jsx";
 import ReviewModal from "./modals/ReviewModal.jsx";
 import PhotoViewModal from "./modals/PhotoViewModal.jsx";
@@ -135,6 +137,12 @@ export default function Explore() {
             {/* Карточка 3 */}
             <div
                 className="relative w-[95%] md:w-[210px] h-[100px] md:h-[460px] rounded-[17px] md:rounded-[30px] bg-[#75bcff] flex-shrink-0">
+                <img loading="lazy"
+                    src={review}
+                    alt="photo 2"
+                    className="w-full h-full rounded-[17px] md:rounded-[30px] object-cover"
+                />
+                
                 <div
                     className="absolute top-3 right-4 w-[50px] h-[50px] rounded-full flex items-center justify-center bg-white/40 backdrop-blur-sm cursor-pointer"
                     onClick={() => setIsOpenReview(true)}
@@ -143,7 +151,7 @@ export default function Explore() {
                 </div>
 
                 <div
-                    className="absolute bottom-5 md:bottom-10 left-6 text-[#22324A] tracking-[-0.03em] leading-none text-left">
+                    className="absolute bottom-5 md:bottom-10 left-6 text-[#FFFFFF] tracking-[-0.03em] leading-none text-left">
                     <div className="flex items-center mb-2">
                         <img loading="lazy"
                             src={starIcon}
@@ -151,7 +159,7 @@ export default function Explore() {
                             className="w-6 h-6 md:w-10 md:h-10 mr-2"
                         />
                         <span className="font-[500] md:font-bold text-[30px] md:text-[50px] leading-none">
-                            4,8k
+                            4,9k
                         </span>
                     </div>
 

@@ -1,26 +1,27 @@
 import React, { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-import Aktau from "../../assets/images/places/Aktau - Caspian Sea.jpg";
-import Almaty from "../../assets/images/places/Almaty.webp";
-import AlmatyAutmn from "../../assets/images/places/Almaty autumn.jpg";
-import AltynEmel1 from "../../assets/images/places/Altyn Emel National Park.jpg";
-import AltynEmel2 from "../../assets/images/places/Altyn Emel National Park 2.webp";
-import Astana from "../../assets/images/places/Astana.png";
-import Bayanauyl from "../../assets/images/places/Bayanauyl Natuonal Park.jpg";
-import Big from "../../assets/images/places/Big Almaty Lake.jpg";
-import Bozzhyra from "../../assets/images/places/Bozzhyra valley.jpg";
-import Burabay from "../../assets/images/places/Burabay National Park.jpg";
-import Charyn from "../../assets/images/places/Charyn Canyon.jpg";
-import Kaiyndy from "../../assets/images/places/Kaiyndy lake.jpeg";
-import Katon from "../../assets/images/places/Katon Karagay National Park.jpg";
-import Keruen from "../../assets/images/places/Keruen Saray Turkestan.jpg";
-import KokTobe from "../../assets/images/places/Kok Tobe.jpg";
-import KokZhailau from "../../assets/images/places/Kok Zhailau Almaty.png";
-import Kolsay from "../../assets/images/places/Kolsay lakes.webp";
-import Medeu from "../../assets/images/places/Medeu.jpg";
-import Shymbulak from "../../assets/images/places/Shymbulak Ski resort.jpg";
-import Turkestan from "../../assets/images/places/Turkestan.jpg";
+// Images from public folder
+const Aktau = "/images/places/Aktau - Caspian Sea.jpg";
+const Almaty = "/images/places/Almaty.webp";
+const AlmatyAutmn = "/images/places/Almaty autumn.jpg";
+const AltynEmel1 = "/images/places/Altyn Emel National Park.jpg";
+const AltynEmel2 = "/images/places/Altyn Emel National Park 2.webp";
+const Astana = "/images/places/Astana.webp";
+const Bayanauyl = "/images/places/Bayanauyl Natuonal Park.jpg";
+const Big = "/images/places/Big Almaty Lake.jpg";
+const Bozzhyra = "/images/places/Bozzhyra valley.jpg";
+const Burabay = "/images/places/Burabay National Park.jpg";
+const Charyn = "/images/places/Charyn Canyon.jpg";
+const Kaiyndy = "/images/places/Kaiyndy lake.jpeg";
+const Katon = "/images/places/Katon Karagay National Park.jpg";
+const Keruen = "/images/places/Keruen Saray Turkestan.jpg";
+const KokTobe = "/images/places/Kok Tobe.jpg";
+const KokZhailau = "/images/places/Kok Zhailau Almaty.webp";
+const Kolsay = "/images/places/Kolsay lakes.webp";
+const Medeu = "/images/places/Medeu.jpg";
+const Shymbulak = "/images/places/Shymbulak Ski resort.webp";
+const Turkestan = "/images/places/Turkestan.jpg";
 
 const PhotoViewModal = ({ onClose }) => {
     const photos = [
@@ -105,11 +106,10 @@ const PhotoViewModal = ({ onClose }) => {
                                 src={src}
                                 alt={`thumb-${index}`}
                                 onClick={() => setCurrentIndex(index)}
-                                className={`w-20 h-16 object-cover rounded-md cursor-pointer border-2 flex-shrink-0 ${
-                                    index === currentIndex
+                                className={`w-20 h-16 object-cover rounded-md cursor-pointer border-2 flex-shrink-0 ${index === currentIndex
                                         ? "border-blue-500"
                                         : "border-transparent hover:border-gray-300"
-                                }`}
+                                    }`}
                             />
                         ))}
                     </div>

@@ -1,6 +1,7 @@
-import NoBoots from "../../assets/helper/NoBoots.png";
-import YesBoots from "../../assets/helper/YesBoots.png";
-import sockets from "../../assets/helper/sockets.png";
+// Images from public folder
+const NoBoots = "/helper/NoBoots.png";
+const YesBoots = "/helper/YesBoots.png";
+const sockets = "/helper/sockets.png";
 
 export default function TravelTip() {
     return (
@@ -90,9 +91,9 @@ export default function TravelTip() {
 
                     <p className="text-[#22324A] text-base md:text-lg leading-relaxed mb-8">
                         Trekking shoes are highly recommended to prevent ankle injuries. You can bring:
-                        <br/>• Proper hiking boots with ankle support
-                        <br/>• High-top sneakers (as a lightweight backup)
-                        <br/>• Avoid thin-soled or worn-out shoes — opt for shoes with thick, sturdy soles.
+                        <br />• Proper hiking boots with ankle support
+                        <br />• High-top sneakers (as a lightweight backup)
+                        <br />• Avoid thin-soled or worn-out shoes — opt for shoes with thick, sturdy soles.
                     </p>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

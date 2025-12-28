@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom";
-import workImage from "../../assets/work.png";
-import kokZhailauImage from "../../assets/images/places/Kok Zhailau Almaty.png";
-import graphIcon from "../../assets/blocks/graph.png";
-import paperIcon from "../../assets/blocks/paper.png";
-import ppIcon from "../../assets/blocks/pp.png";
-import ssIcon from "../../assets/blocks/ss.png";
-import businessImage from "../../assets/business.png";
-import businessImmigrantImage from "../../assets/businessImmigrant.jpg";
+
+const workImage = "/work.webp";
+const kokZhailauImage = "/images/places/Kok Zhailau Almaty.webp";
+const graphIcon = "/blocks/graph.png";
+const paperIcon = "/blocks/paper.png";
+const ppIcon = "/blocks/pp.png";
+const ssIcon = "/blocks/ss.png";
+const businessImage = "/business.webp";
+const businessImmigrantImage = "/businessImmigrant.jpg";
 
 const visaBlocks = [
     {
@@ -65,6 +66,7 @@ export default function VisaServices() {
                                 <img
                                     src={block.icon}
                                     alt="Icon"
+                                    loading="lazy"
                                     className="w-6 h-6 md:w-9 md:h-9 object-contain"
                                 />
                             </div>
@@ -77,11 +79,12 @@ export default function VisaServices() {
                                 <img
                                     src={block.img}
                                     alt={block.title}
+                                    loading="lazy"
                                     className={`w-full h-full object-cover ${index === 0
-                                            ? "object-[center_10%]"
-                                            : index === 1
-                                                ? "object-[center_70%]"
-                                                : "object-center"
+                                        ? "object-[center_10%]"
+                                        : index === 1
+                                            ? "object-[center_70%]"
+                                            : "object-center"
                                         }`}
                                 />
                                 <div
@@ -97,8 +100,8 @@ export default function VisaServices() {
                                     </h2>
                                     <span
                                         className={`inline-block mt-3 ${index === 0
-                                                ? "bg-white text-[#22324A]"
-                                                : "bg-white/20 text-[#FFFFFF]"
+                                            ? "bg-white text-[#22324A]"
+                                            : "bg-white/20 text-[#FFFFFF]"
                                             } text-[13px] font-[400] px-8 py-2 rounded-[10px]`}
                                     >
                                         {block.type}
@@ -111,15 +114,16 @@ export default function VisaServices() {
                                 <img
                                     src={block.img}
                                     alt={block.title}
+                                    loading="lazy"
                                     className={`w-full h-full object-cover ${index === 0
-                                            ? "object-[center_18%]"
-                                            : index === 1
-                                                ? "object-[center_70%]"
-                                                : index === 2
-                                                    ? "object-[center_92%]"
-                                                    : index === 3
-                                                        ? "object-[center_35%]"
-                                                        : "object-center"
+                                        ? "object-[center_18%]"
+                                        : index === 1
+                                            ? "object-[center_70%]"
+                                            : index === 2
+                                                ? "object-[center_92%]"
+                                                : index === 3
+                                                    ? "object-[center_35%]"
+                                                    : "object-center"
                                         }`}
                                 />
                             </div>

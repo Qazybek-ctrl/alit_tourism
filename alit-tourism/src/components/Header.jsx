@@ -1,8 +1,10 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
-import ailtLogo from "../assets/ailt.png";
-import phoneIcon from "../assets/phone.png";
-import emailIcon from "../assets/email.png";
+
+const ailtLogo = "/ailt.png";
+const phoneIcon = "/phone.png";
+const emailIcon = "/email.png";
+
 import { AuthContext } from "../utility/AuthContext";
 import { User, Menu, X } from "lucide-react";
 
@@ -74,7 +76,7 @@ export default function Header() {
           </div>
 
           {/* Локализация */}
-          <div className="flex items-center gap-2 relative">
+          {/* <div className="flex items-center gap-2 relative">
             <select className="appearance-none bg-transparent text-[#22324A] text-[19px] lg:text-[15px] text-gotham font-[500] [letter-spacing:0.5px] pr-6 cursor-pointer focus:outline-none focus:ring-0">
               <option value="en">EN</option>
               <option value="ru">RU</option>
@@ -93,7 +95,7 @@ export default function Header() {
                 d="M19 9l-7 7-7-7"
               />
             </svg>
-          </div>
+          </div> */}
 
           {/* Бургер (мобилка) */}
           <button

@@ -1,24 +1,26 @@
 import React from "react";
 import { workStepTitles, workStepDescriptions } from "../../helper/helper";
-import globallightPng from "../../../assets/icons/global_light.png";
-import pointPng from "../../../assets/icons/point-in.png";
-import timePng from "../../../assets/icons/time.png";
-import verifyPng from "../../../assets/icons/verify.png";
-import docPng from "../../../assets/icons/doc.png";
-import calendarPng from "../../../assets/icons/calendar.png";
-import listPng from "../../../assets/icons/list.png";
-import globalPng from "../../../assets/icons/global.png";
-import handglobalPng from "../../../assets/icons/handglobal.png";
-import extensionPng from "../../../assets/icons/extension.png";
-import avaPng from "../../../assets/icons/ava.png";
-import billPng from "../../../assets/icons/bill.png";
-import infoPng from "../../../assets/icons/info.png";
-import letterPng from "../../../assets/icons/letter.png";
-import bagPng from "../../../assets/icons/bag.png";
-import downplanePng from "../../../assets/icons/downplane.png";
-import workImage from "../../../assets/work.png";
+
+const globallightPng = "/icons/global_light.png";
+const pointPng = "/icons/point-in.png";
+const timePng = "/icons/time.png";
+const verifyPng = "/icons/verify.png";
+const docPng = "/icons/doc.png";
+const calendarPng = "/icons/calendar.png";
+const listPng = "/icons/list.png";
+const globalPng = "/icons/global.png";
+const handglobalPng = "/icons/handglobal.png";
+const extensionPng = "/icons/extension.png";
+const avaPng = "/icons/ava.png";
+const billPng = "/icons/bill.png";
+const infoPng = "/icons/info.png";
+const letterPng = "/icons/letter.png";
+const bagPng = "/icons/bag.png";
+const downplanePng = "/icons/downplane.png";
+const workImage = "/work.webp";
+
 import toast from "react-hot-toast";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Work() {
     const navigate = useNavigate();
@@ -49,6 +51,7 @@ export default function Work() {
                 <img
                     src={workImage}
                     alt="Tourist Visa"
+                    loading="lazy"
                     className="w-full h-[200px] md:w-[1000px] md:h-[420px] rounded-[15px] md:rounded-[20px] object-cover object-[center_85%] mb-10 md:mb-16"
                 />
 
@@ -72,6 +75,7 @@ export default function Work() {
                         <img
                             src={pointPng}
                             alt="Purpose Icon"
+                            loading="lazy"
                             className="w-[50px] h-[50px] mb-4"
                         />
                         <h3 className="text-[#22324A] text-[20px] md:text-[30px] font-semibold">Purpose</h3>
@@ -85,6 +89,7 @@ export default function Work() {
                         <img
                             src={verifyPng}
                             alt="Validity Icon"
+                            loading="lazy"
                             className="w-[50px] h-[50px] mb-4"
                         />
                         <h3 className="text-[#22324A] text-[20px] md:text-[30px] font-semibold">Validity</h3>
@@ -98,6 +103,7 @@ export default function Work() {
                         <img
                             src={timePng}
                             alt="Stay Duration Icon"
+                            loading="lazy"
                             className="w-[50px] h-[50px] mb-4"
                         />
                         <h3 className="text-[#22324A] text-[20px] md:text-[30px] font-semibold">Stay duration</h3>
@@ -114,6 +120,7 @@ export default function Work() {
                         <img
                             src={extensionPng}
                             alt="Extra Icon"
+                            loading="lazy"
                             className="w-[50px] h-[50px] mb-4 scale-125"
                         />
                         <h3 className="text-[#22324A] text-[20px] md:text-[30px] font-semibold">
@@ -129,6 +136,7 @@ export default function Work() {
                         <img
                             src={handglobalPng}
                             alt="Extra Icon"
+                            loading="lazy"
                             className="w-[50px] h-[50px] mb-4 scale-125"
                         />
                         <h3 className="text-[#22324A] text-[20px] md:text-[30px] font-semibold leading-none">
@@ -148,21 +156,21 @@ export default function Work() {
                 <p className="mt-5 text-[15px] md:text-[20px] text-[#22324A] font-[400] font-gotham tracking-[-0.03em]">You need a C3 visa if:</p>
                 <div className="flex flex-col gap-4 mt-5 text-[#22324A]">
                     <div className="flex items-center gap-3">
-                        <img src={docPng} alt="icon" className="w-12 h-12 mt-1" />
+                        <img src={docPng} alt="icon" loading="lazy" className="w-12 h-12 mt-1" />
                         <p className="text-[15px] md:text-[20px] font-[400] font-gotham tracking-[-0.03em]">
                             You have a job offer from a Kazakhstani employer.
                         </p>
                     </div>
 
                     <div className="flex items-center gap-3">
-                        <img src={calendarPng} alt="icon" className="w-12 h-12 mt-1" />
+                        <img src={calendarPng} alt="icon" loading="lazy" className="w-12 h-12 mt-1" />
                         <p className="text-[15px] md:text-[20px] font-[400] font-gotham tracking-[-0.03em]">
                             Your employer has obtained a work permit for you.
                         </p>
                     </div>
 
                     <div className="flex items-center gap-3">
-                        <img src={globallightPng} alt="icon" className="w-12 h-12 mt-1" />
+                        <img src={globallightPng} alt="icon" loading="lazy" className="w-12 h-12 mt-1" />
                         <p className="text-[15px] md:text-[20px] font-[400] font-gotham tracking-[-0.03em]">
                             You plan to work and live in Kazakhstan for more than 90 days.
                         </p>
@@ -217,6 +225,7 @@ export default function Work() {
                     <img
                         src={billPng}
                         alt="icon"
+                        loading="lazy"
                         className="w-10 h-10 mt-1 object-contain"
                     />
 
@@ -267,11 +276,10 @@ export default function Work() {
                                 {/* Кружочек */}
                                 <div className="relative z-10 flex-shrink-0  mt-2">
                                     <div
-                                        className={`w-10 h-10 flex items-center justify-center rounded-full ${
-                                            index === 0
-                                                ? 'bg-[#22324A] text-white'
-                                                : 'bg-[#D9D9D9] text-[#22324A]'
-                                        }`}
+                                        className={`w-10 h-10 flex items-center justify-center rounded-full ${index === 0
+                                            ? 'bg-[#22324A] text-white'
+                                            : 'bg-[#D9D9D9] text-[#22324A]'
+                                            }`}
                                     >
                                         {index === 0 ? '✓' : num}
                                     </div>
@@ -343,6 +351,7 @@ export default function Work() {
                         <img
                             src={downplanePng}
                             alt="eVisa info"
+                            loading="lazy"
                             className="w-[180px] md:w-[180px] h-auto object-contain"
                         />
                     </div>
@@ -374,6 +383,7 @@ export default function Work() {
                             <img
                                 src={infoPng}
                                 alt="More info"
+                                loading="lazy"
                                 className="w-[150px] h-auto rounded-[15px] object-cover"
                             />
                         </div>

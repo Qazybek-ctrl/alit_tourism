@@ -1,16 +1,23 @@
-import heroImage from "../assets/hero.png";
-import planeIcon from "../assets/plane.png";
-import verifiedIcon from "../assets/verified.png";
+const heroImage = "/hero.webp";
+const planeIcon = "/plane.png";
+const verifiedIcon = "/verified.png";
 import { MessageCircle } from "lucide-react";
 
 export default function Hero() {
   return (
     <section className="relative w-full h-[74vh] sm:h-[90vh] lg:h-screen flex items-center justify-center px-4 lg:px-0">
       <div
-        className="relative w-full h-[70vh] lg:h-screen bg-cover bg-center flex items-center
+        className="relative w-full h-[70vh] lg:h-screen flex items-center
                rounded-2xl lg:rounded-none overflow-hidden"
-        style={{ backgroundImage: `url(${heroImage})` }}
       >
+        {/* Hero image with priority loading */}
+        <img
+          src={heroImage}
+          alt="Kazakhstan Tourism"
+          fetchpriority="high"
+          className="absolute inset-0 w-full h-full object-cover rounded-2xl lg:rounded-none"
+        />
+
         {/* Затемнение */}
         <div className="absolute inset-0 bg-black/50 lg:bg-black/40 rounded-2xl lg:rounded-none"></div>
 
@@ -23,6 +30,7 @@ export default function Hero() {
             <img
               src={planeIcon}
               alt="Plane Icon"
+              loading="lazy"
               className="w-[45px] h-[50px] sm:w-[60px] sm:h-[60px] lg:w-[90px] lg:h-[90px] object-contain -translate-y-2 sm:-translate-y-3"
             />
           </div>
@@ -38,6 +46,7 @@ export default function Hero() {
             <img
               src={verifiedIcon}
               alt="Decor Icon"
+              loading="lazy"
               className="hidden sm:block w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 object-contain"
             />
           </div>

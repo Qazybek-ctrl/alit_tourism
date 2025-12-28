@@ -1,13 +1,13 @@
-import {useState} from "react";
-import {useLocation, useNavigate} from "react-router-dom";
+import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import Select from "react-select";
 import countryList from "react-select-country-list";
-import {DateRange} from "react-date-range";
+import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
-import {Upload} from "lucide-react";
+import { Upload } from "lucide-react";
 import api from "../../../Api";
 import toast from "react-hot-toast";
 
@@ -49,32 +49,32 @@ export default function QuestionnaireForm() {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
-    const RequiredLabel = ({children}) => (
+    const RequiredLabel = ({ children }) => (
         <label className="text-[#22324A] font-medium flex items-center gap-1">
             {children} <span className="text-red-500">*</span>
         </label>
     );
 
-    const {search} = useLocation();
+    const { search } = useLocation();
     const params = new URLSearchParams(search);
     const visaInvitationType = params.get("visaInvitationType");
 
     const countries = countryList().getData();
 
     const handleCountryChange = (field, value) => {
-        setForm({...form, [field]: value.label});
+        setForm({ ...form, [field]: value.label });
     };
 
     const handleChange = (e) => {
-        setForm({...form, [e.target.name]: e.target.value});
+        setForm({ ...form, [e.target.name]: e.target.value });
     };
 
     const handleFileChange = (e) => {
-        setForm({...form, document: e.target.files[0]});
+        setForm({ ...form, document: e.target.files[0] });
     };
 
     const handleRangeChange = (ranges) => {
-        setForm({...form, visaPeriod: ranges.selection});
+        setForm({ ...form, visaPeriod: ranges.selection });
     };
 
     const handleSubmit = async (e) => {
@@ -139,7 +139,7 @@ export default function QuestionnaireForm() {
             formData.append("visaInvitationType", visaInvitationType);
 
             await api.post("/visa/invitation", formData, {
-                headers: {"Content-Type": "multipart/form-data"},
+                headers: { "Content-Type": "multipart/form-data" },
             });
 
             toast.success("Application submitted successfully!");
@@ -182,7 +182,7 @@ export default function QuestionnaireForm() {
                     />
                 </div>
                 <div>
-                    <label>Middle Name</label>
+                    <RequiredLabel>Middle Name</RequiredLabel>
                     <input
                         name="middleName"
                         onChange={handleChange}
@@ -201,20 +201,18 @@ export default function QuestionnaireForm() {
                     <div className="flex gap-4 mt-2">
                         <button
                             type="button"
-                            onClick={() => setForm({...form, gender: "Male"})}
-                            className={`px-4 py-2 border rounded ${
-                                form.gender === "Male" ? "bg-[#22324A] text-white" : ""
-                            }`}
+                            onClick={() => setForm({ ...form, gender: "Male" })}
+                            className={`px-4 py-2 border rounded ${form.gender === "Male" ? "bg-[#22324A] text-white" : ""
+                                }`}
                             disabled={loading}
                         >
                             Male
                         </button>
                         <button
                             type="button"
-                            onClick={() => setForm({...form, gender: "Female"})}
-                            className={`px-4 py-2 border rounded ${
-                                form.gender === "Female" ? "bg-[#22324A] text-white" : ""
-                            }`}
+                            onClick={() => setForm({ ...form, gender: "Female" })}
+                            className={`px-4 py-2 border rounded ${form.gender === "Female" ? "bg-[#22324A] text-white" : ""
+                                }`}
                             disabled={loading}
                         >
                             Female
@@ -240,7 +238,7 @@ export default function QuestionnaireForm() {
             {/* Место рождения и гражданство */}
             <div className="grid md:grid-cols-2 gap-4">
                 <div>
-                    <label>Place of Birth</label>
+                    <RequiredLabel>Place of Birth</RequiredLabel>
                     <input
                         name="placeOfBirth"
                         onChange={handleChange}
@@ -250,7 +248,7 @@ export default function QuestionnaireForm() {
                     />
                 </div>
                 <div>
-                    <label>Citizenship</label>
+                    <RequiredLabel>Citizenship</RequiredLabel>
 
                     <input
                         name="citizenship"
@@ -312,7 +310,7 @@ export default function QuestionnaireForm() {
             </div>
 
             <div>
-                <label>Place of Work and Position</label>
+                <RequiredLabel>Place of Work and Position</RequiredLabel>
                 <input
                     name="workPlace"
                     onChange={handleChange}
@@ -326,9 +324,9 @@ export default function QuestionnaireForm() {
             {/* Residential + Building */}
             <div className="flex flex-col gap-4">
                 <div>
-                    <label className="text-[#22324A] font-medium">
+                    <RequiredLabel>
                         Residential address in the Republic of Kazakhstan, street
-                    </label>
+                    </RequiredLabel>
                     <input
                         name="addressKZStreet"
                         placeholder="Street"
@@ -339,7 +337,7 @@ export default function QuestionnaireForm() {
                 </div>
 
                 <div>
-                    <label className="text-[#22324A] font-medium">Building</label>
+                    <RequiredLabel>Building</RequiredLabel>
                     <input
                         name="addressKZBuilding"
                         placeholder="Building"
@@ -352,9 +350,9 @@ export default function QuestionnaireForm() {
 
             {/* Block + Apartment */}
             <div className="mt-4">
-                <label className="text-[#22324A] font-medium">
+                <RequiredLabel>
                     Block and Apartment
-                </label>
+                </RequiredLabel>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
                     <input
                         name="addressKZBlock"
@@ -374,11 +372,11 @@ export default function QuestionnaireForm() {
             </div>
 
             <div>
-                <label>Travel itinerary in Kazakhstan</label>
+                <RequiredLabel>Travel itinerary in Kazakhstan</RequiredLabel>
                 <input
                     name="travelItinerary"
                     onChange={handleChange}
-                    placeholder="Enter reason or duration"
+                    placeholder=""
                     className="input"
                     disabled={loading}
                 />
@@ -400,7 +398,7 @@ export default function QuestionnaireForm() {
             </div>
 
             <div>
-                <label>Residential Address Abroad</label>
+                <RequiredLabel>Residential Address Abroad</RequiredLabel>
                 <input
                     name="residenceAddressAbroad"
                     onChange={handleChange}
@@ -427,24 +425,22 @@ export default function QuestionnaireForm() {
                     <div className="flex gap-4 mt-1">
                         <button
                             type="button"
-                            onClick={() => setForm({...form, visaType: "Single-entry"})}
-                            className={`px-4 py-2 border rounded ${
-                                form.visaType === "Single-entry"
-                                    ? "bg-[#22324A] text-white"
-                                    : ""
-                            }`}
+                            onClick={() => setForm({ ...form, visaType: "Single-entry" })}
+                            className={`px-4 py-2 border rounded ${form.visaType === "Single-entry"
+                                ? "bg-[#22324A] text-white"
+                                : ""
+                                }`}
                             disabled={loading}
                         >
                             Single-entry
                         </button>
                         <button
                             type="button"
-                            onClick={() => setForm({...form, visaType: "Multiple-entry"})}
-                            className={`px-4 py-2 border rounded ${
-                                form.visaType === "Multiple-entry"
-                                    ? "bg-[#22324A] text-white"
-                                    : ""
-                            }`}
+                            onClick={() => setForm({ ...form, visaType: "Multiple-entry" })}
+                            className={`px-4 py-2 border rounded ${form.visaType === "Multiple-entry"
+                                ? "bg-[#22324A] text-white"
+                                : ""
+                                }`}
                             disabled={loading}
                         >
                             Multiple-entry
@@ -502,7 +498,7 @@ export default function QuestionnaireForm() {
                     <PhoneInput
                         country={"kz"}
                         value={form.phoneNumber}
-                        onChange={(value) => setForm({...form, phoneNumber: value})}
+                        onChange={(value) => setForm({ ...form, phoneNumber: value })}
                         inputClass="!w-full !h-11 !pl-12 !rounded-xl !border !outline-none"
                         buttonClass="!rounded-l-xl"
                         disableCountryGuess={true}
@@ -524,16 +520,14 @@ export default function QuestionnaireForm() {
 
             {/* Документ */}
             <div>
-                <label className="block font-medium text-gray-800 mb-2">
-                    Upload Document
-                </label>
+                <RequiredLabel>Upload Document</RequiredLabel>
 
                 <div
                     className="relative border-2 border-dashed border-gray-300 rounded-2xl p-8 text-center
                hover:border-blue-500 transition-colors cursor-pointer bg-gray-50"
                     onClick={() => document.getElementById("fileInput").click()}
                 >
-                    <Upload className="mx-auto mb-3 text-gray-500" size={36}/>
+                    <Upload className="mx-auto mb-3 text-gray-500" size={36} />
                     <p className="text-gray-700 font-medium">
                         Click to upload or drag & drop
                     </p>
@@ -549,7 +543,7 @@ export default function QuestionnaireForm() {
                     {form.document && (
                         <div
                             className="mt-4 bg-white p-3 rounded-xl shadow-sm border flex items-center justify-center gap-2">
-                            <Upload className="text-blue-500" size={20}/>
+                            <Upload className="text-blue-500" size={20} />
                             <p className="text-gray-700 text-sm truncate">
                                 {form.document.name}
                             </p>

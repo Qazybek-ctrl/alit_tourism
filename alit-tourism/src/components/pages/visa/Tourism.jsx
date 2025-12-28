@@ -1,13 +1,16 @@
-import planePng from "../../../assets/icons/blueplane.png";
-import pointPng from "../../../assets/icons/point-in.png";
-import timePng from "../../../assets/icons/time.png";
-import verifyPng from "../../../assets/icons/verify.png";
-import visaPng from "../../../assets/icons/visa.png";
-import docPng from "../../../assets/icons/doc.png";
-import calendarPng from "../../../assets/icons/calendar.png";
+const planePng = "/icons/blueplane.png";
+const pointPng = "/icons/point-in.png";
+const timePng = "/icons/time.png";
+const verifyPng = "/icons/verify.png";
+const visaPng = "/icons/visa.png";
+const docPng = "/icons/doc.png";
+const calendarPng = "/icons/calendar.png";
+
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import kokZhailauImage from "../../../assets/images/places/Kok Zhailau Almaty.png";
+
+const kokZhailauImage = "/images/places/Kok Zhailau Almaty.webp";
+
 import { Dot } from "lucide-react";
 
 export default function Tourism() {

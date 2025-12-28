@@ -1,56 +1,57 @@
-import AssyPlateau1 from "../../assets/images/places/AssyPlateau1.png";
-import Koktobe1 from "../../assets/images/places/Koktobe.png";
-import AltynEmell from "../../assets/images/places/AltynEmel.png";
-import Tamgaly from "../../assets/images/places/Tamgaly.png";
-import AlmaArasann from "../../assets/images/places/AlmaArasann.png";
-import Kolsay1 from "../../assets/images/places/Kolsay lakes.webp";
-import Mountain from "../../assets/images/places/mountain.png";
-import Charyn from "../../assets/images/places/charyn.png";
-import noPng from "../../assets/icons/no.png";
-import yesPng from "../../assets/icons/yes.png";
-import smilePng from "../../assets/icons/smile.png";
-import circlePng from "../../assets/icons/circle.png";
-import cloudPng from "../../assets/icons/cloud.png";
-import lightningPng from "../../assets/icons/lightning.png";
-import pinPng from "../../assets/icons/pin.png";
-import flagPng from "../../assets/icons/flag.png";
-import clockPng from "../../assets/icons/clock.png";
-import timerPng from "../../assets/icons/timer.png";
-import bagPng from "../../assets/icons/bag1.png";
-import Assy from "../../assets/images/places/Assy.png";
-import AssyPlateu from "../../assets/images/places/AssyPlateu.png";
-import AssyPlateau from "../../assets/images/places/AssyPlateau.png";
-import Assy2 from "../../assets/images/places/Assy2.png";
-import AlmatyCanad from "../../assets/images/places/AlmatyCanad.png";
-import Medeu1 from "../../assets/images/places/Medeu.png";
-import AlmatyStreet from "../../assets/images/places/AlmatyStreet.png";
-import KokTobe from "../../assets/images/places/Kok Tobe.jpg";
-import Issyk from "../../assets/images/places/Issyk.png";
-import IssykHourse from "../../assets/images/places/IssykHourse.png";
-import Turgen from "../../assets/images/places/Turgen.png";
-import Turgen2 from "../../assets/images/places/Turgen2.jpg";
-import BigAlmatyLake from "../../assets/images/places/Big Almaty Lake.jpg";
-import BigAlmatyLake2 from "../../assets/images/places/Big-Almaty-Lake-1.jpg";
-import Baomotor from "../../assets/images/places/Baomotor.png";
-import Baoo from "../../assets/images/places/baoo.png";
-import AltynEmel2 from "../../assets/images/places/AltynEmel2.png";
-import AltynEmelNationalPark2 from "../../assets/images/places/Altyn Emel National Park 2.webp";
-import AltynEmelMoun from "../../assets/images/places/AltynEmelMoun.png";
-import AltynEmelNationalPark from "../../assets/images/places/Altyn Emel National Park.jpg";
-import Charyn2 from "../../assets/images/places/Charyn Canyon.jpg";
-import Tamgaly3 from "../../assets/images/places/Tamgaly3.png";
-import Tamgaly4 from "../../assets/images/places/Tamgaly4.png";
-import TamgalyTass from "../../assets/images/places/TamgalyTass.png";
-import AlmaArasan from "../../assets/images/places/AlmaArasan.png";
-import Almaarasans from "../../assets/images/places/Almaarasans.png";
-import Almaarasanile from "../../assets/images/places/Almaarasanile.png";
-import AlmaArasnc from "../../assets/images/places/AlmaArasnc.png";
-import KokZhailau from "../../assets/images/places/Kok Zhailau Almaty.png";
-import BizdinAuyl from "../../assets/images/places/BizdinAuyl.png";
-import BizdinAuyl2 from "../../assets/images/places/BizdinAuyl2.png";
-import BizdinAuyl3 from "../../assets/images/places/BizdinAuyl3.jpg";
-import BizdinAuyl4 from "../../assets/images/places/BizdinAuyl4.png";
-import KaiyndyLake from "../../assets/images/places/Kaiyndy lake.jpeg";
+// Images from public folder
+const AssyPlateau1 = "/images/places/AssyPlateau1.png";
+const Koktobe1 = "/images/places/Koktobe.png";
+const AltynEmell = "/images/places/AltynEmel.png";
+const Tamgaly = "/images/places/Tamgaly.webp";
+const AlmaArasann = "/images/places/AlmaArasann.webp";
+const Kolsay1 = "/images/places/Kolsay lakes.webp";
+const Mountain = "/images/places/mountain.webp";
+const Charyn = "/images/places/charyn.webp";
+const noPng = "/icons/no.png";
+const yesPng = "/icons/yes.png";
+const smilePng = "/icons/smile.png";
+const circlePng = "/icons/circle.png";
+const cloudPng = "/icons/cloud.png";
+const lightningPng = "/icons/lightning.png";
+const pinPng = "/icons/pin.png";
+const flagPng = "/icons/flag.png";
+const clockPng = "/icons/clock.png";
+const timerPng = "/icons/timer.png";
+const bagPng = "/icons/bag1.png";
+const Assy = "/images/places/Assy.webp";
+const AssyPlateu = "/images/places/AssyPlateu.webp";
+const AssyPlateau = "/images/places/AssyPlateau.png";
+const Assy2 = "/images/places/Assy2.webp";
+const AlmatyCanad = "/images/places/AlmatyCanad.webp";
+const Medeu1 = "/images/places/Medeu.png";
+const AlmatyStreet = "/images/places/AlmatyStreet.webp";
+const KokTobe = "/images/places/Kok Tobe.jpg";
+const Issyk = "/images/places/Issyk.png";
+const IssykHourse = "/images/places/IssykHourse.png";
+const Turgen = "/images/places/Turgen.png";
+const Turgen2 = "/images/places/Turgen2.jpg";
+const BigAlmatyLake = "/images/places/Big Almaty Lake.jpg";
+const BigAlmatyLake2 = "/images/places/Big-Almaty-Lake-1.jpg";
+const Baomotor = "/images/places/Baomotor.png";
+const Baoo = "/images/places/baoo.webp";
+const AltynEmel2 = "/images/places/AltynEmel2.png";
+const AltynEmelNationalPark2 = "/images/places/Altyn Emel National Park 2.webp";
+const AltynEmelMoun = "/images/places/AltynEmelMoun.png";
+const AltynEmelNationalPark = "/images/places/Altyn Emel National Park.jpg";
+const Charyn2 = "/images/places/Charyn Canyon.jpg";
+const Tamgaly3 = "/images/places/Tamgaly3.png";
+const Tamgaly4 = "/images/places/Tamgaly4.png";
+const TamgalyTass = "/images/places/TamgalyTass.png";
+const AlmaArasan = "/images/places/AlmaArasan.webp";
+const Almaarasans = "/images/places/Almaarasans.png";
+const Almaarasanile = "/images/places/Almaarasanile.webp";
+const AlmaArasnc = "/images/places/AlmaArasnc.png";
+const KokZhailau = "/images/places/Kok Zhailau Almaty.webp";
+const BizdinAuyl = "/images/places/BizdinAuyl.png";
+const BizdinAuyl2 = "/images/places/BizdinAuyl2.png";
+const BizdinAuyl3 = "/images/places/BizdinAuyl3.jpg";
+const BizdinAuyl4 = "/images/places/BizdinAuyl4.png";
+const KaiyndyLake = "/images/places/Kaiyndy lake.jpeg";
 import { tourType } from "./type";
 
 export const Tours = [
@@ -68,9 +69,9 @@ export const Tours = [
             "Travel in a small group for a friendly atmosphere, enjoy the comfort, and be guided by an English- speaking expert who knows the best photo spots.Along the way, taste traditional Kazakh cuisine in a remote mountain village.\n\n" +
             "<strong>You will visit:</strong>\n" +
             "Kolsay and Kaiyndy Lakes with Charyn Canyon – Day Tour.Discover the breathtaking beauty of Kazakhstan in one unforgettable day! Kolsay Lakes – Known as the “Pearls of the Tien Shan,” these crystal - clear mountain lakes are surrounded by pine forests and snow - capped peaks.Kaindy Lake, famous for the submerged forest – tree trunks rising straight from the water’s surface.Charyn Canyon – Often called the “Grand Canyon’s little brother,” with dramatic red cliffs and unique rock formations.\n\n" +
-            "<strong>Highlights:</strong>\n" + "• 4 top natural attractions in 1 day\n" + 
-            "• Small, friendly international group\n" + 
-            "• Comfortable travel & plenty of photo stops\n" + 
+            "<strong>Highlights:</strong>\n" + "• 4 top natural attractions in 1 day\n" +
+            "• Small, friendly international group\n" +
+            "• Comfortable travel & plenty of photo stops\n" +
             "• Local food & hospitality experience",
         youWillVisitTitle: "Discover the breathtaking beauty of Kazakhstan in one unforgettable day!",
         itinerary: [
@@ -229,7 +230,7 @@ export const Tours = [
             { peopleCount: 4, price: "$485" },
             { peopleCount: 5, price: "$610" },
             { peopleCount: 6, price: "$625" },
-        { peopleCount: 7, price: "$640" }
+            { peopleCount: 7, price: "$640" }
         ]
     },
     {
@@ -402,7 +403,7 @@ export const Tours = [
         ]
     },
     {
-        id: 3, 
+        id: 3,
         type: tourType.assy,
         src: AssyPlateau1, title: "Assy Plateau", duration: "Day Tour",
         photos: [Assy, AssyPlateu, Assy2, AssyPlateau],
@@ -698,12 +699,12 @@ export const Tours = [
         ],
     },
     {
-        id: 5, 
+        id: 5,
         type: tourType.almatyTwoDay,
-        src: Koktobe1, 
-        title: "Almaty City 2 Day Tour", 
+        src: Koktobe1,
+        title: "Almaty City 2 Day Tour",
         duration: "2 Days",
-        photos: [Koktobe1, AlmatyCanad, Medeu1, AlmatyStreet], 
+        photos: [Koktobe1, AlmatyCanad, Medeu1, AlmatyStreet],
         price: "$400",
         bestOfDescription: "One of Almaty’s most striking features is its unique location at the foot of majestic mountains soaring up to 4700 meters above sea level. Here, you can admire breathtaking alpine scenery without even leaving the city.\n" +
             "On this tour, you’ll visit one of Almaty’s most iconic landmarks — Shymbulak Ski Resort — and take a scenic cable car ride up to 3, 200 meters above sea level.At this height, you’ll find yourself surrounded by snowy peaks all year round, enjoying a spectacular panorama of the mountains.\n\n" +
@@ -873,10 +874,10 @@ export const Tours = [
         ],
     },
     {
-        id: 6, 
+        id: 6,
         type: tourType.issykTurgen,
-        src: Turgen, 
-        title: "Issyk Lake and Turgen Waterfall Tour", 
+        src: Turgen,
+        title: "Issyk Lake and Turgen Waterfall Tour",
         duration: "Half-Day Tour",
         photos: [Issyk, IssykHourse, Turgen, Turgen2], price: "$200",
         bestOfDescription: "Issyk Lake, nestled among majestic mountains, is famous for its stunning turquoise waters that can change shades several times a day — a natural phenomenon that adds to its mystery and charm. Visitors can enjoy a relaxing picnic by the lake or stop at a nearby trout farm, where you can try fishing and taste the freshly caught fish.\n\n" +
@@ -1005,12 +1006,12 @@ export const Tours = [
         ],
     },
     {
-        id: 7, 
+        id: 7,
         type: tourType.bigAlmatyLake,
-        src: BigAlmatyLake, 
-        title: "Big Almaty Lake", 
+        src: BigAlmatyLake,
+        title: "Big Almaty Lake",
         duration: "Day Tour",
-        photos: [BigAlmatyLake, BigAlmatyLake2, Baomotor, Baoo], 
+        photos: [BigAlmatyLake, BigAlmatyLake2, Baomotor, Baoo],
         price: "$200",
         bestOfDescription: "Since March 2020, access to the Big Almaty Lake by private vehicles has been closed indefinitely. Currently, tourists can only reach the lake on foot. But If you’re planning to visit between May and October, it’s possible to rent motorcycles and quad bikes.\n" +
             "Perched at an altitude of 2, 500 meters in the heart of the majestic Trans- Ili Alatau mountains, the Big Almaty Lake dazzles with its turquoise waters.Born from the forces of an ancient earthquake, this breathtaking natural wonder has become one of Almaty’s most cherished symbols, leaving an unforgettable impression on all who visit.",
@@ -1206,7 +1207,7 @@ export const Tours = [
         type: tourType.altynEmelTwoDayJeepTour,
         src: AltynEmell,
         title: "Altyn Emel National Park 2 Days Jeep Tour",
-        duration: "2 Days", 
+        duration: "2 Days",
         price: "$440",
         photos: [AltynEmel2, AltynEmelNationalPark2, AltynEmelMoun, AltynEmelNationalPark],
         bestOfDescription: "This tour is perfect for travelers eager to discover the most iconic sights of Altyn Emel National Nature Park. You’ll visit natural wonders such as the Singing Dune, the colorful Aktau Mountains, the rugged Katutau Mountains, and the legendary 700-year-old “Tree” Here, surreal and otherworldly landscapes will make you feel as if you’ve stepped onto another planet, with every view looking almost unreal.\n\n" +
@@ -1382,7 +1383,7 @@ export const Tours = [
         src: Charyn2,
         title:
             "4-day Jeep Adventure: Altyn Emel, Charyn Canyon, Kolsai & Kaindy Lakes",
-        duration: "4 Days", 
+        duration: "4 Days",
         price: "$1190",
         photos: [Charyn2, Kolsay1, KaiyndyLake, AltynEmelNationalPark],
         bestOfDescription:
@@ -1680,7 +1681,7 @@ export const Tours = [
         type: tourType.tamgaly,
         src: Tamgaly,
         title: "Tamgaly Tas Petroglyphs & Nomad City",
-        duration: "Day Tour", 
+        duration: "Day Tour",
         price: "$440",
         photos: [Tamgaly, Tamgaly3, Tamgaly4, TamgalyTass],
         bestOfDescription: "Tamgaly Tas is a unique open-air site where you can see ancient petroglyphs and Buddhist rock paintings dating back to the 17th century. Recognized as a UNESCO World Heritage Site since 2004, it lies on the picturesque banks of the Ili River, combining rich history with stunning natural scenery. The mysterious civilization disappeared, not having survived till our days, but left more than 4,000 drawings in which displayed their life and worldview." + "\n"
@@ -1817,7 +1818,7 @@ export const Tours = [
         type: tourType.almaArasanAyusai,
         src: AlmaArasann,
         title: "Alma-Arasan & Ayusai Mountain Gorges Day Tour",
-        duration: "Day Tour", 
+        duration: "Day Tour",
         price: "$440",
         photos: [AlmaArasan, Almaarasans, Almaarasanile, AlmaArasnc],
         bestOfDescription: "This tour is perfect for travelers who want to experience the beauty of the mountains without leaving the city far behind. In just one day, you’ll explore two stunning mountain gorges, enjoy the fresh scent of local plants, and listen to the soothing sound of mountain rivers that flow all year round—even in winter. And for an unforgettable highlight, you can relax in a steaming hot tub filled with water from natural underground springs, surrounded by snow and crisp mountain air.\n\n" +
@@ -1950,7 +1951,7 @@ export const Tours = [
         src: KokZhailau,
         title: "Kok Zhailau",
         duration: "Half-Day Tour",
-        photos: [KokZhailau], 
+        photos: [KokZhailau],
         price: "$200",
         bestOfDescription: "Rent a motorcycle or quad bike (between May and October) for a 3-hour adventure to Kok Zhailau, one of Almaty’s most stunning mountain plateaus. The trip includes one hour riding up through scenic forest trails, one hour to relax and enjoy breathtaking views of the city and the Trans-Ili Alatau mountains, and one hour to return.\n" +
             "It’s also possible to reach Kok Zhailau partly by car and partly on foot(year- round) — a great option for those who enjoy hiking and want to experience the mountain’s beauty at a slower pace.Whether you choose an adrenaline - filled ride or a peaceful walk through nature, Kok Zhailau offers unforgettable views, fresh air, and true mountain tranquility.",
@@ -2153,11 +2154,11 @@ export const Tours = [
         ],
     },
     {
-        id: 13, 
+        id: 13,
         type: tourType.auylEtno,
-        src: BizdinAuyl, 
+        src: BizdinAuyl,
         title: "Bizdin Auyl Etno Camp",
-        duration: "Day Tour", 
+        duration: "Day Tour",
         price: "$440",
         photos: [BizdinAuyl, BizdinAuyl2, BizdinAuyl3, BizdinAuyl4],
         bestOfDescription: "At “Bizdin Aul”, you can enjoy walking in the fresh mountain air, horseback riding, archery, picking strawberries and raspberries, relaxing while admiring the mountain views, experiencing the authentic atmosphere of a Kazakh village, and exploring a traditional yurt.",
