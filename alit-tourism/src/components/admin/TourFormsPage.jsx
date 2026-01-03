@@ -15,19 +15,24 @@ export default function TourFormsPage() {
     const [guestForms, setGuestForms] = useState([]);
     const [loading, setLoading] = useState(false);
     const [statusFilter, setStatusFilter] = useState("0");
-    const [phoneSearch, setPhoneSearch] = useState("");
-    const [debouncedPhone, setDebouncedPhone] = useState("");
+    const [search, setSearch] = useState("");
+    const [debouncedSearch, setDebouncedSearch] = useState("");
     const [selectedGuestForm, setSelectedGuestForm] = useState(null);
     const [guestFormModalOpen, setGuestFormModalOpen] = useState(false);
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [total, setTotal] = useState(0);
+    const limit = 10;
     const navigate = useNavigate();
 
-    // Debounce phone search
+    // Debounce search
     useEffect(() => {
         const timer = setTimeout(() => {
-            setDebouncedPhone(phoneSearch);
+            setDebouncedSearch(search);
+            setPage(1); // Reset to first page on search
         }, 500);
         return () => clearTimeout(timer);
-    }, [phoneSearch]);
+    }, [search]);
 
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -36,24 +41,33 @@ export default function TourFormsPage() {
             return;
         }
         fetchGuestForms();
-    }, [navigate]);
+    }, [navigate, page, debouncedSearch, statusFilter]);
 
     const fetchGuestForms = () => {
         setLoading(true);
+        const params = new URLSearchParams({
+            page: page.toString(),
+            limit: limit.toString(),
+        });
+        if (debouncedSearch) {
+            params.append("search", debouncedSearch);
+        }
+        if (statusFilter && statusFilter !== "all") {
+            params.append("status", statusFilter);
+        }
+
         api
-            .get("/admin/forms/guest", {
+            .get(`/admin/forms/guest?${params.toString()}`, {
                 headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
             })
-            .then((res) => setGuestForms(res.data?.data || res.data || []))
+            .then((res) => {
+                setGuestForms(res.data?.data || []);
+                setTotal(res.data?.total || 0);
+                setTotalPages(res.data?.total_pages || 1);
+            })
             .catch((err) => console.error("Error fetching guest forms:", err))
             .finally(() => setLoading(false));
     };
-
-    const filteredForms = guestForms.filter(form => {
-        const matchesStatus = statusFilter === "all" || form.status === parseInt(statusFilter);
-        const matchesPhone = !debouncedPhone || form.User?.phone_number?.includes(debouncedPhone);
-        return matchesStatus && matchesPhone;
-    });
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
@@ -90,15 +104,18 @@ export default function TourFormsPage() {
                         </div>
                         <div className="flex-1">
                             <label className="block text-sm font-medium text-gray-700 mb-2">
-                                Search by Phone
+                                Search by Name or Phone
                             </label>
                             <input
                                 type="text"
-                                value={phoneSearch}
-                                onChange={(e) => setPhoneSearch(e.target.value)}
-                                placeholder="Enter phone number"
+                                value={search}
+                                onChange={(e) => setSearch(e.target.value)}
+                                placeholder="Search by name or phone number..."
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22324A] focus:border-transparent"
                             />
+                        </div>
+                        <div className="text-sm text-gray-600 mt-6">
+                            {total} form{total !== 1 ? 's' : ''} found
                         </div>
                     </div>
                 </div>
@@ -110,7 +127,7 @@ export default function TourFormsPage() {
                             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#22324A] mx-auto mb-4"></div>
                             <p className="text-gray-500">Loading forms...</p>
                         </div>
-                    ) : filteredForms.length === 0 ? (
+                    ) : guestForms.length === 0 ? (
                         <div className="text-center py-12">
                             <Plane size={48} className="mx-auto text-gray-300 mb-4" />
                             <p className="text-gray-500">No tour bookings found</p>
@@ -129,7 +146,7 @@ export default function TourFormsPage() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {filteredForms.map((form) => (
+                                    {guestForms.map((form) => (
                                         <tr key={form.ID} className="border-b border-gray-100 hover:bg-gray-50">
                                             <td className="py-3 px-4 text-gray-700">{form.ID}</td>
                                             <td className="py-3 px-4">
@@ -183,6 +200,40 @@ export default function TourFormsPage() {
                         fetchGuestForms();
                     }}
                 />
+
+                {/* Pagination */}
+                {!loading && guestForms.length > 0 && totalPages > 1 && (
+                    <div className="flex justify-center items-center gap-2 mt-6 pb-8">
+                        <button
+                            onClick={() => setPage(p => Math.max(1, p - 1))}
+                            disabled={page === 1}
+                            className="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition"
+                        >
+                            Previous
+                        </button>
+                        <div className="flex gap-2">
+                            {[...Array(totalPages)].map((_, i) => (
+                                <button
+                                    key={i + 1}
+                                    onClick={() => setPage(i + 1)}
+                                    className={`px-4 py-2 rounded-lg transition ${page === i + 1
+                                        ? "bg-[#22324A] text-white"
+                                        : "bg-white border border-gray-300 hover:bg-gray-50"
+                                        }`}
+                                >
+                                    {i + 1}
+                                </button>
+                            ))}
+                        </div>
+                        <button
+                            onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+                            disabled={page === totalPages}
+                            className="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition"
+                        >
+                            Next
+                        </button>
+                    </div>
+                )}
             </div>
         </div>
     );

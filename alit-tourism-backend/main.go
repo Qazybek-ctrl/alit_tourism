@@ -3,11 +3,12 @@ package main
 import (
 	db "alit-tourism-backend/internal/database"
 	"alit-tourism-backend/internal/router"
-	"os"
-	"log"
-	"fmt"
-
 	"alit-tourism-backend/internal/storage"
+	"alit-tourism-backend/internal/telegram"
+	"fmt"
+	"log"
+	"os"
+
 	"github.com/joho/godotenv"
 )
 
@@ -16,7 +17,7 @@ func init() {
 	fmt.Println(mode)
 
 	if mode == "" {
-		mode = "debug" 
+		mode = "debug"
 	}
 
 	envFile := "local.env"
@@ -34,7 +35,12 @@ func init() {
 func main() {
 	db.Connect()
 
-	storage.InitMinIO() 
+	storage.InitMinIO()
+
+	// Инициализация Telegram бота
+	if err := telegram.InitTelegram(); err != nil {
+		log.Printf("⚠️ Failed to initialize Telegram: %v", err)
+	}
 
 	r := router.SetupRouter()
 	r.Run(":8080")

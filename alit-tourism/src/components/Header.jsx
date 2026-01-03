@@ -126,6 +126,14 @@ export default function Header() {
                   >
                     Profile
                   </Link>
+                  {user?.role === "admin" && (
+                    <Link
+                      to="/admin"
+                      className="block px-4 py-2 hover:bg-gray-100 text-blue-600 font-medium"
+                    >
+                      Admin Panel
+                    </Link>
+                  )}
                   <button
                     onClick={handleLogout}
                     className="w-full text-left px-4 py-2 hover:bg-gray-100"
@@ -155,6 +163,24 @@ export default function Header() {
             <span>+7 (707) 111-84-24</span>
             <span>ailt.toursim@gmail.com</span>
           </div>
+          {user && (
+            <Link
+              to="/profile"
+              onClick={() => setMenuOpen(false)}
+              className="mt-2 bg-[#22324A] text-white px-6 py-2 rounded-lg font-medium"
+            >
+              Profile
+            </Link>
+          )}
+          {user?.role === "admin" && (
+            <Link
+              to="/admin"
+              onClick={() => setMenuOpen(false)}
+              className="mt-2 bg-blue-600 text-white px-6 py-2 rounded-lg font-medium"
+            >
+              Admin Panel
+            </Link>
+          )}
           {!user ? (
             <button
               onClick={() => {

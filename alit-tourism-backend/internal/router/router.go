@@ -74,6 +74,12 @@ func SetupRouter() *gin.Engine {
 
 		// Audit logs endpoint
 		admin.GET("/audit/:entity_type/:entity_id", controllers.GetAuditLogs)
+
+		// File URL endpoint
+		admin.GET("/files/url", controllers.GetFileURL)
+
+		// Excel export endpoint
+		admin.GET("/forms/visa/export", controllers.ExportVisaFormsToExcel)
 	}
 
 	return r

@@ -4,6 +4,7 @@ import (
 	"alit-tourism-backend/internal/auth"
 	db "alit-tourism-backend/internal/database"
 	"alit-tourism-backend/internal/models"
+	"alit-tourism-backend/internal/telegram"
 	"alit-tourism-backend/internal/utils"
 	"net/http"
 
@@ -49,6 +50,7 @@ func LoginHandler(c *gin.Context) {
 			"firstname":    user.FirstName,
 			"surname":      user.Surname,
 			"phone_number": user.PhoneNumber,
+			"role":         user.Role,
 		},
 	})
 }
@@ -97,6 +99,9 @@ func RegisterHandler(c *gin.Context) {
 		return
 	}
 
+	// 📱 Отправляем уведомление в Telegram
+	go telegram.NotifyUserRegistration(user.FirstName, user.Surname, user.PhoneNumber)
+
 	// -------------------------
 	// 🔥 Генерируем токен как в логине
 	// -------------------------
@@ -114,6 +119,7 @@ func RegisterHandler(c *gin.Context) {
 			"firstname":    user.FirstName,
 			"surname":      user.Surname,
 			"phone_number": user.PhoneNumber,
+			"role":         user.Role,
 		},
 	})
 }

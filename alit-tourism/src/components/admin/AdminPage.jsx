@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Users, FileText, Plane, BarChart3 } from "lucide-react";
+import { Users, FileText, Plane, BarChart3, Home } from "lucide-react";
 import api from "../../Api";
 
 export default function AdminPage() {
@@ -38,6 +38,13 @@ export default function AdminPage() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 {/* Header */}
                 <div className="mb-8">
+                    <button
+                        onClick={() => navigate("/")}
+                        className="mb-4 text-[#22324A] hover:text-[#2f3e5c] flex items-center gap-2 transition"
+                    >
+                        <Home size={20} />
+                        На главную
+                    </button>
                     <h1 className="text-3xl font-bold text-[#22324A]">Admin Dashboard</h1>
                     <p className="text-gray-600 mt-2">Manage your tourism platform</p>
                 </div>
@@ -50,74 +57,6 @@ export default function AdminPage() {
                     </div>
                 ) : (
                     <>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                            {/* Total Users */}
-                            <div className="bg-white rounded-2xl shadow-sm p-6 hover:shadow-md transition">
-                                <div className="flex items-center justify-between">
-                                    <div>
-                                        <p className="text-gray-600 text-sm">Total Users</p>
-                                        <p className="text-3xl font-bold text-[#22324A] mt-2">
-                                            {stats?.total_users || 0}
-                                        </p>
-                                    </div>
-                                    <div className="bg-blue-100 p-3 rounded-xl">
-                                        <Users className="text-blue-600" size={24} />
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Tour Applications */}
-                            <div className="bg-white rounded-2xl shadow-sm p-6 hover:shadow-md transition">
-                                <div className="flex items-center justify-between">
-                                    <div>
-                                        <p className="text-gray-600 text-sm">Tour Applications</p>
-                                        <p className="text-3xl font-bold text-[#22324A] mt-2">
-                                            {stats?.total_guest_forms || 0}
-                                        </p>
-                                    </div>
-                                    <div className="bg-green-100 p-3 rounded-xl">
-                                        <Plane className="text-green-600" size={24} />
-                                    </div>
-                                </div>
-                                <p className="text-sm text-yellow-600 mt-2">
-                                    {stats?.new_guest_forms || 0} new
-                                </p>
-                            </div>
-
-                            {/* Visa Applications */}
-                            <div className="bg-white rounded-2xl shadow-sm p-6 hover:shadow-md transition">
-                                <div className="flex items-center justify-between">
-                                    <div>
-                                        <p className="text-gray-600 text-sm">Visa Applications</p>
-                                        <p className="text-3xl font-bold text-[#22324A] mt-2">
-                                            {stats?.total_visa_forms || 0}
-                                        </p>
-                                    </div>
-                                    <div className="bg-purple-100 p-3 rounded-xl">
-                                        <FileText className="text-purple-600" size={24} />
-                                    </div>
-                                </div>
-                                <p className="text-sm text-yellow-600 mt-2">
-                                    {stats?.new_visa_forms || 0} new
-                                </p>
-                            </div>
-
-                            {/* Total Revenue */}
-                            <div className="bg-white rounded-2xl shadow-sm p-6 hover:shadow-md transition">
-                                <div className="flex items-center justify-between">
-                                    <div>
-                                        <p className="text-gray-600 text-sm">Total Applications</p>
-                                        <p className="text-3xl font-bold text-[#22324A] mt-2">
-                                            {(stats?.total_guest_forms || 0) + (stats?.total_visa_forms || 0)}
-                                        </p>
-                                    </div>
-                                    <div className="bg-yellow-100 p-3 rounded-xl">
-                                        <BarChart3 className="text-yellow-600" size={24} />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
                         {/* Quick Actions */}
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                             {/* Users Management */}
@@ -160,7 +99,7 @@ export default function AdminPage() {
                                 </div>
                                 <div className="flex justify-between items-center">
                                     <div>
-                                            <p className="text-sm text-gray-600">Total: {stats?.total_tour_forms || 0}</p>
+                                        <p className="text-sm text-gray-600">Total: {stats?.total_tour_forms || 0}</p>
                                         <p className="text-sm text-yellow-600">New: {stats?.new_guest_forms || 0}</p>
                                     </div>
                                     <button className="px-6 py-2 bg-[#22324A] text-white rounded-lg hover:bg-[#2f3e5c] transition">

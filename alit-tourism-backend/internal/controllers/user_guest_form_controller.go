@@ -6,6 +6,7 @@ import (
 
 	db "alit-tourism-backend/internal/database"
 	"alit-tourism-backend/internal/models"
+	"alit-tourism-backend/internal/telegram"
 	"alit-tourism-backend/internal/utils"
 
 	"strconv"
@@ -53,6 +54,17 @@ func CreateUserGuestForm(c *gin.Context) {
 	if err := db.DB.Create(&form).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Ошибка при сохранении анкеты"})
 		return
+	}
+
+	// 📱 Отправляем уведомление в Telegram
+	var user models.User
+	if err := db.DB.First(&user, userID).Error; err == nil {
+		userName := fmt.Sprintf("%s %s", user.FirstName, user.Surname)
+		tourName := form.TourType
+		if tourName == "" {
+			tourName = "Тур #" + fmt.Sprint(form.TourID)
+		}
+		go telegram.NotifyNewTourForm(userName, tourName, user.PhoneNumber)
 	}
 
 	c.JSON(http.StatusOK, gin.H{
@@ -117,6 +129,20 @@ func UpdateGuestFormStatus(c *gin.Context) {
 	statusNames := map[int]string{0: "Новый", 1: "Оплачен", 2: "Отмена"}
 	description := fmt.Sprintf("Status changed from '%s' to '%s'", statusNames[oldStatus], statusNames[*request.Status])
 	utils.LogAudit(c, "user_guest_form", form.ID, "status_change", oldStatus, *request.Status, description)
+
+	// 📱 Отправляем уведомление при изменении статуса на "Оплачено"
+	if *request.Status == 1 {
+		var user models.User
+		if err := db.DB.First(&user, form.UserID).Error; err == nil {
+			clientName := fmt.Sprintf("%s %s", user.FirstName, user.Surname)
+			tourName := form.TourType
+			if tourName == "" {
+				tourName = "Тур #" + fmt.Sprint(form.TourID)
+			}
+			details := fmt.Sprintf("%s (ID: %d)", tourName, form.ID)
+			go telegram.NotifyStatusPaid("Тур", clientName, details)
+		}
+	}
 
 	c.JSON(http.StatusOK, gin.H{
 		"message": "Status updated successfully",

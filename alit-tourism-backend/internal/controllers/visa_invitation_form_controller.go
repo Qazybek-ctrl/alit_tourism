@@ -9,7 +9,8 @@ import (
 
 	db "alit-tourism-backend/internal/database"
 	"alit-tourism-backend/internal/models"
-	"alit-tourism-backend/internal/storage" // ✅ добавь этот импорт (где клиент MinIO)
+	"alit-tourism-backend/internal/storage"
+	"alit-tourism-backend/internal/telegram"
 	"alit-tourism-backend/internal/utils"
 
 	"github.com/gin-gonic/gin"
@@ -87,8 +88,8 @@ func CreateVisaInvitationForm(c *gin.Context) {
 		// Сохраняем только имя файла в базе
 		form.PassportURL = fileName
 
-		// Можно вернуть полный URL клиенту
-		fileURL := fmt.Sprintf("http://%s/%s/%s", storage.MinioEndpoint, "alit-tourism", fileName)
+		// Возвращаем URL с учетом окружения (dev/prod)
+		fileURL := storage.GetMinioURL("alit-tourism", fileName)
 		c.JSON(http.StatusOK, gin.H{
 			"message":  "Файл загружен",
 			"fileName": fileName,
@@ -101,6 +102,13 @@ func CreateVisaInvitationForm(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Ошибка при сохранении анкеты"})
 		return
 	}
+
+	// 📱 Отправляем уведомление в Telegram
+	visaType := form.VisaInvitationType
+	if visaType == "" {
+		visaType = "Виза"
+	}
+	go telegram.NotifyNewVisaForm(form.FirstName, form.LastName, visaType, form.PhoneNumber)
 
 	c.JSON(http.StatusOK, gin.H{
 		"message": "Анкета успешно сохранена",
@@ -133,6 +141,33 @@ func GetUserVisaForms(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, forms)
+}
+
+// GetFileURL генерирует presigned URL для доступа к файлу в MinIO
+func GetFileURL(c *gin.Context) {
+	filename := c.Query("filename")
+	if filename == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "filename is required"})
+		return
+	}
+
+	// Генерируем presigned URL на 1 час
+	ctx := context.Background()
+	presignedURL, err := storage.MinioClient.PresignedGetObject(
+		ctx,
+		"alit-tourism",
+		filename,
+		time.Hour*1,
+		nil,
+	)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate file URL", "details": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"url": presignedURL.String(),
+	})
 }
 
 // UpdateVisaStatus — обновление статуса визового приглашения
@@ -179,6 +214,17 @@ func UpdateVisaStatus(c *gin.Context) {
 	statusNames := map[int]string{0: "Новый", 1: "На проверке", 2: "Оплачено", 3: "Одобрено", 4: "Отказано"}
 	description := fmt.Sprintf("Status changed from '%s' to '%s'", statusNames[oldStatus], statusNames[*request.Status])
 	utils.LogAudit(c, "visa_invitation_form", form.ID, "status_change", oldStatus, *request.Status, description)
+
+	// 📱 Отправляем уведомление при изменении статуса на "Оплачено"
+	if *request.Status == 2 {
+		clientName := fmt.Sprintf("%s %s", form.FirstName, form.LastName)
+		visaType := form.VisaInvitationType
+		if visaType == "" {
+			visaType = "Виза"
+		}
+		details := fmt.Sprintf("%s (ID: %d)", visaType, form.ID)
+		go telegram.NotifyStatusPaid("Виза", clientName, details)
+	}
 
 	c.JSON(http.StatusOK, gin.H{
 		"message": "Status updated successfully",

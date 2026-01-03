@@ -1,8 +1,24 @@
 import { useEffect, useState } from "react";
 import api from "../../Api";
 import { useNavigate } from "react-router-dom";
-import { User, FileText, Plane, ChevronDown, ChevronUp } from "lucide-react";
-import {Tours} from "../helper/ImageHelper";
+import { User, FileText, Plane, ChevronDown, ChevronUp, CheckCircle, Clock, XCircle } from "lucide-react";
+import { Tours } from "../helper/ImageHelper";
+
+// Статусы для туров
+const TOUR_STATUS = {
+  0: { name: "Новый", color: "bg-yellow-100 text-yellow-700 border-yellow-200", icon: Clock },
+  1: { name: "Оплачен", color: "bg-green-100 text-green-700 border-green-200", icon: CheckCircle },
+  2: { name: "Отменён", color: "bg-red-100 text-red-700 border-red-200", icon: XCircle },
+};
+
+// Статусы для виз
+const VISA_STATUS = {
+  0: { name: "Новый", color: "bg-yellow-100 text-yellow-700 border-yellow-200", icon: Clock },
+  1: { name: "На проверке", color: "bg-blue-100 text-blue-700 border-blue-200", icon: Clock },
+  2: { name: "Оплачено", color: "bg-green-100 text-green-700 border-green-200", icon: CheckCircle },
+  3: { name: "Одобрено", color: "bg-emerald-100 text-emerald-700 border-emerald-200", icon: CheckCircle },
+  4: { name: "Отказано", color: "bg-red-100 text-red-700 border-red-200", icon: XCircle },
+};
 
 export default function ProfilePage() {
   const [profile, setProfile] = useState(null);
@@ -10,8 +26,6 @@ export default function ProfilePage() {
   const [visaForms, setVisaForms] = useState([]);
   const [activeTab, setActiveTab] = useState("profile");
   const [expandedForm, setExpandedForm] = useState(null);
-  const [loadingGuest, setLoadingGuest] = useState(false);
-  const [loadingVisa, setLoadingVisa] = useState(false);
   const [guestFormsFetched, setGuestFormsFetched] = useState(false);
   const [visaFormsFetched, setVisaFormsFetched] = useState(false);
   const navigate = useNavigate();
@@ -23,7 +37,7 @@ export default function ProfilePage() {
       return;
     }
 
-    // Fetch only profile on mount
+    // Fetch profile
     api
       .get("/profile", {
         headers: { Authorization: `Bearer ${token}` },
@@ -33,52 +47,43 @@ export default function ProfilePage() {
         localStorage.removeItem("token");
         localStorage.removeItem("user");
       });
+
+    // Fetch counts for tabs immediately
+    fetchGuestFormsCount();
+    fetchVisaFormsCount();
   }, [navigate]);
 
-  const fetchGuestForms = () => {
-    if (guestFormsFetched) return; 
-
-    setLoadingGuest(true);
+  const fetchGuestFormsCount = () => {
     const token = localStorage.getItem("token");
-
     api
       .get("/forms/guest", {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
-        setGuestForms(res.data || []);
+        const forms = res.data || [];
+        setGuestForms(forms);
         setGuestFormsFetched(true);
       })
-      .catch((err) => console.error("Error fetching guest forms:", err))
-      .finally(() => setLoadingGuest(false));
+      .catch((err) => console.error("Error fetching guest forms:", err));
   };
 
-  const fetchVisaForms = () => {
-    if (visaFormsFetched) return;
-
-    setLoadingVisa(true);
+  const fetchVisaFormsCount = () => {
     const token = localStorage.getItem("token");
-
     api
       .get("/forms/visa", {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
-        setVisaForms(res.data || []);
+        const forms = res.data || [];
+        setVisaForms(forms);
         setVisaFormsFetched(true);
       })
-      .catch((err) => console.error("Error fetching visa forms:", err))
-      .finally(() => setLoadingVisa(false));
+      .catch((err) => console.error("Error fetching visa forms:", err));
   };
+
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
-
-    if (tab === "tours") {
-      fetchGuestForms();
-    } else if (tab === "visa") {
-      fetchVisaForms();
-    }
   };
 
   const toggleForm = (id) => {
@@ -182,12 +187,7 @@ export default function ProfilePage() {
                 <h2 className="text-2xl font-semibold text-[#22324A] mb-6">
                   Your Tour Bookings
                 </h2>
-                {loadingGuest ? (
-                  <div className="text-center py-12">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#22324A] mx-auto mb-4"></div>
-                    <p className="text-gray-500">Loading tour bookings...</p>
-                  </div>
-                ) : guestForms.length === 0 ? (
+                {guestForms.length === 0 ? (
                   <div className="text-center py-12">
                     <Plane size={48} className="mx-auto text-gray-300 mb-4" />
                     <p className="text-gray-500">No tour bookings yet</p>
@@ -203,10 +203,21 @@ export default function ProfilePage() {
                           className="bg-gray-50 p-4 flex justify-between items-center cursor-pointer hover:bg-gray-100 transition"
                           onClick={() => toggleForm(form.ID)}
                         >
-                          <div>
-                            <h3 className="font-semibold text-[#22324A]">
-                              {Tours.find((tour) => tour.id === form.tour_id)?.title || form.tour_type || `Tour #${form.tour_id}`}
-                            </h3>
+                          <div className="flex-1">
+                            <div className="flex items-center gap-3 mb-2">
+                              <h3 className="font-semibold text-[#22324A]">
+                                {Tours.find((tour) => tour.id === form.tour_id)?.title || form.tour_type || `Tour #${form.tour_id}`}
+                              </h3>
+                              {TOUR_STATUS[form.status] && (
+                                <span className={`px-3 py-1 rounded-full text-xs font-medium border flex items-center gap-1 ${TOUR_STATUS[form.status].color}`}>
+                                  {(() => {
+                                    const StatusIcon = TOUR_STATUS[form.status].icon;
+                                    return <StatusIcon size={14} />;
+                                  })()}
+                                  {TOUR_STATUS[form.status].name}
+                                </span>
+                              )}
+                            </div>
                             <p className="text-sm text-gray-600">
                               {new Date(form.CreatedAt).toLocaleDateString(
                                 "en-US",
@@ -307,12 +318,7 @@ export default function ProfilePage() {
                 <h2 className="text-2xl font-semibold text-[#22324A] mb-6">
                   Your Visa Applications
                 </h2>
-                {loadingVisa ? (
-                  <div className="text-center py-12">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#22324A] mx-auto mb-4"></div>
-                    <p className="text-gray-500">Loading visa applications...</p>
-                  </div>
-                ) : visaForms.length === 0 ? (
+                {visaForms.length === 0 ? (
                   <div className="text-center py-12">
                     <FileText
                       size={48}
@@ -331,10 +337,21 @@ export default function ProfilePage() {
                           className="bg-gray-50 p-4 flex justify-between items-center cursor-pointer hover:bg-gray-100 transition"
                           onClick={() => toggleForm(`visa-${form.ID}`)}
                         >
-                          <div>
-                            <h3 className="font-semibold text-[#22324A]">
-                              {form.visa_invitation_type || "Visa Application"}
-                            </h3>
+                          <div className="flex-1">
+                            <div className="flex items-center gap-3 mb-2">
+                              <h3 className="font-semibold text-[#22324A]">
+                                {form.visa_invitation_type || "Visa Application"}
+                              </h3>
+                              {VISA_STATUS[form.status] && (
+                                <span className={`px-3 py-1 rounded-full text-xs font-medium border flex items-center gap-1 ${VISA_STATUS[form.status].color}`}>
+                                  {(() => {
+                                    const StatusIcon = VISA_STATUS[form.status].icon;
+                                    return <StatusIcon size={14} />;
+                                  })()}
+                                  {VISA_STATUS[form.status].name}
+                                </span>
+                              )}
+                            </div>
                             <p className="text-sm text-gray-600">
                               {form.first_name} {form.last_name} -{" "}
                               {new Date(form.CreatedAt).toLocaleDateString(

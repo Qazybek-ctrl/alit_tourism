@@ -13,12 +13,17 @@ import (
 var (
 	MinioClient   *minio.Client
 	MinioEndpoint string
+	isDev         bool
 )
 
 func InitMinIO() {
 	MinioEndpoint = os.Getenv("MINIO_ENDPOINT")
 	accessKeyID := os.Getenv("MINIO_ACCESS_KEY")
 	secretAccessKey := os.Getenv("MINIO_SECRET_KEY")
+	ginMode := os.Getenv("GIN_MODE")
+
+	// Определяем режим (dev/prod)
+	isDev = ginMode == "" || ginMode == "debug"
 
 	client, err := minio.New(MinioEndpoint, &minio.Options{
 		Creds:  credentials.NewStaticV4(accessKeyID, secretAccessKey, ""),
@@ -37,5 +42,23 @@ func InitMinIO() {
 	}
 
 	MinioClient = client
-	log.Println("✅ MinIO успешно подключен!")
+	if isDev {
+		log.Println("✅ MinIO успешно подключен! (DEV mode - localhost)")
+	} else {
+		log.Println("✅ MinIO успешно подключен! (PROD mode)")
+	}
+}
+
+// GetMinioURL возвращает правильный URL для доступа к файлам
+// В dev режиме использует localhost, в prod - серверный endpoint
+func GetMinioURL(bucket, fileName string) string {
+	var endpoint string
+	if isDev {
+		// В dev режиме используем localhost
+		endpoint = "localhost:9000"
+	} else {
+		// В prod режиме используем серверный endpoint
+		endpoint = MinioEndpoint
+	}
+	return "http://" + endpoint + "/" + bucket + "/" + fileName
 }

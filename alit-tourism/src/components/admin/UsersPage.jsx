@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Users, Shield, Key } from "lucide-react";
 import api from "../../Api";
 import toast, { Toaster } from "react-hot-toast";
+import { AuthContext } from "../../utility/AuthContext";
 
 export default function UsersPage() {
+    const { user: currentUser } = useContext(AuthContext);
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(false);
     const [passwordModal, setPasswordModal] = useState({ open: false, userId: null });
@@ -181,7 +183,7 @@ export default function UsersPage() {
                                             <tr key={user.ID} className="border-b border-gray-100 hover:bg-gray-50">
                                                 <td className="py-3 px-4 text-gray-700">{user.ID}</td>
                                                 <td className="py-3 px-4">
-                                                    <div>
+                                                    <div className="flex items-center gap-2">
                                                         <p className="font-medium text-[#22324A]">
                                                             {user.first_name || user.firstname} {user.surname}
                                                         </p>
@@ -189,16 +191,23 @@ export default function UsersPage() {
                                                 </td>
                                                 <td className="py-3 px-4 text-gray-700">{user.phone_number}</td>
                                                 <td className="py-3 px-4">
-                                                    <button
-                                                        onClick={() => toggleRole(user.ID, user.role)}
-                                                        className={`px-3 py-1 rounded-full text-xs font-medium inline-flex items-center gap-1 ${user.role === "admin"
-                                                            ? "bg-purple-100 text-purple-700 hover:bg-purple-200"
-                                                            : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                                                            } transition`}
-                                                    >
-                                                        <Shield size={12} />
-                                                        {user.role === "admin" ? "Admin" : "User"}
-                                                    </button>
+                                                    {currentUser?.id === user.ID ? (
+                                                        <span className={`px-3 py-1 rounded-full text-xs font-medium inline-flex items-center gap-1 bg-green-100 text-green-700`}>
+                                                            <Shield size={12} />
+                                                            Это вы
+                                                        </span>
+                                                    ) : (
+                                                        <button
+                                                            onClick={() => toggleRole(user.ID, user.role)}
+                                                            className={`px-3 py-1 rounded-full text-xs font-medium inline-flex items-center gap-1 ${user.role === "admin"
+                                                                ? "bg-purple-100 text-purple-700 hover:bg-purple-200"
+                                                                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                                                                } transition`}
+                                                        >
+                                                            <Shield size={12} />
+                                                            {user.role === "admin" ? "Admin" : "User"}
+                                                        </button>
+                                                    )}
                                                 </td>
                                                 <td className="py-3 px-4 text-sm text-gray-600">
                                                     {new Date(user.CreatedAt).toLocaleDateString()}
@@ -292,8 +301,8 @@ export default function UsersPage() {
                                     key={i + 1}
                                     onClick={() => setPage(i + 1)}
                                     className={`px-4 py-2 rounded-lg transition ${page === i + 1
-                                            ? "bg-[#22324A] text-white"
-                                            : "bg-white border border-gray-300 hover:bg-gray-50"
+                                        ? "bg-[#22324A] text-white"
+                                        : "bg-white border border-gray-300 hover:bg-gray-50"
                                         }`}
                                 >
                                     {i + 1}

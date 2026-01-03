@@ -11,8 +11,6 @@ const VISA_STATUS = {
     4: { name: "Отказано", color: "bg-red-100 text-red-700" },
 };
 
-const MINIO_BASE_URL = "http://89.207.253.252:9000/alit-tourism";
-
 export default function VisaFormModal({ form, isOpen, onClose, onUpdate }) {
     const [activeTab, setActiveTab] = useState("details");
     const [isEditing, setIsEditing] = useState(false);
@@ -103,9 +101,34 @@ export default function VisaFormModal({ form, isOpen, onClose, onUpdate }) {
         }
     };
 
-    const downloadFile = (filename) => {
-        const fileUrl = `${MINIO_BASE_URL}/${filename}`;
-        window.open(fileUrl, "_blank");
+    const downloadFile = async (filename) => {
+        try {
+            // Получаем presigned URL
+            const response = await api.get(`/admin/files/url?filename=${filename}`, {
+                headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+            });
+
+            // Скачиваем файл как blob
+            const fileResponse = await fetch(response.data.url);
+            const blob = await fileResponse.blob();
+
+            // Создаем URL для blob
+            const blobUrl = window.URL.createObjectURL(blob);
+
+            // Создаем временную ссылку для скачивания
+            const link = document.createElement('a');
+            link.href = blobUrl;
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+
+            // Очищаем
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(blobUrl);
+        } catch (error) {
+            console.error("Error downloading file:", error);
+            toast.error("Failed to download file");
+        }
     };
 
     if (!isOpen || !form) return null;
