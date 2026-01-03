@@ -110,8 +110,19 @@ export default function VisaFormsPage() {
                     >
                         ← Back to Dashboard
                     </button>
-                    <h1 className="text-3xl font-bold text-[#22324A]">Visa Applications</h1>
-                    <p className="text-gray-600 mt-2">Manage all visa invitation requests</p>
+                    <div className="flex justify-between items-center">
+                        <div>
+                            <h1 className="text-3xl font-bold text-[#22324A]">Visa Applications</h1>
+                            <p className="text-gray-600 mt-2">Manage all visa invitation requests</p>
+                        </div>
+                        <button
+                            onClick={handleExportExcel}
+                            className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition inline-flex items-center gap-2"
+                        >
+                            <Download size={20} />
+                            Export to Excel
+                        </button>
+                    </div>
                 </div>
 
                 {/* Filters */}
@@ -149,13 +160,6 @@ export default function VisaFormsPage() {
                         <div className="text-sm text-gray-600 mt-6">
                             {total} form{total !== 1 ? 's' : ''} found
                         </div>
-                        <button
-                            onClick={handleExportExcel}
-                            className="mt-6 px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition inline-flex items-center gap-2"
-                        >
-                            <Download size={20} />
-                            Export to Excel
-                        </button>
                     </div>
                 </div>
 

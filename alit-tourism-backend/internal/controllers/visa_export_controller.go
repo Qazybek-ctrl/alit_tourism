@@ -3,7 +3,6 @@ package controllers
 import (
 	"fmt"
 	"net/http"
-	"path/filepath"
 	"time"
 
 	db "alit-tourism-backend/internal/database"
@@ -30,11 +29,12 @@ func ExportVisaFormsToExcel(c *gin.Context) {
 		return
 	}
 
-	// Открываем шаблон
-	templatePath := filepath.Join("../alit-tourism/public/files/template.xlsx")
+	// Открываем шаблон - путь относительно корня проекта backend
+	templatePath := "../alit-tourism/public/files/template.xlsx"
 	f, err := excelize.OpenFile(templatePath)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error opening template file"})
+		fmt.Printf("Error opening template file: %v, path: %s\n", err, templatePath)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("Error opening template file: %v", err)})
 		return
 	}
 	defer func() {
