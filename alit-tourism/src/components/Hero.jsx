@@ -1,7 +1,6 @@
 const heroImage = "/hero.webp";
 const planeIcon = "/plane.png";
 const verifiedIcon = "/verified.png";
-import { MessageCircle } from "lucide-react";
 
 export default function Hero() {
   return (

@@ -14,23 +14,17 @@ import (
 
 // ExportVisaFormsToExcel - экспорт визовых заявок в Excel на основе шаблона
 func ExportVisaFormsToExcel(c *gin.Context) {
-	status := c.Query("status") // Фильтр по статусу
-
+	// Всегда экспортируем только новые заявки (status = 0)
 	var visaForms []models.VisaInvitationForm
-	query := db.DB.Preload("User").Order("created_at DESC")
-
-	// Фильтр по статусу
-	if status != "" && status != "all" {
-		query = query.Where("status = ?", status)
-	}
+	query := db.DB.Preload("User").Where("status = ?", 0).Order("created_at DESC")
 
 	if err := query.Find(&visaForms).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error fetching visa forms"})
 		return
 	}
 
-	// Открываем шаблон - путь относительно корня проекта backend
-	templatePath := "../alit-tourism/public/files/template.xlsx"
+	// Открываем шаблон - путь к файлу в папке backend
+	templatePath := "files/template.xlsx"
 	f, err := excelize.OpenFile(templatePath)
 	if err != nil {
 		fmt.Printf("Error opening template file: %v, path: %s\n", err, templatePath)
@@ -55,8 +49,22 @@ func ExportVisaFormsToExcel(c *gin.Context) {
 		4: "Отказано",
 	}
 
-	// Начинаем заполнять данные с 10-й строки (строки 1-9 - заголовки шаблона)
+	// Строка-образец для копирования (строка 10)
+	templateRow := 10
+	// Начинаем заполнять данные с 11-й строки
 	startRow := 11
+
+	// Если есть заявки, дублируем строку 10 нужное количество раз
+	if len(visaForms) > 0 {
+		// Дублируем строку templateRow (строка 10) для каждой заявки
+		for i := 0; i < len(visaForms); i++ {
+			if err := f.DuplicateRow(sheetName, templateRow); err != nil {
+				fmt.Printf("Error duplicating row: %v\n", err)
+				c.JSON(http.StatusInternalServerError, gin.H{"error": "Error duplicating row"})
+				return
+			}
+		}
+	}
 
 	for i, form := range visaForms {
 		row := startRow + i

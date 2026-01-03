@@ -72,12 +72,7 @@ export default function VisaFormsPage() {
 
 
     const handleExportExcel = () => {
-        const params = new URLSearchParams();
-        if (statusFilter && statusFilter !== "all") {
-            params.append("status", statusFilter);
-        }
-
-        const url = `/admin/forms/visa/export?${params.toString()}`;
+        const url = `/admin/forms/visa/export`;
 
         // Используем api instance с responseType blob
         api
@@ -92,7 +87,7 @@ export default function VisaFormsPage() {
                 const url = window.URL.createObjectURL(blob);
                 const a = document.createElement("a");
                 a.href = url;
-                a.download = `visa_applications_${new Date().toISOString().split('T')[0]}.xlsx`;
+                a.download = `visa_applications_new_${new Date().toISOString().split('T')[0]}.xlsx`;
                 document.body.appendChild(a);
                 a.click();
                 window.URL.revokeObjectURL(url);
@@ -127,7 +122,7 @@ export default function VisaFormsPage() {
                             className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition inline-flex items-center gap-2"
                         >
                             <Download size={20} />
-                            Export to Excel
+                            Export New Applications
                         </button>
                     </div>
                 </div>
