@@ -36,6 +36,7 @@ func Connect() *gorm.DB {
 		&models.User{},
 		&models.VisaInvitationForm{},
 		&models.UserGuestForm{},
+		&models.AuditLog{},
 	); err != nil {
 		log.Fatalf("Ошибка миграции базы данных: %v", err)
 	}

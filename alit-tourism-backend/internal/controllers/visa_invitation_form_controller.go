@@ -10,6 +10,7 @@ import (
 	db "alit-tourism-backend/internal/database"
 	"alit-tourism-backend/internal/models"
 	"alit-tourism-backend/internal/storage" // ✅ добавь этот импорт (где клиент MinIO)
+	"alit-tourism-backend/internal/utils"
 
 	"github.com/gin-gonic/gin"
 	"github.com/minio/minio-go/v7"
@@ -132,4 +133,55 @@ func GetUserVisaForms(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, forms)
+}
+
+// UpdateVisaStatus — обновление статуса визового приглашения
+func UpdateVisaStatus(c *gin.Context) {
+	formID := c.Param("id")
+
+	var request struct {
+		Status *int `json:"status"`
+	}
+
+	if err := c.ShouldBindJSON(&request); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
+		return
+	}
+
+	// Проверяем что статус передан
+	if request.Status == nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Status is required"})
+		return
+	}
+
+	// Проверяем валидность статуса (0-4)
+	if *request.Status < 0 || *request.Status > 4 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid status value. Must be between 0 and 4"})
+		return
+	}
+
+	var form models.VisaInvitationForm
+	if err := db.DB.First(&form, formID).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Visa form not found"})
+		return
+	}
+
+	// Сохраняем старый статус для лога
+	oldStatus := form.Status
+
+	// Обновляем статус
+	if err := db.DB.Model(&form).Update("status", *request.Status).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update status"})
+		return
+	}
+
+	// Логируем изменение статуса
+	statusNames := map[int]string{0: "Новый", 1: "На проверке", 2: "Оплачено", 3: "Одобрено", 4: "Отказано"}
+	description := fmt.Sprintf("Status changed from '%s' to '%s'", statusNames[oldStatus], statusNames[*request.Status])
+	utils.LogAudit(c, "visa_invitation_form", form.ID, "status_change", oldStatus, *request.Status, description)
+
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Status updated successfully",
+		"data":    form,
+	})
 }

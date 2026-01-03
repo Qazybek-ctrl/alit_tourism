@@ -2,6 +2,12 @@
 const NoBoots = "/helper/NoBoots.png";
 const YesBoots = "/helper/YesBoots.png";
 const sockets = "/helper/sockets.png";
+const road = "/helper/road.webp";
+const toilet = "/helper/streetToilet.jpg";
+const insideYurt = "/helper/insideYurt.webp";
+const dorm = "/helper/dorm.jpg";
+const dorm2 = "/helper/dorm2.webp";
+const yurt = "/helper/yurt.webp";
 
 export default function TravelTip() {
     return (
@@ -126,7 +132,7 @@ export default function TravelTip() {
                 </div>
 
                 {/* Новый блок “Electrical sockets” */}
-                <div className="bg-white rounded-2xl shadow-sm p-4 md:p-10">
+                <div className="bg-white rounded-2xl shadow-sm p-4 md:p-10 mb-10">
                     <h2 className="text-[#22324A] text-xl md:text-2xl font-medium mb-4">Electrical sockets</h2>
 
                     <p className="text-[#22324A] text-base md:text-lg leading-relaxed mb-8">
@@ -140,6 +146,108 @@ export default function TravelTip() {
                             alt="Kazakhstan electrical socket example"
                             className="w-full md:w-[50%] h-auto rounded-2xl object-cover"
                         />
+                    </div>
+                </div>
+
+                <div className="bg-white rounded-2xl shadow-sm p-4 md:p-10">
+                    <h2 className="text-[#22324A] text-xl md:text-2xl font-medium mb-4">Drive to Wild Nature – What to Expect?</h2>
+
+                    <p className="text-[#22324A] text-base md:text-lg leading-tight font-[500]">
+                        Safety
+                    </p>
+                    <p className="text-[#22324A] text-base md:text-lg mb-8 font-[400]">
+                        Kazakhstan is a very safe country, and our people are warm, welcoming, and curious. If locals approach you, it’s usually because they are interested in you or would like to practice their English.
+                        However, we recommend taking normal travel precautions: keep your valuables secure, and during trekking always store them safely inside your tent.
+                    </p>
+
+                    <p className="text-[#22324A] text-base md:text-lg leading-tight font-[500]">
+                        Food
+                    </p>
+                    <p className="text-[#22324A] text-base md:text-lg mb-8 font-[400]">
+                        Kazakh cuisine is rich in meat dishes, especially beef, horse meat, and noodles, and we traditionally enjoy black tea with milk several times a day.
+                        Coffee is also available. For those with special preferences, vegetarian meals can be arranged upon request.
+                    </p>
+
+                    <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-start mb-5">
+                        <div className="flex-1">
+                            <p className="text-[#22324A] text-base md:text-lg leading-tight font-[500]">
+                                Roads
+                            </p>
+                            <p className="text-[#22324A] text-base md:text-lg font-[400]">
+                                In some mountainous areas, there are no paved roads, so please be prepared for a more adventurous journey.
+                            </p>
+                        </div>
+
+                        <div className="w-full md:w-[45%] flex-shrink-0 flex justify-center">
+                            <img
+                                src={road}
+                                alt="Roads"
+                                className="w-[70%] h-auto rounded-2xl object-cover"
+                            />
+                        </div>
+                    </div>
+
+                    <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-start">
+                        <div className="flex-1">
+                            <p className="text-[#22324A] text-base md:text-lg leading-tight font-[500]">
+                                Toilets
+                            </p>
+                            <p className="text-[#22324A] text-base md:text-lg font-[400]">
+                                While exploring the wild nature, you may not always find modern European-style toilets.
+                                Instead, in some areas, only simple, rustic facilities are available — which is part of the authentic outdoor experience.
+                            </p>
+                        </div>
+
+                        {/* Image on the right */}
+                        <div className="w-full md:w-[45%] flex-shrink-0 flex justify-center">
+                            <img
+                                src={toilet}
+                                alt="Street Toilet"
+                                className="w-[70%] h-auto rounded-2xl object-cover"
+                            />
+                        </div>
+                    </div>
+
+                    {/* New 3-column section */}
+                    <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-start mt-8">
+                        {/* Column 1: Text (40%) */}
+                        <div className="w-full md:w-[40%]">
+                            <p className="text-[#22324A] text-base md:text-lg leading-tight font-[500] mb-2">
+                                Accommodation
+                            </p>
+                            <p className="text-[#22324A] text-base md:text-lg font-[400]">
+                                Depending on the destination, you may stay in guesthouses or traditional yurts. 
+                                These are authentic and cozy but not luxury-level accommodations.
+                            </p>
+                        </div>
+
+                        {/* Column 2: Two stacked images */}
+                        <div className="w-full md:w-[30%] flex flex-col gap-4">
+                            <img
+                                src={dorm}
+                                alt="Mountain view 1"
+                                className="w-full h-auto rounded-2xl object-cover"
+                            />
+                            <img
+                                src={yurt}
+                                alt="Mountain view 2"
+                                className="w-full h-auto rounded-2xl object-cover"
+                            />
+                        </div>
+
+                        {/* Column 3: One large image */}
+                        <div className="w-full md:w-[30%] flex flex-col gap-4">
+                            <img
+                                src={insideYurt}
+                                alt="Mountain view 1"
+                                className="w-full h-auto rounded-2xl object-cover"
+                            />
+                            <img
+                                src={dorm2}
+                                alt="Mountain view 2"
+                                className="w-full h-[160px] rounded-2xl object-cover"
+                            />
+                        </div>
                     </div>
                 </div>
             </div>

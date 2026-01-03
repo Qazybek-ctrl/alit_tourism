@@ -40,6 +40,7 @@ type VisaInvitationForm struct {
 	EmailAddress           string    `json:"email_address"`
 	PassportURL            string    `json:"passport_url"`
 	VisaInvitationType     string    `json:"visa_invitation_type"`
+	Status                 int       `json:"status" gorm:"default:0;not null"` // 0=Новый, 1=На проверке, 2=Оплачено, 3=Одобрено, 4=Отказано
 
 	User User `gorm:"foreignKey:UserID;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
 }

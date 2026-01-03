@@ -16,6 +16,9 @@ import QuestionnaireForm from "./components/pages/forms/QuestionnaireForm";
 import GuestForm from "./components/pages/forms/GuestForm";
 import PaymentForm from "./components/pages/forms/PaymentForm";
 import AdminPage from "./components/admin/AdminPage";
+import TourFormsPage from "./components/admin/TourFormsPage";
+import VisaFormsPage from "./components/admin/VisaFormsPage";
+import UsersPage from "./components/admin/UsersPage";
 import TravelTips from "./components/pages/TravelTips";
 import WhatsAppButton from "./components/WhatsAppButton";
 
@@ -42,6 +45,9 @@ function Layout() {
                     <Route path="/" element={<Home />} />
                     <Route path="/auth" element={<AuthPage />} />
                     <Route path="/admin" element={<AdminPage />} />
+                    <Route path="/admin/users" element={<UsersPage />} />
+                    <Route path="/admin/tours" element={<TourFormsPage />} />
+                    <Route path="/admin/visas" element={<VisaFormsPage />} />
                     <Route path="/profile" element={<ProfilePage />} />
                     <Route path="/visa" element={<VisaServices />} />
                     <Route path="/visa/tourism" element={<Tourism />} />

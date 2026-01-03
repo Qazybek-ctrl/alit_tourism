@@ -19,6 +19,7 @@ type UserGuestForm struct {
 	TripInterests      string `json:"trip_interests"`
 	Request            string `json:"request"`
 	DietaryPreferences string `json:"dietary_preferences"`
+	Status             int    `json:"status" gorm:"default:0;not null"` // 0=Новый, 1=Оплачен, 2=Отмена
 
 	User User `gorm:"foreignKey:UserID;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
 }

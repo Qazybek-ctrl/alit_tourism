@@ -27,7 +27,7 @@ func SetupRouter() *gin.Engine {
 			"http://ailt-tourism.com",
 			"http://www.ailt-tourism.com",
 		},
-		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"},
 		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
 		ExposeHeaders:    []string{"Content-Length"},
 		AllowCredentials: true,
@@ -59,9 +59,21 @@ func SetupRouter() *gin.Engine {
 	{
 		admin.GET("/users", controllers.GetAllUsers)
 		admin.PUT("/users/:id/role", controllers.UpdateUserRole)
+		admin.PUT("/users/:id/password", controllers.UpdateUserPassword)
 		admin.GET("/forms/guest", controllers.GetAllGuestForms)
 		admin.GET("/forms/visa", controllers.GetAllVisaForms)
 		admin.GET("/dashboard/stats", controllers.GetDashboardStats)
+
+		// Status update endpoints
+		admin.PATCH("/forms/visa/:id/status", controllers.UpdateVisaStatus)
+		admin.PATCH("/forms/guest/:id/status", controllers.UpdateGuestFormStatus)
+
+		// Form edit endpoints
+		admin.PUT("/forms/guest/:id", controllers.UpdateGuestForm)
+		admin.PUT("/forms/visa/:id", controllers.UpdateVisaForm)
+
+		// Audit logs endpoint
+		admin.GET("/audit/:entity_type/:entity_id", controllers.GetAuditLogs)
 	}
 
 	return r

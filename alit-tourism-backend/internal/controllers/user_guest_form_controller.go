@@ -1,10 +1,12 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 
 	db "alit-tourism-backend/internal/database"
 	"alit-tourism-backend/internal/models"
+	"alit-tourism-backend/internal/utils"
 
 	"strconv"
 
@@ -69,4 +71,55 @@ func GetUserGuestForms(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, forms)
+}
+
+// UpdateGuestFormStatus — обновление статуса гостевой формы
+func UpdateGuestFormStatus(c *gin.Context) {
+	formID := c.Param("id")
+
+	var request struct {
+		Status *int `json:"status"`
+	}
+
+	if err := c.ShouldBindJSON(&request); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
+		return
+	}
+
+	// Проверяем что статус передан
+	if request.Status == nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Status is required"})
+		return
+	}
+
+	// Проверяем валидность статуса (0-2)
+	if *request.Status < 0 || *request.Status > 2 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid status value. Must be between 0 and 2"})
+		return
+	}
+
+	var form models.UserGuestForm
+	if err := db.DB.First(&form, formID).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Guest form not found"})
+		return
+	}
+
+	// Сохраняем старый статус для лога
+	oldStatus := form.Status
+
+	// Обновляем статус
+	if err := db.DB.Model(&form).Update("status", *request.Status).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update status"})
+		return
+	}
+
+	// Логируем изменение статуса
+	statusNames := map[int]string{0: "Новый", 1: "Оплачен", 2: "Отмена"}
+	description := fmt.Sprintf("Status changed from '%s' to '%s'", statusNames[oldStatus], statusNames[*request.Status])
+	utils.LogAudit(c, "user_guest_form", form.ID, "status_change", oldStatus, *request.Status, description)
+
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Status updated successfully",
+		"data":    form,
+	})
 }
