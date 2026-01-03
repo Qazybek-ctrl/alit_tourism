@@ -70,23 +70,25 @@ export default function VisaFormsPage() {
             .finally(() => setLoading(false));
     };
 
+
     const handleExportExcel = () => {
         const params = new URLSearchParams();
         if (statusFilter && statusFilter !== "all") {
             params.append("status", statusFilter);
         }
 
-        const token = localStorage.getItem("token");
         const url = `/admin/forms/visa/export?${params.toString()}`;
 
-        // Создаем временную ссылку для скачивания
-        fetch(`http://localhost:8080/api${url}`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        })
-            .then((response) => response.blob())
-            .then((blob) => {
+        // Используем api instance с responseType blob
+        api
+            .get(url, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+                responseType: "blob", // Важно для скачивания файлов
+            })
+            .then((response) => {
+                const blob = response.data;
                 const url = window.URL.createObjectURL(blob);
                 const a = document.createElement("a");
                 a.href = url;
@@ -95,8 +97,13 @@ export default function VisaFormsPage() {
                 a.click();
                 window.URL.revokeObjectURL(url);
                 document.body.removeChild(a);
+                console.log("Excel file downloaded successfully");
             })
-            .catch((err) => console.error("Error exporting Excel:", err));
+            .catch((err) => {
+                console.error("Error exporting Excel:", err);
+                console.error("Error response:", err.response);
+                alert(`Ошибка экспорта: ${err.response?.data?.error || err.message || "Неизвестная ошибка"}`);
+            });
     };
 
     return (
