@@ -79,7 +79,7 @@ export default function Explore() {
                     className="absolute top-3 right-4 w-[50px] h-[50px] rounded-full flex items-center justify-center bg-white/20 backdrop-blur-sm cursor-pointer"
                     onClick={() => navigate("/travel/tips")}
                 >
-                    <img loading="lazy"
+                    <img
                         src={arrowIcon}
                         alt="arrow"
                         className="w-5 h-5 object-contain"
@@ -113,7 +113,7 @@ export default function Explore() {
                     className="absolute top-3 right-4 w-[50px] h-[50px] rounded-full flex items-center justify-center bg-white/20 backdrop-blur-sm cursor-pointer"
                     onClick={() => setIsOpen(true)}
                 >
-                    <img loading="lazy" src={arrowIcon} alt="arrow" className="w-5 h-5 object-contain" />
+                    <img src={arrowIcon} alt="arrow" className="w-5 h-5 object-contain" />
                 </div>
 
                 {/* Основная погода */}
@@ -147,13 +147,13 @@ export default function Explore() {
                     className="absolute top-3 right-4 w-[50px] h-[50px] rounded-full flex items-center justify-center bg-white/40 backdrop-blur-sm cursor-pointer"
                     onClick={() => setIsOpenReview(true)}
                 >
-                    <img loading="lazy" src={arrowIcon} alt="arrow" className="w-5 h-5 object-contain" />
+                    <img src={arrowIcon} alt="arrow" className="w-5 h-5 object-contain" />
                 </div>
 
                 <div
                     className="absolute bottom-5 md:bottom-10 left-6 text-[#FFFFFF] tracking-[-0.03em] leading-none text-left">
                     <div className="flex items-center mb-2">
-                        <img loading="lazy"
+                        <img
                             src={starIcon}
                             alt="star"
                             className="w-6 h-6 md:w-10 md:h-10 mr-2"
@@ -175,7 +175,7 @@ export default function Explore() {
             <div className="relative w-[95%] md:w-[210px] h-[100px] md:h-[460px] flex-shrink-0">
                 <div className="absolute top-3 right-4 w-[50px] h-[50px] rounded-full flex items-center justify-center bg-white/20 backdrop-blur-sm cursor-pointer"
                     onClick={() => setIsOpenPhoto(true)} >
-                    <img loading="lazy"
+                    <img
                         src={arrowIcon}
                         alt="arrow"
                         className="w-5 h-5 object-contain"
@@ -206,7 +206,7 @@ export default function Explore() {
         <div className="mt-10 md:mt-32 flex items-center justify-center text-[#22324A]">
             <p className="font-[500] md:font-semibold text-[30px] md:text-[70px] tracking-[0.01em] leading-none flex items-center">
                 Visa Support
-                <img loading="lazy"
+                <img
                     src={oiuIcon}
                     alt="Oiu Icon"
                     className="ml-6 w-[60px] md:w-[120px] h-[60px] md:h-[120px] object-contain"
@@ -228,7 +228,7 @@ export default function Explore() {
 
                     <div
                         className="absolute -top-4 -right-4 w-[60px] h-[60px] md:w-[70px] md:h-[70px] rounded-[20px] bg-[#F4EBE2] shadow-md flex items-center justify-center pointer-events-none text-center z-20">
-                        <img loading="lazy"
+                        <img
                             src={ppIcon}
                             alt="Plane Icon"
                             className="w-7 h-7 md:w-9 md:h-9 object-contain"
@@ -257,7 +257,7 @@ export default function Explore() {
 
                     <div
                         className="absolute -top-4 -right-4 w-[60px] h-[60px] md:w-[70px] md:h-[70px] rounded-[20px] bg-[#F4EBE2] shadow-md flex items-center justify-center pointer-events-none text-center z-20">
-                        <img loading="lazy"
+                        <img
                             src={ssIcon}
                             alt="Plane Icon"
                             className="w-7 h-7 md:w-9 md:h-9 object-contain"
@@ -288,7 +288,7 @@ export default function Explore() {
 
                     <div
                         className="absolute -top-4 -right-4 w-[60px] h-[60px] md:w-[70px] md:h-[70px] rounded-[20px] bg-[#F4EBE2] shadow-md flex items-center justify-center pointer-events-none text-center z-20">
-                        <img loading="lazy"
+                        <img
                             src={graphIcon}
                             alt="Plane Icon"
                             className="w-7 h-7 md:w-9 md:h-9 object-contain"
@@ -315,7 +315,7 @@ export default function Explore() {
                             `}
                     onClick={() => navigate("/visa/immigrant")}
                 >
-                    <img loading="lazy"
+                    <img
                         src={businessImmigrantImage}
                         alt="square-4"
                         className="w-full h-full rounded-[20px] object-cover"
@@ -323,7 +323,7 @@ export default function Explore() {
 
                     <div
                         className="absolute -top-4 -right-4 w-[60px] h-[60px] md:w-[70px] md:h-[70px] rounded-[20px] bg-[#F4EBE2] shadow-md flex items-center justify-center pointer-events-none text-center z-20">
-                        <img loading="lazy"
+                        <img
                             src={paperIcon}
                             alt="Plane Icon"
                             className="w-7 h-7 md:w-9 md:h-9 object-contain"
@@ -359,7 +359,7 @@ export default function Explore() {
                     className="text-[#22324A] text-[25px] md:text-[65px] font-[500] md:font-semibold text-left md:text-center">
                     Top-Recommended Tours
                 </span>
-                <img loading="lazy"
+                <img
                     src={oiuIcon}
                     alt="icon"
                     className="hidden md:block w-[120px] h-[120px] object-contain"

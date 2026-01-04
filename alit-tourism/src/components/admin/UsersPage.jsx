@@ -96,7 +96,10 @@ export default function UsersPage() {
         api
             .put(
                 `/admin/users/${passwordModal.userId}/password`,
-                { new_password: newPassword },
+                {
+                    new_password: newPassword,
+                    confirm_password: confirmPassword
+                },
                 {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("token")}`,

@@ -151,8 +151,20 @@ func GetFileURL(c *gin.Context) {
 		return
 	}
 
-	// Генерируем presigned URL на 1 час
 	ctx := context.Background()
+
+	// Проверяем существование файла
+	_, err := storage.MinioClient.StatObject(ctx, "alit-tourism", filename, minio.StatObjectOptions{})
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{
+			"error":    "File not found in storage",
+			"details":  err.Error(),
+			"filename": filename,
+		})
+		return
+	}
+
+	// Генерируем presigned URL на 1 час
 	presignedURL, err := storage.MinioClient.PresignedGetObject(
 		ctx,
 		"alit-tourism",
@@ -170,7 +182,6 @@ func GetFileURL(c *gin.Context) {
 	})
 }
 
-// UpdateVisaStatus — обновление статуса визового приглашения
 func UpdateVisaStatus(c *gin.Context) {
 	formID := c.Param("id")
 
