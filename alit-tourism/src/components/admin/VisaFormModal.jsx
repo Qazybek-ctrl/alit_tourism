@@ -103,28 +103,12 @@ export default function VisaFormModal({ form, isOpen, onClose, onUpdate }) {
 
     const downloadFile = async (filename) => {
         try {
-            // Получаем presigned URL
-            const response = await api.get(`/admin/files/url?filename=${filename}`, {
-                headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-            });
+            const response = await api.get(
+                `/admin/files/url?filename=${filename}`,
+                { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
+            );
 
-            // Скачиваем файл как blob
-            const fileResponse = await fetch(response.data.url);
-            const blob = await fileResponse.blob();
-
-            // Создаем URL для blob
-            const blobUrl = window.URL.createObjectURL(blob);
-
-            // Создаем временную ссылку для скачивания
-            const link = document.createElement('a');
-            link.href = blobUrl;
-            link.download = filename;
-            document.body.appendChild(link);
-            link.click();
-
-            // Очищаем
-            document.body.removeChild(link);
-            window.URL.revokeObjectURL(blobUrl);
+            window.location.href = response.data.url;
         } catch (error) {
             console.error("Error downloading file:", error);
             toast.error("Failed to download file");

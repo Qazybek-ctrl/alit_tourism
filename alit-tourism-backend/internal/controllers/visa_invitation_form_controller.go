@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"net/url"
 	"path/filepath"
 	"time"
 
@@ -164,13 +165,16 @@ func GetFileURL(c *gin.Context) {
 		return
 	}
 
+	reqParams := url.Values{}
+	reqParams.Set("response-content-disposition", "attachment")
+
 	// Генерируем presigned URL на 1 час
 	presignedURL, err := storage.MinioClient.PresignedGetObject(
 		ctx,
 		"alit-tourism",
 		filename,
 		time.Hour*1,
-		nil,
+		reqParams,
 	)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate file URL", "details": err.Error()})
