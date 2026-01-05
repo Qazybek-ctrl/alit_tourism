@@ -13,6 +13,7 @@ import (
 var (
 	MinioClient   *minio.Client
 	MinioEndpoint string
+	useSSL        bool
 	isDev         bool
 )
 
@@ -21,13 +22,16 @@ func InitMinIO() {
 	accessKeyID := os.Getenv("MINIO_ACCESS_KEY")
 	secretAccessKey := os.Getenv("MINIO_SECRET_KEY")
 	ginMode := os.Getenv("GIN_MODE")
-
+	
 	// Определяем режим (dev/prod)
 	isDev = ginMode == "" || ginMode == "debug"
+	
+	// В dev режиме используем HTTP, в prod - HTTPS
+	useSSL = !isDev
 
 	client, err := minio.New(MinioEndpoint, &minio.Options{
 		Creds:  credentials.NewStaticV4(accessKeyID, secretAccessKey, ""),
-		Secure: false,
+		Secure: useSSL, // ← Изменено: теперь зависит от режима
 	})
 	if err != nil {
 		log.Fatalf("❌ Ошибка подключения к MinIO: %v", err)
@@ -43,9 +47,9 @@ func InitMinIO() {
 
 	MinioClient = client
 	if isDev {
-		log.Println("✅ MinIO успешно подключен! (DEV mode - localhost)")
+		log.Println("✅ MinIO успешно подключен! (DEV mode - HTTP)")
 	} else {
-		log.Println("✅ MinIO успешно подключен! (PROD mode)")
+		log.Println("✅ MinIO успешно подключен! (PROD mode - HTTPS)")
 	}
 }
 
@@ -53,12 +57,17 @@ func InitMinIO() {
 // В dev режиме использует localhost, в prod - серверный endpoint
 func GetMinioURL(bucket, fileName string) string {
 	var endpoint string
+	var protocol string
+	
 	if isDev {
-		// В dev режиме используем localhost
+		// В dev режиме используем localhost с HTTP
 		endpoint = "localhost:9000"
+		protocol = "http://"
 	} else {
-		// В prod режиме используем серверный endpoint
+		// В prod режиме используем серверный endpoint с HTTPS
 		endpoint = MinioEndpoint
+		protocol = "https://"
 	}
-	return "http://" + endpoint + "/" + bucket + "/" + fileName
+	
+	return protocol + endpoint + "/" + bucket + "/" + fileName
 }

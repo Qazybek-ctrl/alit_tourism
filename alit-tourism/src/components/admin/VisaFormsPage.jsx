@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FileText, Eye, Download } from "lucide-react";
+import { FileText, Eye } from "lucide-react";
 import api from "../../Api";
 import VisaFormModal from "./VisaFormModal";
 
@@ -71,35 +71,6 @@ export default function VisaFormsPage() {
     };
 
 
-    const handleExportExcel = () => {
-        const url = `/admin/forms/visa/export`;
-
-        // Используем api instance с responseType blob
-        api
-            .get(url, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem("token")}`,
-                },
-                responseType: "blob", // Важно для скачивания файлов
-            })
-            .then((response) => {
-                const blob = response.data;
-                const url = window.URL.createObjectURL(blob);
-                const a = document.createElement("a");
-                a.href = url;
-                a.download = `visa_applications_new_${new Date().toISOString().split('T')[0]}.xlsx`;
-                document.body.appendChild(a);
-                a.click();
-                window.URL.revokeObjectURL(url);
-                document.body.removeChild(a);
-                console.log("Excel file downloaded successfully");
-            })
-            .catch((err) => {
-                console.error("Error exporting Excel:", err);
-                console.error("Error response:", err.response);
-                alert(`Ошибка экспорта: ${err.response?.data?.error || err.message || "Неизвестная ошибка"}`);
-            });
-    };
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
@@ -117,13 +88,6 @@ export default function VisaFormsPage() {
                             <h1 className="text-3xl font-bold text-[#22324A]">Visa Applications</h1>
                             <p className="text-gray-600 mt-2">Manage all visa invitation requests</p>
                         </div>
-                        <button
-                            onClick={handleExportExcel}
-                            className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition inline-flex items-center gap-2"
-                        >
-                            <Download size={20} />
-                            Export New Applications
-                        </button>
                     </div>
                 </div>
 

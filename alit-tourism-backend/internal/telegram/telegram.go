@@ -15,6 +15,8 @@ var (
 
 var chatIDs = []string{
 	"368941169",
+	"180167697",
+	"1153209109",
 }
 
 // InitTelegram инициализирует Telegram бота

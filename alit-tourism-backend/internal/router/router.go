@@ -78,8 +78,9 @@ func SetupRouter() *gin.Engine {
 		// File URL endpoint
 		admin.GET("/files/url", controllers.GetFileURL)
 
-		// Excel export endpoint
+		// Excel export endpoints
 		admin.GET("/forms/visa/export", controllers.ExportVisaFormsToExcel)
+		admin.GET("/forms/visa/:id/export", controllers.ExportSingleVisaFormToExcel)
 	}
 
 	return r

@@ -21,14 +21,25 @@ export default function VisaFormModal({ form, isOpen, onClose, onUpdate }) {
 
     useEffect(() => {
         if (form) {
+            // Helper function to format date for input[type="date"]
+            const formatDateForInput = (dateString) => {
+                if (!dateString) return "";
+                const date = new Date(dateString);
+                if (isNaN(date.getTime())) return "";
+                return date.toISOString().split('T')[0];
+            };
+
             setFormData({
                 first_name: form.first_name || "",
                 last_name: form.last_name || "",
                 middle_name: form.middle_name || "",
                 gender: form.gender || "",
+                date_of_birth: formatDateForInput(form.date_of_birth),
                 place_of_birth: form.place_of_birth || "",
                 citizenship: form.citizenship || "",
                 passport_number: form.passport_number || "",
+                date_of_issue: formatDateForInput(form.date_of_issue),
+                date_of_expiry: formatDateForInput(form.date_of_expiry),
                 country_of_issue: form.country_of_issue || "",
                 phone_number: form.phone_number || "",
                 email_address: form.email_address || "",
@@ -37,9 +48,16 @@ export default function VisaFormModal({ form, isOpen, onClose, onUpdate }) {
                 residence_country: form.residence_country || "",
                 residence_address_abroad: form.residence_address_abroad || "",
                 visa_type: form.visa_type || "",
+                visa_period_start: formatDateForInput(form.visa_period_start),
+                visa_period_end: formatDateForInput(form.visa_period_end),
                 visa_issuance_country: form.visa_issuance_country || "",
                 visa_issuance_city: form.visa_issuance_city || "",
                 travel_history: form.travel_history || "",
+                travel_itinerary: form.travel_itinerary || "",
+                address_kz_street: form.address_kz_street || "",
+                address_kz_building: form.address_kz_building || "",
+                address_kz_block: form.address_kz_block || "",
+                address_kz_apartment: form.address_kz_apartment || "",
             });
             setStatus(form.status);
             setActiveTab("details");
@@ -131,6 +149,32 @@ export default function VisaFormModal({ form, isOpen, onClose, onUpdate }) {
         }
     };
 
+    const handleExportExcel = async () => {
+        try {
+            const response = await api.get(`/admin/forms/visa/${form.ID}/export`, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+                responseType: "blob",
+            });
+
+            const blob = response.data;
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = `visa_application_${form.ID}_${new Date().toISOString().split('T')[0]}.xlsx`;
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+
+            toast.success("Excel file exported successfully!");
+        } catch (error) {
+            console.error("Error exporting Excel:", error);
+            toast.error(`Export failed: ${error.response?.data?.error || error.message || "Unknown error"}`);
+        }
+    };
+
     if (!isOpen || !form) return null;
 
     const fieldLabels = {
@@ -138,20 +182,30 @@ export default function VisaFormModal({ form, isOpen, onClose, onUpdate }) {
         last_name: "Last Name",
         middle_name: "Middle Name",
         gender: "Gender",
+        date_of_birth: "Date of Birth",
         place_of_birth: "Place of Birth",
         citizenship: "Citizenship",
         passport_number: "Passport Number",
+        date_of_issue: "Passport Date of Issue",
+        date_of_expiry: "Passport Date of Expiry",
         country_of_issue: "Country of Issue",
         phone_number: "Phone Number",
         email_address: "Email Address",
-        work_place: "Work Place",
+        work_place: "Place of Work and Position",
         visa_invitation_type: "Visa Invitation Type",
-        residence_country: "Residence Country",
-        residence_address_abroad: "Residence Address Abroad",
-        visa_type: "Visa Type",
+        residence_country: "Country of Residence Abroad",
+        residence_address_abroad: "Residential Address Abroad",
+        visa_type: "Visa Type (Single/Multiple Entry)",
+        visa_period_start: "Visa Period Start Date",
+        visa_period_end: "Visa Period End Date",
         visa_issuance_country: "Visa Issuance Country",
         visa_issuance_city: "Visa Issuance City",
-        travel_history: "Travel History",
+        travel_history: "Travel History (Last 5 Years)",
+        travel_itinerary: "Travel Itinerary in Kazakhstan",
+        address_kz_street: "Address in Kazakhstan - Street",
+        address_kz_building: "Address in Kazakhstan - Building",
+        address_kz_block: "Address in Kazakhstan - Block",
+        address_kz_apartment: "Address in Kazakhstan - Apartment",
     };
 
     return (
@@ -205,72 +259,108 @@ export default function VisaFormModal({ form, isOpen, onClose, onUpdate }) {
                     <div className="flex-1 overflow-y-auto p-6">
                         {activeTab === "details" ? (
                             <>
-                                {/* Status */}
-                                <div className="mb-6 pb-4 border-b">
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                                        Status
-                                    </label>
-                                    <select
-                                        value={status}
-                                        onChange={(e) => handleStatusChange(parseInt(e.target.value))}
-                                        disabled={loading}
-                                        className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22324A] focus:border-transparent"
-                                    >
-                                        <option value={0}>Новый</option>
-                                        <option value={1}>На проверке</option>
-                                        <option value={2}>Оплачено</option>
-                                        <option value={3}>Одобрено</option>
-                                        <option value={4}>Отказано</option>
-                                    </select>
-                                </div>
+                                {/* Actions Section - Status, Download, Export */}
+                                <div className="mb-6 pb-6 border-b">
+                                    <div className="flex flex-col md:flex-row gap-4 md:items-end">
+                                        {/* Status */}
+                                        <div className="flex-1">
+                                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                                                Status
+                                            </label>
+                                            <select
+                                                value={status}
+                                                onChange={(e) => handleStatusChange(parseInt(e.target.value))}
+                                                disabled={loading}
+                                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22324A] focus:border-transparent"
+                                            >
+                                                <option value={0}>Новый</option>
+                                                <option value={1}>На проверке</option>
+                                                <option value={2}>Оплачено</option>
+                                                <option value={3}>Одобрено</option>
+                                                <option value={4}>Отказано</option>
+                                            </select>
+                                        </div>
 
-                                {/* Passport Download */}
-                                {form.passport_url && (
-                                    <div className="mb-6 pb-4 border-b">
-                                        <button
-                                            onClick={() => downloadFile(form.passport_url)}
-                                            className="px-4 py-2 bg-[#22324A] text-white rounded-lg hover:bg-[#2f3e5c] transition flex items-center gap-2"
-                                        >
-                                            <Download size={18} />
-                                            Download Passport Document
-                                        </button>
+                                        {/* Download Passport */}
+                                        {form.passport_url && (
+                                            <div className="flex-1">
+                                                <button
+                                                    onClick={() => downloadFile(form.passport_url)}
+                                                    className="w-full px-4 py-2 bg-[#22324A] text-white rounded-lg hover:bg-[#2f3e5c] transition flex items-center justify-center gap-2"
+                                                >
+                                                    <Download size={18} />
+                                                    Download Passport
+                                                </button>
+                                            </div>
+                                        )}
+
+                                        {/* Export to Excel */}
+                                        <div className="flex-1">
+                                            <button
+                                                onClick={handleExportExcel}
+                                                className="w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition flex items-center justify-center gap-2"
+                                            >
+                                                <Download size={18} />
+                                                Export to Excel
+                                            </button>
+                                        </div>
                                     </div>
-                                )}
+                                </div>
 
                                 {/* Form Fields */}
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    {Object.entries(formData).map(([key, value]) => (
-                                        <div key={key} className={key === "travel_history" || key === "residence_address_abroad" ? "md:col-span-2" : ""}>
-                                            <label className="block text-sm font-medium text-gray-700 mb-1">
-                                                {fieldLabels[key]}
-                                            </label>
-                                            {isEditing ? (
-                                                key === "travel_history" || key === "residence_address_abroad" ? (
-                                                    <textarea
-                                                        value={value}
-                                                        onChange={(e) =>
-                                                            setFormData({ ...formData, [key]: e.target.value })
-                                                        }
-                                                        rows={3}
-                                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22324A]"
-                                                    />
+                                    {Object.entries(formData).map(([key, value]) => {
+                                        const isDateField = key.includes('date') || key.includes('period');
+                                        const isTextArea = key === "travel_history" || key === "residence_address_abroad" || key === "travel_itinerary";
+                                        const isFullWidth = isTextArea;
+
+                                        // Format date for display
+                                        const displayValue = isDateField && value ?
+                                            new Date(value).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+                                            : value;
+
+                                        return (
+                                            <div key={key} className={isFullWidth ? "md:col-span-2" : ""}>
+                                                <label className="block text-sm font-[600] text-[#22324A] ">
+                                                    {fieldLabels[key]}
+                                                </label>
+                                                {isEditing ? (
+                                                    isTextArea ? (
+                                                        <textarea
+                                                            value={value}
+                                                            onChange={(e) =>
+                                                                setFormData({ ...formData, [key]: e.target.value })
+                                                            }
+                                                            rows={3}
+                                                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22324A]"
+                                                        />
+                                                    ) : isDateField ? (
+                                                        <input
+                                                            type="date"
+                                                            value={value}
+                                                            onChange={(e) =>
+                                                                setFormData({ ...formData, [key]: e.target.value })
+                                                            }
+                                                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22324A]"
+                                                        />
+                                                    ) : (
+                                                        <input
+                                                            type="text"
+                                                            value={value}
+                                                            onChange={(e) =>
+                                                                setFormData({ ...formData, [key]: e.target.value })
+                                                            }
+                                                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22324A]"
+                                                        />
+                                                    )
                                                 ) : (
-                                                    <input
-                                                        type="text"
-                                                        value={value}
-                                                        onChange={(e) =>
-                                                            setFormData({ ...formData, [key]: e.target.value })
-                                                        }
-                                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22324A]"
-                                                    />
-                                                )
-                                            ) : (
-                                                <p className="font-medium text-[#22324A] py-2">
-                                                    {value || "N/A"}
-                                                </p>
-                                            )}
-                                        </div>
-                                    ))}
+                                                    <p className="font-[400] text-[#22324A] py-2">
+                                                        {displayValue || "N/A"}
+                                                    </p>
+                                                )}
+                                            </div>
+                                        );
+                                    })}
                                 </div>
                             </>
                         ) : (
