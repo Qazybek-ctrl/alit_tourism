@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Users, Shield, Key } from "lucide-react";
 import api from "../../Api";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { AuthContext } from "../../utility/AuthContext";
 
 export default function UsersPage() {
@@ -75,21 +75,21 @@ export default function UsersPage() {
             )
             .then(() => {
                 fetchUsers();
-                toast.success(`Role changed to ${newRole}`);
+                toast.success(`Role changed to ${newRole}`, { id: 'user-role-change' });
             })
             .catch((err) => {
                 console.error("Error updating role:", err);
-                toast.error("Failed to update role");
+                toast.error("Failed to update role", { id: 'user-role-error' });
             });
     };
 
     const handlePasswordChange = () => {
         if (newPassword.length < 6) {
-            toast.error("Password must be at least 6 characters");
+            toast.error("Password must be at least 6 characters", { id: 'password-length-error' });
             return;
         }
         if (newPassword !== confirmPassword) {
-            toast.error("Passwords do not match");
+            toast.error("Passwords do not match", { id: 'password-match-error' });
             return;
         }
 
@@ -107,20 +107,19 @@ export default function UsersPage() {
                 }
             )
             .then(() => {
-                toast.success("Password updated successfully");
+                toast.success("Password updated successfully", { id: 'password-update' });
                 setPasswordModal({ open: false, userId: null });
                 setNewPassword("");
                 setConfirmPassword("");
             })
             .catch((err) => {
                 console.error("Error updating password:", err);
-                toast.error("Failed to update password");
+                toast.error("Failed to update password", { id: 'password-update-error' });
             });
     };
 
     return (
         <>
-            <Toaster position="top-right" />
             <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                     {/* Header */}

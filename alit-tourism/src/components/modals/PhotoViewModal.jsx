@@ -2,26 +2,26 @@ import React, { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 // Images from public folder
-const Aktau = "/images/places/Aktau - Caspian Sea.jpg";
+const Aktau = "/images/places/Aktau - Caspian Sea.webp";
 const Almaty = "/images/places/Almaty.webp";
-const AlmatyAutmn = "/images/places/Almaty autumn.jpg";
-const AltynEmel1 = "/images/places/Altyn Emel National Park.jpg";
+const AlmatyAutmn = "/images/places/Almaty autumn.webp";
+const AltynEmel1 = "/images/places/Altyn Emel National Park.webp";
 const AltynEmel2 = "/images/places/Altyn Emel National Park 2.webp";
 const Astana = "/images/places/Astana.webp";
-const Bayanauyl = "/images/places/Bayanauyl Natuonal Park.jpg";
-const Big = "/images/places/Big Almaty Lake.jpg";
-const Bozzhyra = "/images/places/Bozzhyra valley.jpg";
-const Burabay = "/images/places/Burabay National Park.jpg";
-const Charyn = "/images/places/Charyn Canyon.jpg";
-const Kaiyndy = "/images/places/Kaiyndy lake.jpeg";
-const Katon = "/images/places/Katon Karagay National Park.jpg";
+const Bayanauyl = "/images/places/Bayanauyl Natuonal Park.webp";
+const Big = "/images/places/Big Almaty Lake.webp";
+const Bozzhyra = "/images/places/Bozzhyra valley.webp";
+const Burabay = "/images/places/Burabay National Park.webp";
+const Charyn = "/images/places/Charyn Canyon.webp";
+const Kaiyndy = "/images/places/Kaiyndy lake.webp";
+const Katon = "/images/places/Katon Karagay National Park.webp";
 const Keruen = "/images/places/Keruen Saray Turkestan.jpg";
 const KokTobe = "/images/places/Kok Tobe.jpg";
 const KokZhailau = "/images/places/Kok Zhailau Almaty.webp";
 const Kolsay = "/images/places/Kolsay lakes.webp";
-const Medeu = "/images/places/Medeu.jpg";
+const Medeu = "/images/places/Medeuu.jpg";
 const Shymbulak = "/images/places/Shymbulak Ski resort.webp";
-const Turkestan = "/images/places/Turkestan.jpg";
+const Turkestan = "/images/places/Turkestan.webp";
 
 const PhotoViewModal = ({ onClose }) => {
     const photos = [

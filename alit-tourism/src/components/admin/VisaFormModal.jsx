@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { X, Save, History, FileText, Download } from "lucide-react";
 import api from "../../Api";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 
 const VISA_STATUS = {
     0: { name: "Новый", color: "bg-yellow-100 text-yellow-700" },
@@ -89,10 +89,10 @@ export default function VisaFormModal({ form, isOpen, onClose, onUpdate }) {
             });
             setIsEditing(false);
             onUpdate();
-            toast.success("Form updated successfully!");
+            toast.success("Form updated successfully!", { id: 'visa-form-update' });
         } catch (error) {
             console.error("Error updating form:", error);
-            toast.error("Failed to update form");
+            toast.error("Failed to update form", { id: 'visa-form-update-error' });
         } finally {
             setLoading(false);
         }
@@ -110,10 +110,10 @@ export default function VisaFormModal({ form, isOpen, onClose, onUpdate }) {
             );
             setStatus(newStatus);
             onUpdate();
-            toast.success(`Status changed to "${VISA_STATUS[newStatus].name}"`);
+            toast.success(`Status changed to "${VISA_STATUS[newStatus].name}"`, { id: 'visa-status-change' });
         } catch (error) {
             console.error("Error updating status:", error);
-            toast.error("Failed to update status");
+            toast.error("Failed to update status", { id: 'visa-status-error' });
         } finally {
             setLoading(false);
         }
@@ -143,9 +143,12 @@ export default function VisaFormModal({ form, isOpen, onClose, onUpdate }) {
             // Очищаем
             document.body.removeChild(link);
             window.URL.revokeObjectURL(blobUrl);
+
+            // Уведомление об успешном скачивании
+            toast.success("File downloaded successfully!", { id: 'file-download' });
         } catch (error) {
             console.error("Error downloading file:", error);
-            toast.error("Failed to download file");
+            toast.error("Failed to download file", { id: 'file-download-error' });
         }
     };
 
@@ -168,10 +171,10 @@ export default function VisaFormModal({ form, isOpen, onClose, onUpdate }) {
             window.URL.revokeObjectURL(url);
             document.body.removeChild(a);
 
-            toast.success("Excel file exported successfully!");
+            toast.success("Excel file exported successfully!", { id: 'excel-export' });
         } catch (error) {
             console.error("Error exporting Excel:", error);
-            toast.error(`Export failed: ${error.response?.data?.error || error.message || "Unknown error"}`);
+            toast.error(`Export failed: ${error.response?.data?.error || error.message || "Unknown error"}`, { id: 'excel-export-error' });
         }
     };
 
@@ -210,7 +213,6 @@ export default function VisaFormModal({ form, isOpen, onClose, onUpdate }) {
 
     return (
         <>
-            <Toaster position="top-right" />
             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
                 <div className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col">
                     {/* Header */}

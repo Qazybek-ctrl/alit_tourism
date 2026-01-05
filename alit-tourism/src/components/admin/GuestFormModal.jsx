@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { X, Save, History, FileText } from "lucide-react";
 import api from "../../Api";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 
 const GUEST_STATUS = {
     0: { name: "Новый", color: "bg-yellow-100 text-yellow-700" },
@@ -60,10 +60,10 @@ export default function GuestFormModal({ form, isOpen, onClose, onUpdate }) {
             });
             setIsEditing(false);
             onUpdate();
-            toast.success("Form updated successfully!");
+            toast.success("Form updated successfully!", { id: 'guest-form-update' });
         } catch (error) {
             console.error("Error updating form:", error);
-            toast.error("Failed to update form");
+            toast.error("Failed to update form", { id: 'guest-form-update-error' });
         } finally {
             setLoading(false);
         }
@@ -81,10 +81,10 @@ export default function GuestFormModal({ form, isOpen, onClose, onUpdate }) {
             );
             setStatus(newStatus);
             onUpdate();
-            toast.success(`Status changed to "${GUEST_STATUS[newStatus].name}"`);
+            toast.success(`Status changed to "${GUEST_STATUS[newStatus].name}"`, { id: 'guest-status-change' });
         } catch (error) {
             console.error("Error updating status:", error);
-            toast.error("Failed to update status");
+            toast.error("Failed to update status", { id: 'guest-status-error' });
         } finally {
             setLoading(false);
         }
@@ -94,7 +94,6 @@ export default function GuestFormModal({ form, isOpen, onClose, onUpdate }) {
 
     return (
         <>
-            <Toaster position="top-right" />
             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
                 <div className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col">
                     {/* Header */}
