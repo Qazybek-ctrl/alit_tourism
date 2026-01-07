@@ -10,8 +10,10 @@ import "react-phone-input-2/lib/style.css";
 import { Upload } from "lucide-react";
 import api from "../../../Api";
 import toast from "react-hot-toast";
+import { useLanguage } from "../../../utility/LanguageContext";
 
 export default function QuestionnaireForm() {
+    const { t } = useLanguage();
     const [form, setForm] = useState({
         lastName: "",
         firstName: "",
@@ -80,7 +82,7 @@ export default function QuestionnaireForm() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!visaInvitationType) {
-            toast.error("Visa Invitation Type is required to proceed with booking", { duration: 3000 });
+            toast.error(t("forms.questionnaireForm.errors.visaTypeRequired"), { duration: 3000 });
             return;
         }
         setLoading(true);
@@ -107,21 +109,21 @@ export default function QuestionnaireForm() {
             );
 
             if (emptyField) {
-                toast.error(`Please fill out the empty fields`);
+                toast.error(t("forms.questionnaireForm.errors.fillEmptyFields"));
                 setLoading(false);
                 return;
             }
 
             // Проверка диапазона дат
             if (!form.visaPeriod.startDate || !form.visaPeriod.endDate) {
-                toast.error("Please select visa start and end dates");
+                toast.error(t("forms.questionnaireForm.errors.selectDates"));
                 setLoading(false);
                 return;
             }
 
             // Проверка на наличие документа
             if (!form.document) {
-                toast.error("Please upload your document");
+                toast.error(t("forms.questionnaireForm.errors.uploadDocument"));
                 setLoading(false);
                 return;
             }
@@ -142,11 +144,11 @@ export default function QuestionnaireForm() {
                 headers: { "Content-Type": "multipart/form-data" },
             });
 
-            toast.success("Application submitted successfully!");
+            toast.success(t("forms.questionnaireForm.success.submitted"));
             navigate("/profile");
         } catch (error) {
             console.error(error);
-            toast.error("❌ Failed to submit application");
+            toast.error(t("forms.questionnaireForm.errors.submitFailed"));
         } finally {
             setLoading(false);
         }
@@ -156,38 +158,38 @@ export default function QuestionnaireForm() {
         <form
             className="max-w-3xl mx-auto p-6 space-y-6 text-gotham text-[#22324A]  bg-[#FFFFFF] md:bg-[#F6F6F6] rounded-[30px] my-8">
             <h1 className="text-[#22324A] text-[38px] font-[500] text-gotham mb-6 text-center">
-                Questionnaire for Kazakhstan Visa Invitation
+                {t("forms.questionnaireForm.title")}
             </h1>
 
             {/* ФИО */}
             <div className="grid md:grid-cols-3 gap-4">
                 <div>
-                    <RequiredLabel>Last Name</RequiredLabel>
+                    <RequiredLabel>{t("forms.questionnaireForm.lastName")}</RequiredLabel>
                     <input
                         name="lastName"
                         onChange={handleChange}
                         className="input"
-                        placeholder="Enter your last name"
+                        placeholder={t("forms.questionnaireForm.lastNamePlaceholder")}
                         disabled={loading}
                     />
                 </div>
                 <div>
-                    <RequiredLabel>First Name</RequiredLabel>
+                    <RequiredLabel>{t("forms.questionnaireForm.firstName")}</RequiredLabel>
                     <input
                         name="firstName"
                         onChange={handleChange}
                         className="input"
-                        placeholder="Enter your first name"
+                        placeholder={t("forms.questionnaireForm.firstNamePlaceholder")}
                         disabled={loading}
                     />
                 </div>
                 <div>
-                    <RequiredLabel>Middle Name</RequiredLabel>
+                    <RequiredLabel>{t("forms.questionnaireForm.middleName")}</RequiredLabel>
                     <input
                         name="middleName"
                         onChange={handleChange}
                         className="input"
-                        placeholder="Enter your middle name"
+                        placeholder={t("forms.questionnaireForm.middleNamePlaceholder")}
                         disabled={loading}
                     />
                 </div>
@@ -197,7 +199,7 @@ export default function QuestionnaireForm() {
             <div className="flex flex-col md:flex-row md:items-end md:gap-10 w-full">
                 {/* Gender */}
                 <div className="flex flex-col gap-2 md:w-1/2">
-                    <RequiredLabel>Gender</RequiredLabel>
+                    <RequiredLabel>{t("forms.questionnaireForm.gender")}</RequiredLabel>
                     <div className="flex gap-4 mt-2">
                         <button
                             type="button"
@@ -206,7 +208,7 @@ export default function QuestionnaireForm() {
                                 }`}
                             disabled={loading}
                         >
-                            Male
+                            {t("forms.questionnaireForm.male")}
                         </button>
                         <button
                             type="button"
@@ -215,14 +217,14 @@ export default function QuestionnaireForm() {
                                 }`}
                             disabled={loading}
                         >
-                            Female
+                            {t("forms.questionnaireForm.female")}
                         </button>
                     </div>
                 </div>
 
                 {/* Date of Birth */}
                 <div className="flex flex-col gap-2 md:w-1/2 mt-6 md:mt-0">
-                    <RequiredLabel>Date of Birth</RequiredLabel>
+                    <RequiredLabel>{t("forms.questionnaireForm.dateOfBirth")}</RequiredLabel>
                     <div className="flex gap-2">
                         <input
                             type="date"
@@ -238,23 +240,23 @@ export default function QuestionnaireForm() {
             {/* Место рождения и гражданство */}
             <div className="grid md:grid-cols-2 gap-4">
                 <div>
-                    <RequiredLabel>Place of Birth</RequiredLabel>
+                    <RequiredLabel>{t("forms.questionnaireForm.placeOfBirth")}</RequiredLabel>
                     <input
                         name="placeOfBirth"
                         onChange={handleChange}
                         className="input"
-                        placeholder="City, Country"
+                        placeholder={t("forms.questionnaireForm.placeOfBirthPlaceholder")}
                         disabled={loading}
                     />
                 </div>
                 <div>
-                    <RequiredLabel>Citizenship</RequiredLabel>
+                    <RequiredLabel>{t("forms.questionnaireForm.citizenship")}</RequiredLabel>
 
                     <input
                         name="citizenship"
                         onChange={handleChange}
                         className="input"
-                        placeholder="Enter your citizenship"
+                        placeholder={t("forms.questionnaireForm.citizenshipPlaceholder")}
                         disabled={loading}
                     />
                 </div>
@@ -263,7 +265,7 @@ export default function QuestionnaireForm() {
             {/* Паспорт */}
             <div className="grid md:grid-cols-3 gap-4">
                 <div>
-                    <RequiredLabel>Passport Number</RequiredLabel>
+                    <RequiredLabel>{t("forms.questionnaireForm.passportNumber")}</RequiredLabel>
                     <input
                         name="passportNumber"
                         onChange={handleChange}
@@ -272,7 +274,7 @@ export default function QuestionnaireForm() {
                     />
                 </div>
                 <div>
-                    <RequiredLabel>Date of Issue</RequiredLabel>
+                    <RequiredLabel>{t("forms.questionnaireForm.dateOfIssue")}</RequiredLabel>
                     <input
                         type="date"
                         name="dateOfIssue"
@@ -282,7 +284,7 @@ export default function QuestionnaireForm() {
                     />
                 </div>
                 <div>
-                    <RequiredLabel>Date of Expiry</RequiredLabel>
+                    <RequiredLabel>{t("forms.questionnaireForm.dateOfExpiry")}</RequiredLabel>
                     <input
                         type="date"
                         name="dateOfExpiry"
@@ -295,7 +297,7 @@ export default function QuestionnaireForm() {
 
             {/* Страна выдачи */}
             <div>
-                <RequiredLabel>Country of Issue</RequiredLabel>
+                <RequiredLabel>{t("forms.questionnaireForm.countryOfIssue")}</RequiredLabel>
                 <Select
                     options={countries}
                     onChange={(value) => handleCountryChange("countryOfIssue", value)}
@@ -310,11 +312,11 @@ export default function QuestionnaireForm() {
             </div>
 
             <div>
-                <RequiredLabel>Place of Work and Position</RequiredLabel>
+                <RequiredLabel>{t("forms.questionnaireForm.workPlace")}</RequiredLabel>
                 <input
                     name="workPlace"
                     onChange={handleChange}
-                    placeholder="Enter your work"
+                    placeholder={t("forms.questionnaireForm.workPlacePlaceholder")}
                     className="input"
                     disabled={loading}
                 />
@@ -325,11 +327,11 @@ export default function QuestionnaireForm() {
             <div className="flex flex-col gap-4">
                 <div>
                     <RequiredLabel>
-                        Residential address in the Republic of Kazakhstan, street
+                        {t("forms.questionnaireForm.addressKZStreet")}
                     </RequiredLabel>
                     <input
                         name="addressKZStreet"
-                        placeholder="Street"
+                        placeholder={t("forms.questionnaireForm.streetPlaceholder")}
                         onChange={handleChange}
                         className="w-full border border-gray-300 rounded-md px-3 py-2 mt-2 focus:outline-none focus:ring-2 focus:ring-[#22324A]"
                         disabled={loading}
@@ -337,10 +339,10 @@ export default function QuestionnaireForm() {
                 </div>
 
                 <div>
-                    <RequiredLabel>Building</RequiredLabel>
+                    <RequiredLabel>{t("forms.questionnaireForm.building")}</RequiredLabel>
                     <input
                         name="addressKZBuilding"
-                        placeholder="Building"
+                        placeholder={t("forms.questionnaireForm.buildingPlaceholder")}
                         onChange={handleChange}
                         className="w-full border border-gray-300 rounded-md px-3 py-2 mt-2 focus:outline-none focus:ring-2 focus:ring-[#22324A]"
                         disabled={loading}
@@ -351,19 +353,19 @@ export default function QuestionnaireForm() {
             {/* Block + Apartment */}
             <div className="mt-4">
                 <RequiredLabel>
-                    Block and Apartment
+                    {t("forms.questionnaireForm.blockAndApartment")}
                 </RequiredLabel>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
                     <input
                         name="addressKZBlock"
-                        placeholder="Block"
+                        placeholder={t("forms.questionnaireForm.blockPlaceholder")}
                         onChange={handleChange}
                         className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#22324A]"
                         disabled={loading}
                     />
                     <input
                         name="addressKZApartment"
-                        placeholder="Apartment"
+                        placeholder={t("forms.questionnaireForm.apartmentPlaceholder")}
                         onChange={handleChange}
                         className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#22324A]"
                         disabled={loading}
@@ -372,7 +374,7 @@ export default function QuestionnaireForm() {
             </div>
 
             <div>
-                <RequiredLabel>Travel itinerary in Kazakhstan</RequiredLabel>
+                <RequiredLabel>{t("forms.questionnaireForm.travelItinerary")}</RequiredLabel>
                 <input
                     name="travelItinerary"
                     onChange={handleChange}
@@ -383,7 +385,7 @@ export default function QuestionnaireForm() {
             </div>
 
             <div>
-                <RequiredLabel>Country of residence abroad</RequiredLabel>
+                <RequiredLabel>{t("forms.questionnaireForm.residenceCountryAbroad")}</RequiredLabel>
                 <Select
                     options={countries}
                     onChange={(value) => handleCountryChange("residenceCountry", value)}
@@ -398,11 +400,11 @@ export default function QuestionnaireForm() {
             </div>
 
             <div>
-                <RequiredLabel>Residential Address Abroad</RequiredLabel>
+                <RequiredLabel>{t("forms.questionnaireForm.residenceAddressAbroad")}</RequiredLabel>
                 <input
                     name="residenceAddressAbroad"
                     onChange={handleChange}
-                    placeholder="in English, country code, country name, full address"
+                    placeholder={t("forms.questionnaireForm.residenceAddressPlaceholder")}
                     className="input"
                     disabled={loading}
                 />
@@ -410,7 +412,7 @@ export default function QuestionnaireForm() {
 
             {/* Виза */}
             <div>
-                <RequiredLabel>Validity period of the requested visa</RequiredLabel>
+                <RequiredLabel>{t("forms.questionnaireForm.visaPeriod")}</RequiredLabel>
                 <div className="mt-3">
                     <DateRange
                         ranges={[form.visaPeriod]}
@@ -420,7 +422,7 @@ export default function QuestionnaireForm() {
                 </div>
                 <div className="mt-6">
                     <RequiredLabel>
-                        Do you need a Single-entry or Multiple-entry visa?
+                        {t("forms.questionnaireForm.visaType")}
                     </RequiredLabel>
                     <div className="flex gap-4 mt-1">
                         <button
@@ -432,7 +434,7 @@ export default function QuestionnaireForm() {
                                 }`}
                             disabled={loading}
                         >
-                            Single-entry
+                            {t("forms.questionnaireForm.singleEntry")}
                         </button>
                         <button
                             type="button"
@@ -443,7 +445,7 @@ export default function QuestionnaireForm() {
                                 }`}
                             disabled={loading}
                         >
-                            Multiple-entry
+                            {t("forms.questionnaireForm.multipleEntry")}
                         </button>
                     </div>
                 </div>
@@ -451,7 +453,7 @@ export default function QuestionnaireForm() {
 
             {/* Место выдачи визы */}
             <div>
-                <RequiredLabel>Place of visa issuance</RequiredLabel>
+                <RequiredLabel>{t("forms.questionnaireForm.visaIssuancePlace")}</RequiredLabel>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <Select
@@ -466,13 +468,13 @@ export default function QuestionnaireForm() {
                             menu: () => "!rounded-xl !shadow-md !z-50",
                             singleValue: () => "!text-gray-700",
                         }}
-                        placeholder="Select country"
+                        placeholder={t("forms.questionnaireForm.selectCountry")}
                         disabled={loading}
                     />
 
                     <input
                         name="visaIssuanceCity"
-                        placeholder="City"
+                        placeholder={t("forms.questionnaireForm.cityPlaceholder")}
                         onChange={handleChange}
                         className="input w-full"
                         disabled={loading}
@@ -481,11 +483,11 @@ export default function QuestionnaireForm() {
             </div>
 
             <div>
-                <RequiredLabel>Travel history for the last 5 years?</RequiredLabel>
+                <RequiredLabel>{t("forms.questionnaireForm.travelHistory")}</RequiredLabel>
                 <input
                     name="travelHistory"
                     onChange={handleChange}
-                    placeholder="Enter travel history for the last 5 years"
+                    placeholder={t("forms.questionnaireForm.travelHistoryPlaceholder")}
                     className="input"
                     disabled={loading}
                 />
@@ -494,7 +496,7 @@ export default function QuestionnaireForm() {
             {/* Контакты */}
             <div className="grid md:grid-cols-2 gap-4">
                 <div>
-                    <RequiredLabel>Phone Number</RequiredLabel>
+                    <RequiredLabel>{t("forms.questionnaireForm.phoneNumber")}</RequiredLabel>
                     <PhoneInput
                         country={"kz"}
                         value={form.phoneNumber}
@@ -507,7 +509,7 @@ export default function QuestionnaireForm() {
                 </div>
 
                 <div>
-                    <RequiredLabel>Email Address</RequiredLabel>
+                    <RequiredLabel>{t("forms.questionnaireForm.emailAddress")}</RequiredLabel>
                     <input
                         name="emailAddress"
                         type="email"
@@ -520,7 +522,7 @@ export default function QuestionnaireForm() {
 
             {/* Документ */}
             <div>
-                <RequiredLabel>Upload Document</RequiredLabel>
+                <RequiredLabel>{t("forms.questionnaireForm.uploadDocument")}</RequiredLabel>
 
                 <div
                     className="relative border-2 border-dashed border-gray-300 rounded-2xl p-8 text-center
@@ -529,9 +531,9 @@ export default function QuestionnaireForm() {
                 >
                     <Upload className="mx-auto mb-3 text-gray-500" size={36} />
                     <p className="text-gray-700 font-medium">
-                        Click to upload or drag & drop
+                        {t("forms.questionnaireForm.uploadText")}
                     </p>
-                    <p className="text-sm text-gray-500 mt-1">PDF, JPG, PNG up to 10MB</p>
+                    <p className="text-sm text-gray-500 mt-1">{t("forms.questionnaireForm.uploadHint")}</p>
 
                     <input
                         id="fileInput"
@@ -558,7 +560,7 @@ export default function QuestionnaireForm() {
                 onClick={handleSubmit}
                 disabled={loading}
             >
-                Apply
+                {t("forms.questionnaireForm.apply")}
             </button>
         </form>
     );

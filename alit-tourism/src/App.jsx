@@ -1,10 +1,13 @@
 import AppRouter from "./Router";
 import { AuthProvider } from "./utility/AuthContext";
+import { LanguageProvider } from "./utility/LanguageContext";
 
 export default function App() {
   return (
-    <AuthProvider>
-      <AppRouter />
-    </AuthProvider>
+    <LanguageProvider>
+      <AuthProvider>
+        <AppRouter />
+      </AuthProvider>
+    </LanguageProvider>
   );
 }

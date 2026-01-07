@@ -1,29 +1,90 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import toast from "react-hot-toast";
+import { useLanguage } from "../../../utility/LanguageContext";
 // Images from public folder
 const bagPng = "/icons/bag1.png";
 const oiuPng = "/oiu.png";
 import { Tours } from "../../helper/ImageHelper.jsx"
+import { translateTourCommon } from "../../helper/tourTranslations.js";
+import { getTranslatedTourContent } from "../../helper/tourContentTranslations.js";
 
 export default function TourPage() {
+    const { t, language } = useLanguage();
     const navigate = useNavigate();
     const isAuthenticated = !!localStorage.getItem("token"); // пример проверки
     const { id } = useParams();
     const [currentIndex, setCurrentIndex] = useState(0);
-    const currentTour = Tours.find((Tour) => Tour.id === Number(id));
+
+    // Localize tours based on current language
+    const localizedTours = useMemo(() => {
+        return Tours.map(tour => {
+            const contentTranslation = getTranslatedTourContent(tour.id, language);
+
+            return {
+                ...tour,
+                // Apply common translations (Included, Activities, etc.)
+                duration: translateTourCommon(tour.duration, language),
+                touristInfo: tour.touristInfo?.map(info => ({
+                    ...info,
+                    title: translateTourCommon(info.title, language),
+                    texts: info.texts?.map(text => translateTourCommon(text, language))
+                })),
+                tourInfo: tour.tourInfo?.map(info => ({
+                    ...info,
+                    title: translateTourCommon(info.title, language),
+                    texts: info.texts?.map(text => translateTourCommon(text, language))
+                })),
+                // Apply content translations if available
+                ...(contentTranslation && {
+                    title: contentTranslation.title || tour.title,
+                    highlightsTitle: contentTranslation.highlightsTitle || tour.highlightsTitle,
+                    bestOfTitle: contentTranslation.bestOfTitle || tour.bestOfTitle,
+                    bestOfDescription: contentTranslation.bestOfDescription || tour.bestOfDescription,
+                    youWillVisitTitle: contentTranslation.youWillVisitTitle || tour.youWillVisitTitle,
+                    highlights: contentTranslation.highlights || tour.highlights,
+                    slides: tour.slides?.map((slide, idx) => ({
+                        ...slide,
+                        description: contentTranslation.slides?.[idx] || slide.description
+                    })),
+                    itinerary: (() => {
+                        // If contentTranslation has itinerary as array, use it directly
+                        if (contentTranslation.itinerary && Array.isArray(contentTranslation.itinerary)) {
+                            return contentTranslation.itinerary;
+                        }
+                        // Otherwise, merge translations with original tour.itinerary
+                        if (tour.itinerary && Array.isArray(tour.itinerary)) {
+                            return tour.itinerary.map((item, idx) => ({
+                                ...item,
+                                title: contentTranslation?.itinerary?.[idx]?.title || item.title,
+                                description: contentTranslation?.itinerary?.[idx]?.description || item.description,
+                                steps: contentTranslation?.itinerary?.[idx]?.steps || item.steps?.map((step) => ({
+                                    ...step,
+                                    description: typeof step === 'string' ? step : step.description
+                                })),
+                                underText: contentTranslation?.itinerary?.[idx]?.underText || item.underText
+                            }));
+                        }
+                        return tour.itinerary;
+                    })()
+                })
+            };
+        });
+    }, [language]);
+
+    const currentTour = localizedTours.find((Tour) => Tour.id === Number(id));
     if (!currentTour) {
         return (
             <div className="h-[200px] flex flex-col items-center justify-center bg-white text-center space-y-3">
                 <h1 className="text-[#22324A] text-2xl sm:text-4xl font-semibold">
-                    Page Doesn’t Exist 😔
+                    {t("tourPage.pageNotFound")}
                 </h1>
                 <button
                     onClick={() => navigate("/")}
                     className="text-[#22324A] text-xl sm:text-2xl font-medium hover:underline hover:text-[#3B4B6A] transition"
                 >
-                    Go Back to Main Page
+                    {t("tourPage.goBackToMain")}
                 </button>
             </div>
         );
@@ -35,7 +96,7 @@ export default function TourPage() {
         } else {
             // Save current page URL to redirect back after authentication
             localStorage.setItem("redirectAfterAuth", window.location.pathname);
-            toast.error("Please authorize before booking", {
+            toast.error(t("tourPage.authorizeBeforeBooking"), {
                 duration: 4000
             });
             navigate("/auth");
@@ -49,8 +110,6 @@ export default function TourPage() {
         setCurrentIndex((p) => (p === 0 ? slides.length - 1 : p - 1));
     const next = () =>
         setCurrentIndex((p) => (p === slides.length - 1 ? 0 : p + 1));
-
-    console.log("currentTour:", currentTour);
 
     return (
         <div className="min-h-screen flex flex-col items-center bg-white py-8 px-4 sm:py-16 sm:px-0 text-gotham">
@@ -131,10 +190,10 @@ export default function TourPage() {
 
                     <div className="flex flex-col items-center sm:items-start">
                         <span className="text-[#22324A]/50 text-[16px] sm:text-[20px] text-gotham">
-                            Price
+                            {t("tourPage.price")}
                         </span>
                         <span className="text-[#22324A] text-[24px] sm:text-[32px] text-gotham font-[500]">
-                            From {currentTour.price}
+                            {t("tourPage.from")} {currentTour.price}
                         </span>
                     </div>
 
@@ -142,7 +201,7 @@ export default function TourPage() {
                         onClick={handleBook}
                         className="w-full sm:w-[270px] h-[60px] sm:h-[80px] bg-[#22324A] rounded-[15px] sm:rounded-[20px] text-white text-[20px] sm:text-[32px] font-[500] text-gotham"
                     >
-                        Book
+                        {t("tourPage.book")}
                     </button>
                 </div>
 
@@ -161,7 +220,7 @@ export default function TourPage() {
                     {/* Левая колонка — Tour Info */}
                     <div className="bg-white rounded-[15px] px-6 py-8">
                         <h1 className="text-[#22324A] text-2xl sm:text-[38px] font-[500] text-gotham mb-4">
-                            Tour Info
+                            {t("tourPage.tourInfo")}
                         </h1>
 
                         {currentTour?.tourInfo && currentTour.tourInfo.length > 0 ? (
@@ -180,14 +239,14 @@ export default function TourPage() {
                                 ))}
                             </div>
                         ) : (
-                            <p className="text-[#22324A]/50 text-center">No Tour Info available</p>
+                            <p className="text-[#22324A]/50 text-center">{t("tourPage.noTourInfo")}</p>
                         )}
                     </div>
 
                     {/* Правая колонка — Tourist Info */}
                     <div className="bg-white rounded-[15px] px-6 py-8">
                         <h1 className="text-[#22324A] text-2xl sm:text-[38px] font-[500] text-gotham mb-4">
-                            Tourist Info
+                            {t("tourPage.touristInfo")}
                         </h1>
 
                         {currentTour?.touristInfo && currentTour.touristInfo.length > 0 ? (
@@ -206,7 +265,7 @@ export default function TourPage() {
                                 ))}
                             </div>
                         ) : (
-                            <p className="text-[#22324A]/50 text-center">No Tourist Info available</p>
+                            <p className="text-[#22324A]/50 text-center">{t("tourPage.noTouristInfo")}</p>
                         )}
                     </div>
                 </div>
@@ -217,7 +276,7 @@ export default function TourPage() {
                             {/* Table Header */}
                             <div className="bg-[#22324A] py-6">
                                 <h1 className="text-white text-2xl sm:text-[38px] font-[500] text-gotham text-center">
-                                    Price List
+                                    {t("tourPage.priceList")}
                                 </h1>
                             </div>
 
@@ -226,10 +285,10 @@ export default function TourPage() {
                                 <thead>
                                     <tr className="border-b border-gray-200">
                                         <th className="text-center px-6 py-4 text-[#22324A] text-lg sm:text-xl font-[500] text-gotham">
-                                            Number of people
+                                            {t("tourPage.numberOfPeople")}
                                         </th>
                                         <th className="text-left px-6 py-4 text-[#22324A] text-lg sm:text-xl font-[500] text-gotham">
-                                            Price
+                                            {t("tourPage.priceLabel")}
                                         </th>
                                     </tr>
                                 </thead>
@@ -237,7 +296,7 @@ export default function TourPage() {
                                     {currentTour.prices.map((price, i) => (
                                         <tr key={i} className="border-b border-gray-200 last:border-b-0">
                                             <td className="px-6 py-4 text-[#22324A] text-base text-center sm:text-lg text-gotham">
-                                                {price.peopleCount} people
+                                                {price.peopleCount} {t("common.people")}
                                             </td>
                                             <td className="px-6 py-4 text-[#22324A] text-xl sm:text-2xl font-[500] text-gotham">
                                                 {price.price}
@@ -256,14 +315,14 @@ export default function TourPage() {
                             {/* Table Header */}
                             {item.type && <div className='bg-[#22324A] p-6'>
                                 <h1 className="text-white text-2xl sm:text-[38px] font-[500] text-gotham text-left">
-                                    {item.type}
+                                    {translateTourCommon(item.type, language)}
                                 </h1>
                             </div>}
 
                             {item.accommodation && <div className={`bg-[#22324A] px-6 pb-4 ${item.type ? '' : 'pt-6'
                                 }`}>
                                 <p className="whitespace-pre-line text-white text-[15px] sm:text-xl font-[400] text-left">
-                                    {item.accommodation}
+                                    {translateTourCommon(item.accommodation, language)}
                                 </p>
                             </div>}
 
@@ -272,15 +331,15 @@ export default function TourPage() {
                                 <thead>
                                     <tr className="border-b border-gray-200">
                                         <th className="text-center px-6 py-4 text-[#22324A] text-lg sm:text-xl font-[500] text-gotham">
-                                            Number of people
+                                            {t("tourPage.numberOfPeople")}
                                         </th>
                                         <th className="text-left px-6 py-4 text-[#22324A] text-lg sm:text-xl font-[500] text-gotham">
-                                            {item.priceTitle ? item.priceTitle : "Price"}
+                                            {item.priceTitle ? translateTourCommon(item.priceTitle, language) : t("tourPage.priceLabel")}
                                         </th>
                                         {
                                             item.secondPriceTitle && (
                                                 <th className="text-left px-6 py-4 text-[#22324A] text-lg sm:text-xl font-[500] text-gotham">
-                                                    {item.secondPriceTitle}
+                                                    {translateTourCommon(item.secondPriceTitle, language)}
                                                 </th>
                                             )
                                         }
@@ -290,7 +349,7 @@ export default function TourPage() {
                                     {item.prices.map((price, i) => (
                                         <tr key={i} className="border-b border-gray-200 last:border-b-0">
                                             <td className="px-6 py-4 text-[#22324A] text-base text-center sm:text-lg text-gotham">
-                                                {price.peopleCount} people
+                                                {price.peopleCount} {t("common.people")}
                                             </td>
                                             <td className="px-6 py-4 text-[#22324A] text-xl sm:text-2xl font-[500] text-gotham">
                                                 {price.price}
@@ -334,14 +393,13 @@ export default function TourPage() {
                 {currentTour.youWillVisitTitle &&
                     <div>
                         <h1 className="text-[#22324A] text-2xl sm:text-[38px] font-[500] text-gotham mt-10 text-center sm:text-left">
-                            You will visit:
+                            {t("tourPage.youWillVisit")}
                         </h1>
                         <p className="mt-2 text-[#22324A]/60 text-[18px] text-left leading-[25px]">
                             {currentTour.title}
                         </p>
                         <p className="text-[#22324A]/60 text-[16px] text-left mb-8">
-                            Discover the breathtaking beauty of Kazakhstan in one unforgettable
-                            day!
+                            {t("tourPage.discoverBeauty")}
                         </p>
 
                         {/* 🖼️ Image carousel */}
@@ -391,10 +449,10 @@ export default function TourPage() {
                     </div>}
 
                 <h1 className="text-[#22324A] text-2xl sm:text-[38px] font-[500] text-gotham mt-10 text-center sm:text-left">
-                    Itinerary
+                    {t("tourPage.itinerary")}
                 </h1>
 
-                {currentTour.itinerary && currentTour.itinerary.map(item => (
+                {currentTour.itinerary && Array.isArray(currentTour.itinerary) && currentTour.itinerary.map(item => (
                     <div
                         className="w-full max-w-[400px] sm:max-w-[600px]  mt-10 bg-white rounded-[20px] p-6 sm:p-10">
                         {item.title && <p className="px-4 text-base sm:text-xl text-[#22324A] font-[500] tracking-[-0.01em] leading-tight">
@@ -411,12 +469,20 @@ export default function TourPage() {
                                         <div
                                             className="absolute left-[10px] top-1 w-4 h-4 rounded-full bg-[#22324A] border-[2px] border-white shadow-md"></div>
                                         <div>
-                                            <p className="text-base sm:text-lg text-[#22324A] font-medium leading-snug">
-                                                {step.title}
-                                            </p>
-                                            <p className="text-sm text-gray-500 mt-1">
-                                                {step.description}
-                                            </p>
+                                            {typeof step === 'string' ? (
+                                                <p className="text-sm text-gray-500 mt-1">
+                                                    {step}
+                                                </p>
+                                            ) : (
+                                                <>
+                                                    <p className="text-base sm:text-lg text-[#22324A] font-medium leading-snug">
+                                                        {step.title}
+                                                    </p>
+                                                    <p className="text-sm text-gray-500 mt-1">
+                                                        {step.description}
+                                                    </p>
+                                                </>
+                                            )}
                                         </div>
                                     </div>))}
                             </div>

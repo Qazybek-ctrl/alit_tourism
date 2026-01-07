@@ -21,8 +21,10 @@ const workImage = "/work.webp";
 
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { useLanguage } from "../../../utility/LanguageContext";
 
 export default function Work() {
+    const { t } = useLanguage();
     const navigate = useNavigate();
     const isAuthenticated = !!localStorage.getItem("token");
 
@@ -30,7 +32,7 @@ export default function Work() {
         if (isAuthenticated) {
             navigate(`/form/questionnaire?visaInvitationType=work`);
         } else {
-            toast.error("Please authorize in before booking", {
+            toast.error(t("pages.work.authError"), {
                 duration: 5000
             });
             localStorage.setItem("redirectAfterAuth", window.location.pathname);
@@ -44,7 +46,7 @@ export default function Work() {
             <div className="w-full md:w-[1135px] bg-[#F6F6F6] rounded-[20px] md:rounded-[30px] px-5 md:px-20 py-8 md:py-12 flex flex-col">
                 {/* Заголовок */}
                 <h1 className="mb-6 md:mb-8 text-[#22324A] text-[24px] md:text-[35px] font-semibold text-left">
-                    Work Visa (C3) to Kazakhstan
+                    {t("pages.work.title")}
                 </h1>
 
                 {/* Фото */}
@@ -56,16 +58,16 @@ export default function Work() {
                 />
 
                 <h1 className="text-[#22324A] text-[24px] md:text-[35px] font-semibold text-left">
-                    What is a Work Visa (C3)?
+                    {t("pages.work.whatIs")}
                 </h1>
 
                 {/* Описание */}
                 <p className="mt-1 text-[#22324a] font-light text-[15px] md:text-[20px] leading-[20px] md:leading-[25px] tracking-[0.02em] max-w-[1000px]">
-                    The C3 visa is a long-term entry visa issued to foreign citizens who come to Kazakhstan for employment. It allows you to live and legally work in the country under a contract with a Kazakhstani employer.
+                    {t("pages.work.whatIsText")}
                 </p>
 
                 <h1 className="mt-10 text-[#22324A] text-[24px] md:text-[35px] font-semibold text-left">
-                    Key Facts About the C3 Visa
+                    {t("pages.work.keyFacts")}
                 </h1>
 
                 {/* Key Facts */}
@@ -78,9 +80,9 @@ export default function Work() {
                             loading="lazy"
                             className="w-[50px] h-[50px] mb-4"
                         />
-                        <h3 className="text-[#22324A] text-[20px] md:text-[30px] font-semibold">Purpose</h3>
+                        <h3 className="text-[#22324A] text-[20px] md:text-[30px] font-semibold">{t("pages.work.purpose")}</h3>
                         <p className="text-[#22324A] text-[15px] md:text-[20px] font-normal leading-tight">
-                            Tourism only (no business, study, or work).
+                            {t("pages.work.purposeText")}
                         </p>
                     </div>
 
@@ -92,9 +94,9 @@ export default function Work() {
                             loading="lazy"
                             className="w-[50px] h-[50px] mb-4"
                         />
-                        <h3 className="text-[#22324A] text-[20px] md:text-[30px] font-semibold">Validity</h3>
+                        <h3 className="text-[#22324A] text-[20px] md:text-[30px] font-semibold">{t("pages.work.validity")}</h3>
                         <p className="text-[#22324A] text-[15px] md:text-[20px] font-normal leading-tight">
-                            Usually issued for up to 90 days.
+                            {t("pages.work.validityText")}
                         </p>
                     </div>
 
@@ -106,9 +108,9 @@ export default function Work() {
                             loading="lazy"
                             className="w-[50px] h-[50px] mb-4"
                         />
-                        <h3 className="text-[#22324A] text-[20px] md:text-[30px] font-semibold">Stay duration</h3>
+                        <h3 className="text-[#22324A] text-[20px] md:text-[30px] font-semibold">{t("pages.work.stayDuration")}</h3>
                         <p className="text-[#22324A] text-[15px] md:text-[20px] font-normal leading-tight">
-                            Maximum of 30 days per entry (extensions are generally not possible).
+                            {t("pages.work.stayDurationText")}
                         </p>
                     </div>
                 </div>
@@ -124,10 +126,10 @@ export default function Work() {
                             className="w-[50px] h-[50px] mb-4 scale-125"
                         />
                         <h3 className="text-[#22324A] text-[20px] md:text-[30px] font-semibold">
-                            Extension
+                            {t("pages.work.extension")}
                         </h3>
                         <p className="text-[#22324A] text-[15px] md:text-[20px] font-normal leading-tight">
-                            Can be extended annually if the work contract continues.
+                            {t("pages.work.extensionText")}
                         </p>
                     </div>
 
@@ -140,85 +142,85 @@ export default function Work() {
                             className="w-[50px] h-[50px] mb-4 scale-125"
                         />
                         <h3 className="text-[#22324A] text-[20px] md:text-[30px] font-semibold leading-none">
-                            Employer’s responsibility
+                            {t("pages.work.employerResponsibility")}
                         </h3>
                         <p className="text-[#22324A] text-[15px] md:text-[20px] font-normal leading-tight mt-2">
-                            The Kazakh employer must obtain a work permit from the authorities before the visa is issued.
+                            {t("pages.work.employerResponsibilityText")}
                         </p>
                     </div>
                 </div>
 
 
                 <h1 className="mt-10 text-[#22324A] text-[24px] md:text-[35px] font-semibold text-left tracking-[-0.03em]">
-                    Who Needs a B12 Visa?
+                    {t("pages.work.whoNeeds")}
                 </h1>
 
-                <p className="mt-5 text-[15px] md:text-[20px] text-[#22324A] font-[400] font-gotham tracking-[-0.03em]">You need a C3 visa if:</p>
+                <p className="mt-5 text-[15px] md:text-[20px] text-[#22324A] font-[400] font-gotham tracking-[-0.03em]">{t("pages.work.whoNeedsIntro")}</p>
                 <div className="flex flex-col gap-4 mt-5 text-[#22324A]">
                     <div className="flex items-center gap-3">
                         <img src={docPng} alt="icon" loading="lazy" className="w-12 h-12 mt-1" />
                         <p className="text-[15px] md:text-[20px] font-[400] font-gotham tracking-[-0.03em]">
-                            You have a job offer from a Kazakhstani employer.
+                            {t("pages.work.whoNeedsItem1")}
                         </p>
                     </div>
 
                     <div className="flex items-center gap-3">
                         <img src={calendarPng} alt="icon" loading="lazy" className="w-12 h-12 mt-1" />
                         <p className="text-[15px] md:text-[20px] font-[400] font-gotham tracking-[-0.03em]">
-                            Your employer has obtained a work permit for you.
+                            {t("pages.work.whoNeedsItem2")}
                         </p>
                     </div>
 
                     <div className="flex items-center gap-3">
                         <img src={globallightPng} alt="icon" loading="lazy" className="w-12 h-12 mt-1" />
                         <p className="text-[15px] md:text-[20px] font-[400] font-gotham tracking-[-0.03em]">
-                            You plan to work and live in Kazakhstan for more than 90 days.
+                            {t("pages.work.whoNeedsItem3")}
                         </p>
                     </div>
                 </div>
 
 
                 <h1 className="mt-10 text-[#22324A] text-[24px] md:text-[35px] font-semibold text-left tracking-[-0.03em]">
-                    Requirements for Application
+                    {t("pages.work.requirements")}
                 </h1>
                 <p className="mt-4 text-[15px] md:text-[20px] text-[#22324A] font-[400] font-gotham tracking-[-0.03em]">
-                    To apply for a Kazakhstan Work Visa (C3), you generally need:
+                    {t("pages.work.requirementsIntro")}
                 </p>
 
                 <div className="mt-4 flex items-center gap-3">
                     <img src={listPng} alt="icon" className="w-8 h-10 mt-1" />
                     <p className="text-[15px] md:text-[20px] text-[#22324A] font-[400] font-gotham tracking-[-0.03em]">
-                        Completed visa application form (online or at the embassy).
+                        {t("pages.work.req1")}
                     </p>
                 </div>
                 <div className="mt-4 flex items-center gap-3">
                     <img src={globalPng} alt="icon" className="w-8 h-10 mt-1" />
                     <p className="text-[15px] md:text-[20px] text-[#22324A] font-[400] font-gotham tracking-[-0.03em]">
-                        Valid passport (at least 6 months after departure date, 2 blank pages).
+                        {t("pages.work.req2")}
                     </p>
                 </div>
                 <div className="mt-4 flex items-center gap-3">
                     <img src={avaPng} alt="icon" className="w-8 h-10 mt-1" />
                     <p className="text-[15px] md:text-[20px] text-[#22324A] font-[400] font-gotham tracking-[-0.03em]">
-                        Recent passport-sized photo.
+                        {t("pages.work.req3")}
                     </p>
                 </div>
                 <div className="mt-4 flex items-center gap-3">
                     <img src={bagPng} alt="icon" className="w-[32px] h-[50px] scale-80 object-contain" />
                     <p className="text-[15px] md:text-[20px] text-[#22324A] font-[400] font-gotham tracking-[-0.03em]">
-                        Work permit copy issued to the employer by Kazakhstan authorities.
+                        {t("pages.work.req4")}
                     </p>
                 </div>
                 <div className="mt-4 flex items-center gap-3">
                     <img src={listPng} alt="icon" className="w-8 h-10 mt-1" />
                     <p className="text-[15px] md:text-[20px] text-[#22324A] font-[400] font-gotham tracking-[-0.03em]">
-                        Employment contract with a Kazakh company.
+                        {t("pages.work.req5")}
                     </p>
                 </div>
                 <div className="mt-4 flex items-center gap-1">
                     <img src={letterPng} alt="icon" className="w-10 h-10 mt-1 scale-125 object-contain" />
                     <p className="text-[15px] md:text-[20px] text-[#22324A] font-[400] font-gotham tracking-[-0.03em]">
-                        Invitation letter from the employer (registered with the Migration Service of Kazakhstan).
+                        {t("pages.work.req6")}
                     </p>
                 </div>
                 <div className="mt-4 flex items-start gap-2">
@@ -231,16 +233,16 @@ export default function Work() {
 
                     <div className="flex flex-col">
                         <p className="text-[15px] md:text-[20px] text-[#22324A] font-[400] font-gotham tracking-[-0.03em]">
-                            Visa fee payment receipt.
+                            {t("pages.work.req7")}
                         </p>
                         <p className="text-[11px] text-[#22324A]/80 font-[300] font-gotham tracking-[-0.02em]">
-                            (Additional documents may be requested depending on your profession and embassy.)
+                            {t("pages.work.req7Note")}
                         </p>
                     </div>
                 </div>
 
                 <h1 className="mt-10 text-[#22324A] text-[24px] md:text-[35px] text-gotham font-[500] text-left">
-                    Application Process
+                    {t("pages.work.applicationProcess")}
                 </h1>
 
                 <div className="flex flex-col items-center mt-5">
@@ -288,10 +290,10 @@ export default function Work() {
                                 {/* Текст справа */}
                                 <div className="bg-white p-3 rounded-lg ml-4 flex-1">
                                     <p className="text-[#22324A] text-[16px] text-gotham leading-tight font-[500]">
-                                        {workStepTitles[num]}
+                                        {num === 1 ? t("pages.work.step1Title") : t(`pages.work.workSteps.${num}.title`)}
                                     </p>
                                     <p className="text-[#22324A] text-gotham font-[300] leading-tight text-[11px] mt-1">
-                                        {workStepDescriptions[num]}
+                                        {num === 1 ? t("pages.work.step1Desc") : t(`pages.work.workSteps.${num}.desc`)}
                                     </p>
                                 </div>
                             </div>
@@ -302,10 +304,10 @@ export default function Work() {
                     <div className="hidden md:flex items-start justify-center mt-5 gap-[20px]">
                         <div className="bg-white p-3 rounded-lg w-[120px] h-[200px] text-left">
                             <p className="mt-3 text-[#22324A] text-[16px] text-gotham leading-tight font-[500]">
-                                Job offer
+                                {t("pages.work.step1Title")}
                             </p>
                             <p className="text-[#22324A] text-gotham font-[300] leading-tight text-[11px] mt-1">
-                                Secure employment with a Kazakhstani company.
+                                {t("pages.work.step1Desc")}
                             </p>
                         </div>
 
@@ -315,10 +317,10 @@ export default function Work() {
                                 className="bg-white p-3 rounded-lg w-[120px] h-[200px] text-left"
                             >
                                 <p className="mt-3 text-[#22324A] text-[16px] text-gotham leading-tight font-[500]">
-                                    {workStepTitles[num]}
+                                    {t(`pages.work.workSteps.${num}.title`)}
                                 </p>
                                 <p className="text-[#22324A] text-gotham font-[300] leading-tight text-[11px] mt-1">
-                                    {workStepDescriptions[num]}
+                                    {t(`pages.work.workSteps.${num}.desc`)}
                                 </p>
                             </div>
                         ))}
@@ -328,21 +330,18 @@ export default function Work() {
                 <div className="mt-10 flex flex-col md:flex-row items-start md:items-center gap-6">
                     <div className="flex flex-col gap-3 max-w-full md:max-w-[600px]">
                         <h1 className="text-[#22324A] text-[24px] md:text-[35px] font-[500] font-gotham text-left tracking-[-0.03em]">
-                            Responsibilities After Arrival
+                            {t("pages.work.responsibilitiesTitle")}
                         </h1>
 
                         <div className="max-w-full md:max-w-[460px]">
                             <p className="text-[15px] md:text-[20px] text-[#22324A] font-[400] font-gotham tracking-[-0.03em] leading-tight">
-                                <span className="font-[500] font-gotham">Migration registration: </span>
-                                Must be done within 3 business days after arrival (usually handled automatically at airports or by the employer).
+                                {t("pages.work.resp1")}
                             </p>
                             <p className="mt-2 text-[15px] md:text-[20px] text-[#22324A] font-[400] font-gotham tracking-[-0.03em] leading-tight">
-                                <span className="font-[500] font-gotham">Residence permit: </span>
-                                If you plan to stay more than 1 year, you may need a residence permit (issued with employer assistance).
+                                {t("pages.work.resp2")}
                             </p>
                             <p className="mt-2 text-[15px] md:text-[20px] text-[#22324A] font-[400] font-gotham tracking-[-0.03em] leading-tight">
-                                <span className="font-[500] font-gotham">Work only for your sponsoring employer: </span>
-                                Changing employers requires a new work permit and visa.
+                                {t("pages.work.resp3")}
                             </p>
                         </div>
                     </div>
@@ -362,19 +361,19 @@ export default function Work() {
                     <div className="flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-10">
                         <div className="flex flex-col gap-3 w-full md:max-w-[500px]">
                             <h1 className="text-[#22324A] text-[24px] md:text-[35px] font-semibold text-left tracking-[-0.03em] mb-4">
-                                Important Notes for Workers
+                                {t("pages.work.importantNotes")}
                             </h1>
                             <p className="text-[15px] md:text-[20px] text-[#22324A] font-[400] font-gotham tracking-[-0.03em] leading-tight">
-                                Work without a valid C3 visa and permit is illegal and may result in fines or deportation.
+                                {t("pages.work.note1")}
                             </p>
                             <p className="text-[15px] md:text-[20px] text-[#22324A] font-[400] font-gotham tracking-[-0.03em] leading-tight">
-                                Some categories of foreign specialists (e.g., teachers, IT experts, oil & gas professionals) may be given priority in obtaining work permits.
+                                {t("pages.work.note2")}
                             </p>
                             <p className="text-[15px] md:text-[20px] text-[#22324A] font-[400] font-gotham tracking-[-0.03em] leading-tight">
-                                Family members (spouse, children) can apply for dependent visas (C4) to join the worker.
+                                {t("pages.work.note3")}
                             </p>
                             <p className="text-[15px] md:text-[20px] text-[#22324A] font-[400] font-gotham tracking-[-0.03em]">
-                                Health insurance is mandatory during your stay.
+                                {t("pages.work.note4")}
                             </p>
                         </div>
 
@@ -394,7 +393,7 @@ export default function Work() {
                     <button onClick={handleVisa}
                         className="w-[900px] h-[90px] bg-[#22324A] rounded-[15px] flex items-center justify-center hover:opacity-90 transition">
                         <span className="text-white text-[24px] md:text-[35px] font-gotham font-[500] tracking-[-0.03em]">
-                            Apply to Visa
+                            {t("pages.work.applyButton")}
                         </span>
                     </button>
                 </div>

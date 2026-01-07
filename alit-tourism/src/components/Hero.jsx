@@ -2,7 +2,11 @@ const heroImage = "/hero.webp";
 const planeIcon = "/plane.png";
 const verifiedIcon = "/verified.png";
 
+import { useLanguage } from "../utility/LanguageContext";
+
 export default function Hero() {
+  const { t } = useLanguage();
+
   return (
     <section className="relative w-full h-[74vh] sm:h-[90vh] lg:h-screen flex items-center justify-center px-4 lg:px-0">
       <div
@@ -24,7 +28,7 @@ export default function Hero() {
         <div className="relative text-left text-white max-w-3xl mx-6 lg:ml-[350px] lg:mx-0 -translate-y-6 lg:-translate-y-7 z-10">
           <div className="flex items-end gap-2 sm:gap-3 mb-1 lg:gap-4 lg:mb-4">
             <h1 className="text-[12vw] sm:text-5xl md:text-7xl lg:text-7xl leading-tight text-gotham font-[500]">
-              From Visa
+              {t("hero.title1")}
             </h1>
             <img
               src={planeIcon}
@@ -35,12 +39,12 @@ export default function Hero() {
           </div>
 
           <h1 className="text-[12vw] sm:text-5xl md:text-7xl lg:text-7xl mb-4 lg:mb-8 leading-tight text-gotham font-[500]">
-            to Adventure
+            {t("hero.title2")}
           </h1>
 
           <div className="flex flex-wrap items-center gap-3 lg:gap-4 mb-6">
             <p className="text-[6vw] sm:text-2xl md:text-4xl lg:text-4xl font-[400] text-gotham">
-              Your Trusted Partner in Kazakhstan
+              {t("hero.subtitle")}
             </p>
             <img
               src={verifiedIcon}
@@ -65,7 +69,7 @@ export default function Hero() {
                 window.location.href = "/kazakhstan";
               }}
             >
-              Discover Tours
+              {t("hero.discoverTours")}
             </button>
           </div>
         </div>

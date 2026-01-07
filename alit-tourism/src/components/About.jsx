@@ -1,11 +1,13 @@
 const certificateImg = "/certificate.png";
+import { useLanguage } from "../utility/LanguageContext";
 
 export default function About() {
+  const { t } = useLanguage();
   return (
     <section className="w-full bg-white">
       <div className="bg-[#F5F5F5] rounded-[30px] sm:rounded-[50px] p-6 sm:p-8 lg:p-16 my-20 sm:my-32 mx-6 sm:mx-[72px] lg:mx-[120px]">
         <h2 className="text-4xl sm:text-6xl lg:text-7xl text-center text-[#22324A] mb-10 sm:mb-12 text-gotham font-[500]">
-          About Us
+          {t("pages.about.title")}
         </h2>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
@@ -13,18 +15,18 @@ export default function About() {
           <div className="flex flex-col justify-between items-start text-[#000000] text-gotham text-[12px] sm:text-xl lg:text-2xl leading-snug lg:leading-tight">
             <div className="max-w-[600px]">
               <p className="font-light">
-                <span className="font-normal">AILT Tourism</span> is a licensed and registered tourism company in Kazakhstan.
+                <span className="font-normal">AILT Tourism</span> {t("pages.about.intro1")}
               </p>
               <p className="font-light">
-                We offer a full range of services, including visa support (business, tourist, and work visas), insurance services, organizing memorable tours, and we provide comprehensive MICE tourism services.
+                {t("pages.about.intro2")}
               </p>
               <p className="mb-6 font-light">
-                Alongside MICE tourism, we also create unforgettable leisure tours across Kazakhstan, combining culture, nature, and adventure.
+                {t("pages.about.intro3")}
               </p>
 
-              <p className="font-medium">Safety is Our Top Priority</p>
+              <p className="font-medium">{t("pages.about.safetyTitle")}</p>
               <p className="mb-6 font-light">
-                Your safety and comfort are at the heart of our tours. Our team consists of certified guides trained to provide the highest level of service both in urban and natural environments. Skilled in guided tours, landscape navigation, and mountain trekking, they ensure you feel supported at every step. In addition, all our guides are certified in first aid, giving you peace of mind as you enjoy your journey.
+                {t("pages.about.safetyText")}
               </p>
             </div>
 
@@ -32,13 +34,13 @@ export default function About() {
             <div className="mt-8 flex flex-col items-start gap-4">
               <div className="bg-[#F4EBE2] rounded-[30px] w-[280px] sm:w-[350px] lg:w-[400px] p-4 sm:p-6 text-center shadow-md">
                 <p className="text-xl sm:text-2xl lg:text-3xl text-[#22324A] font-medium">
-                  10+ Years of Experience
+                  {t("pages.about.experience")}
                 </p>
               </div>
 
               <div className="bg-[#F4EBE2] rounded-[30px] w-[280px] sm:w-[350px] lg:w-[400px] p-4 sm:p-6 text-center shadow-md">
                 <p className="text-xl sm:text-2xl lg:text-3xl text-[#22324A] font-medium">
-                  5,000+ Satisfied Clients
+                  {t("pages.about.clients")}
                 </p>
               </div>
             </div>

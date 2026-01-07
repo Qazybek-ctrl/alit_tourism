@@ -19,9 +19,11 @@ const bedPng = "/icons/bed.png";
 import { stepTitles, stepDescriptions } from "../../helper/helper";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { useLanguage } from "../../../utility/LanguageContext";
 const businessImmigrantImage = "/businessImmigrant.jpg";
 
 export default function Immigrant() {
+    const { t } = useLanguage();
     const navigate = useNavigate();
     const isAuthenticated = !!localStorage.getItem("token");
 
@@ -29,7 +31,7 @@ export default function Immigrant() {
         if (isAuthenticated) {
             navigate(`/form/questionnaire?visaInvitationType=immigrant`);
         } else {
-            toast.error("Please authorize before booking", {
+            toast.error(t("pages.immigrant.authError"), {
                 duration: 5000
             });
             localStorage.setItem("redirectAfterAuth", window.location.pathname);
@@ -41,7 +43,7 @@ export default function Immigrant() {
             <div className="w-full md:w-[1135px] bg-[#F6F6F6] rounded-[20px] md:rounded-[30px] px-5 md:px-20 py-8 md:py-12 flex flex-col">
                 {/* Заголовок */}
                 <h1 className="mb-6 md:mb-8 text-[#22324A] text-[24px] md:text-[35px] font-semibold text-left">
-                    Business Immigrant Visa (C5) to Kazakhstan
+                    {t("pages.immigrant.title")}
                 </h1>
 
                 {/* Фото */}
@@ -52,17 +54,17 @@ export default function Immigrant() {
                 />
 
                 <h1 className="text-[#22324A] text-[24px] md:text-[35px] font-[500] text-left  ">
-                    What is a Business Immigrant Visa (C5)?
+                    {t("pages.immigrant.whatIs")}
                 </h1>
 
                 {/* Описание */}
                 <p className="mt-1 text-[#22324A]   text-[15px] md:text-[20px] leading-[18px] md:leading-[25px] max-w-[1000px]">
-                    The C5 visa is issued to foreign citizens who plan to come to Kazakhstan as <span className="font-[500]">business immigrants</span>— to open or participate in a private business, invest, or establish a company in Kazakhstan.
-                    It is the first step for those who want to become <span className="font-[500]">entrepreneurs, investors, or company founders</span> in the country.
+                    {t("pages.immigrant.whatIsText1")}
+                    {t("pages.immigrant.whatIsText2")}
                 </p>
 
                 <h1 className="mt-10 text-[#22324A] text-[24px] md:text-[35px]   font-[500] text-left">
-                    Key Facts About the C5 Visa
+                    {t("pages.immigrant.keyFacts")}
                 </h1>
 
                 <div className="mt-10 flex flex-col md:flex-row justify-between gap-2 md:gap-6">
@@ -73,9 +75,9 @@ export default function Immigrant() {
                             alt="Purpose Icon"
                             className="w-[50px] h-[50px] mb-4"
                         />
-                        <h3 className="text-[#22324A] text-[20px] md:text-[30px]   font-[500]">Purpose</h3>
+                        <h3 className="text-[#22324A] text-[20px] md:text-[30px]   font-[500]">{t("pages.immigrant.purpose")}</h3>
                         <p className="text-[#22324A] text-[15px] font-normal leading-tight">
-                            Business immigration (starting or joining a business in Kazakhstan).
+                            {t("pages.immigrant.purposeText")}
                         </p>
                     </div>
 
@@ -86,9 +88,9 @@ export default function Immigrant() {
                             alt="Validity Icon"
                             className="w-[50px] h-[50px] mb-4"
                         />
-                        <h3 className="text-[#22324A] text-[20px] md:text-[30px]   font-[500]">Validity</h3>
+                        <h3 className="text-[#22324A] text-[20px] md:text-[30px]   font-[500]">{t("pages.immigrant.validity")}</h3>
                         <p className="text-[#22324A] text-[15px] font-normal leading-tight">
-                            Usually issued for up to 1 year with multiple entries.
+                            {t("pages.immigrant.validityText")}
                         </p>
                     </div>
 
@@ -99,9 +101,9 @@ export default function Immigrant() {
                             alt="Stay Duration Icon"
                             className="w-[50px] h-[50px] mb-4"
                         />
-                        <h3 className="text-[#22324A] text-[20px] md:text-[30px] font-[500]">Extension</h3>
+                        <h3 className="text-[#22324A] text-[20px] md:text-[30px] font-[500]">{t("pages.immigrant.extension")}</h3>
                         <p className="text-[#22324A] text-[15px] font-normal leading-tight">
-                            Renewable annually if business activity continues.
+                            {t("pages.immigrant.extensionText")}
                         </p>
                     </div>
                 </div>
@@ -116,10 +118,10 @@ export default function Immigrant() {
                             className="w-[50px] h-[50px] mb-4 scale-125"
                         />
                         <h3 className="text-[#22324A] text-[20px] md:text-[30px]   font-[500]">
-                            Residence Permit
+                            {t("pages.immigrant.residencePermit")}
                         </h3>
                         <p className="text-[#22324A] text-[15px] leading-tight">
-                            Holders may later apply for a <span className="font-[500]">residence permit</span> based on their business.
+                            {t("pages.immigrant.residencePermitText")}
                         </p>
                     </div>
 
@@ -131,94 +133,94 @@ export default function Immigrant() {
                             className="w-[50px] h-[50px] mb-4 scale-125"
                         />
                         <h3 className="text-[#22324A] text-[20px] md:text-[30px]   font-[500] leading-none">
-                            Investment requirement
+                            {t("pages.immigrant.investment")}
                         </h3>
                         <p className="text-[#22324A] text-[15px] leading-tight mt-2">
-                            Applicants must meet Kazakhstan’s <span className="font-[500]">financial and business activity requirements</span>.
+                            {t("pages.immigrant.investmentText")}
                         </p>
                     </div>
                 </div>
 
 
                 <h1 className="mt-10 text-[#22324A] text-[24px] md:text-[35px]   font-[500] text-left">
-                    Who Needs a C5 Visa?
+                    {t("pages.immigrant.whoNeeds")}
                 </h1>
 
                 <p className="mt-5 text-[#22324A] text-[15px] md:text-[20px] font-[400] font-gotham tracking-[-0.03em]">
-                    You need a C5 visa if you plan to:
+                    {t("pages.immigrant.whoNeedsIntro")}
                 </p>
                 <div className="flex flex-col gap-4 mt-5 text-[#22324A]">
                     <div className="flex items-center gap-3">
                         <img src={docPng} alt="icon" className="w-12 h-12 mt-1" />
                         <p className="text-[15px] md:text-[20px] font-[400]  ">
-                            Open a private business in Kazakhstan.
+                            {t("pages.immigrant.whoNeedsItem1")}
                         </p>
                     </div>
 
                     <div className="flex items-center gap-3">
                         <img src={calendarPng} alt="icon" className="w-12 h-12 mt-1" />
                         <p className="text-[15px] md:text-[20px] font-[400] font-gotham tracking-[-0.03em]">
-                            Register as an individual entrepreneur.
+                            {t("pages.immigrant.whoNeedsItem2")}
                         </p>
                     </div>
 
                     <div className="flex items-center gap-3">
                         <img src={globallightPng} alt="icon" className="w-12 h-12 mt-1" />
                         <p className="text-[15px] md:text-[20px] font-[400] font-gotham tracking-[-0.03em]">
-                            Invest in a Kazakhstani company.
+                            {t("pages.immigrant.whoNeedsItem3")}
                         </p>
                     </div>
 
                     <div className="flex items-center gap-3">
                         <img src={littlebagPng} alt="icon" className="w-12 h-12 mt-1" />
                         <p className="text-[15px] md:text-[20px] font-[400] font-gotham tracking-[-0.03em]">
-                            Create jobs or participate in projects that contribute to Kazakhstan’s economy.
+                            {t("pages.immigrant.whoNeedsItem4")}
                         </p>
                     </div>
                 </div>
 
 
                 <h1 className="mt-10 text-[#22324A] text-[24px] md:text-[35px]   text-left font-[500]">
-                    Requirements for Application
+                    {t("pages.immigrant.requirements")}
                 </h1>
                 <p className="mt-4 text-[15px] md:text-[20px] text-[#22324A] font-[400] font-gotham tracking-[-0.03em]">
-                    To apply for a Kazakhstan Business Immigrant Visa (C5), you generally need:
+                    {t("pages.immigrant.requirementsIntro")}
                 </p>
 
                 <div className="mt-4 flex items-center gap-3">
                     <img src={listPng} alt="icon" className="w-8 h-10 mt-1" />
                     <p className="text-[15px] md:text-[20px] text-[#22324A] font-[400] font-gotham tracking-[-0.03em]">
-                        Completed visa application form (online or at the embassy).
+                        {t("pages.immigrant.req1")}
                     </p>
                 </div>
                 <div className="mt-4 flex items-center gap-3">
                     <img src={globalPng} alt="icon" className="w-8 h-10 mt-1" />
                     <p className="text-[15px] md:text-[20px] text-[#22324A] font-[400] font-gotham tracking-[-0.03em]">
-                        Valid passport (at least 6 months after departure date, 2 blank pages).
+                        {t("pages.immigrant.req2")}
                     </p>
                 </div>
                 <div className="mt-4 flex items-center gap-3">
                     <img src={avaPng} alt="icon" className="w-8 h-10 mt-1" />
                     <p className="text-[15px] md:text-[20px] text-[#22324A] font-[400] font-gotham tracking-[-0.03em]">
-                        Recent passport-sized photo.
+                        {t("pages.immigrant.req3")}
                     </p>
                 </div>
                 <div className="mt-4 flex items-center gap-1">
                     <img src={bedPng} alt="icon" className="w-10 h-10 mt-1 scale-125 object-contain" />
                     <p className="text-[15px] md:text-[20px] text-[#22324A] font-[400] font-gotham tracking-[-0.03em]">
-                        Proof of financial capacity (bank statement, proof of capital).
+                        {t("pages.immigrant.req4")}
                     </p>
                 </div>
                 <div className="mt-4 flex items-center gap-2">
                     <img src={ticketPng} alt="icon" className="w-9 h-9 mt-1 scale-125 object-contain" />
                     <p className="text-[15px] md:text-[20px] text-[#22324A] font-[400] font-gotham tracking-[-0.03em]">
-                        Business plan or statement of intended activity in Kazakhstan.
+                        {t("pages.immigrant.req5")}
                     </p>
                 </div>
                 <div className="mt-4 flex items-center gap-1">
                     <img src={letterPng} alt="icon" className="w-10 h-10 mt-1 scale-125 object-contain" />
                     <p className="text-[15px] md:text-[20px] text-[#22324A] font-[400] font-gotham tracking-[-0.03em]">
-                        Invitation letter from Kazakh authorities (issued after business registration request).
+                        {t("pages.immigrant.req6")}
                     </p>
                 </div>
                 <div className="mt-4 flex items-start gap-1">
@@ -230,16 +232,16 @@ export default function Immigrant() {
 
                     <div className="flex flex-col">
                         <p className="text-[20px] text-[#22324A] font-[400] font-gotham tracking-[-0.03em]">
-                            Visa fee payment receipt.
+                            {t("pages.immigrant.req7")}
                         </p>
                         <p className="text-[11px] text-[#22324A]/80 font-[300] font-gotham tracking-[-0.02em]">
-                            (Exact requirements may differ depending on the embassy/consulate.)
+                            {t("pages.immigrant.req7Note")}
                         </p>
                     </div>
                 </div>
 
                 <h1 className="mt-10 text-[#22324A] text-[24px] md:text-[35px]   font-[500] text-left">
-                    Application Process
+                    {t("pages.immigrant.applicationProcess")}
                 </h1>
 
                 <div className="flex flex-col items-center mt-5">
@@ -287,10 +289,10 @@ export default function Immigrant() {
                                 {/* Текст справа */}
                                 <div className="bg-white p-3 rounded-lg ml-4 flex-1">
                                     <p className="text-[#22324A] text-[16px]   leading-tight font-[500]">
-                                        {stepTitles[num]}
+                                        {num === 1 ? t("pages.immigrant.step1Title") : t(`pages.immigrant.immigrantSteps.${num}.title`)}
                                     </p>
                                     <p className="text-[#22324A]   font-[300] leading-tight text-[11px] mt-1">
-                                        {stepDescriptions[num]}
+                                        {num === 1 ? t("pages.immigrant.step1Desc") : t(`pages.immigrant.immigrantSteps.${num}.desc`)}
                                     </p>
                                 </div>
                             </div>
@@ -301,10 +303,10 @@ export default function Immigrant() {
                     <div className="hidden md:flex items-start justify-center mt-5 gap-[20px]">
                         <div className="bg-white p-3 rounded-lg w-[120px] h-[200px] text-left">
                             <p className="mt-3 text-[#22324A] text-[16px]   leading-tight font-[500]">
-                                Check visa-free eligibility
+                                {t("pages.immigrant.step1Title")}
                             </p>
                             <p className="text-[#22324A]   font-[300] leading-tight text-[11px] mt-1">
-                                You may not need a visa at all.
+                                {t("pages.immigrant.step1Desc")}
                             </p>
                         </div>
 
@@ -314,10 +316,10 @@ export default function Immigrant() {
                                 className="bg-white p-3 rounded-lg w-[120px] h-[200px] text-left"
                             >
                                 <p className="mt-3 text-[#22324A] text-[16px]   leading-tight font-[500]">
-                                    {stepTitles[num]}
+                                    {t(`pages.immigrant.immigrantSteps.${num}.title`)}
                                 </p>
                                 <p className="text-[#22324A]   font-[300] leading-tight text-[11px] mt-1">
-                                    {stepDescriptions[num]}
+                                    {t(`pages.immigrant.immigrantSteps.${num}.desc`)}
                                 </p>
                             </div>
                         ))}
@@ -326,58 +328,58 @@ export default function Immigrant() {
 
                 <div className="mt-12 w-full max-w-[975px] bg-white rounded-[20px] mx-auto flex flex-col px-6 md:px-10 py-8 text-[#22324A]">
                     <h1 className="text-[24px] md:text-[35px] text-left font-[500] mb-4">
-                        Important Notes for Business Immigrants
+                        {t("pages.immigrant.importantNotes")}
                     </h1>
 
                     <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 md:gap-10">
                         {/* Текст */}
                         <div className="flex flex-col gap-3 w-full text-[15px] md:text-[20px]">
                             <p className="font-[400] font-gotham tracking-[-0.03em] leading-tight">
-                                First, a <span className="font-[500]">C5 visa</span> will be issued for 90 days. Within the first 60 days after arrival, you must either register a company or purchase shares in an existing company. Once the company is registered or the shares are acquired, you become eligible to apply for a <span className="font-[500]">1-year visa</span>.
+                                {t("pages.immigrant.note1")}
                             </p>
                             <p className="font-[400] font-gotham tracking-[-0.03em] leading-tight">
-                                A C5 visa allows you to <span className="font-[500]">do business and invest</span>, but you must follow Kazakhstan’s company registration rules.
+                                {t("pages.immigrant.note2")}
                             </p>
                             <p className="font-[400] font-gotham tracking-[-0.03em] leading-tight">
-                                You should show <span className="font-[500]">sufficient capital</span> to fund your business.
+                                {t("pages.immigrant.note3")}
                             </p>
                             <p className="font-[400] font-gotham tracking-[-0.03em] leading-tight">
-                                Family members (spouse, children) can apply for <span className="font-[500]">dependent visas</span> to join you.
+                                {t("pages.immigrant.note4")}
                             </p>
                             <p className="font-[400] font-gotham tracking-[-0.03em] leading-tight">
-                                Business immigrants are expected to <span className="font-[500]">contribute to the local economy</span> (job creation, investment).
+                                {t("pages.immigrant.note5")}
                             </p>
                         </div>
                     </div>
                 </div>
 
                 <h1 className="mt-12 text-[#22324A] text-[24px] md:text-[35px] font-[500] text-left tracking-[-0.03em]">
-                    How to Apply for an invitation from a licensed tour operator in Kazakhstan.
+                    {t("pages.immigrant.howToApply")}
                 </h1>
                 <p className="mt-4 text-[15px] md:text-[20px] text-[#22324A] font-[400]   tracking-[-0.03em]">
-                    For a <span className="font-[500]">C5 single-entry visa</span>, the processing period is <span className="font-[500]">7–14 working days</span> (excluding Saturdays and Sundays). In some cases, at the request of the National Security Committee of Kazakhstan, the process may be extended up to <span className="font-[500]">30 days</span>.
+                    {t("pages.immigrant.processingTime1")}
                 </p>
                 <p className="mt-4 text-[15px] md:text-[20px] text-[#22324A] font-[400]   tracking-[-0.03em]">
-                    If you are applying to<span className="font-[500]">extend your C5 visa to a 1-year multiple-entry visa</span>, the processing time may take up to <span className="font-[500]">2 months</span>.
+                    {t("pages.immigrant.processingTime2")}
                 </p>
                 <p className="mt-4 text-[15px] md:text-[20px] text-[#22324A] font-[400]   tracking-[-0.03em]">
-                    To apply, please:
+                    {t("pages.immigrant.toApply")}
                 </p>
                 <p className="mt-2 ml-4 text-[15px] md:text-[20px] text-[#22324A] font-[400]   tracking-[-0.03em]">
-                    • Fill out the provided questionnaire.
+                    {t("pages.immigrant.applyStep1")}
                 </p>
                 <p className="mt-2 ml-4 text-[15px] md:text-[20px] text-[#22324A] font-[400]   tracking-[-0.03em]">
-                    • Submit a <span className="font-[500]">high-quality</span> scan or photo of your passport (all pages with stamps and visas).
+                    {t("pages.immigrant.applyStep2")}
                 </p>
                 <p className="mt-2 ml-4 text-[15px] md:text-[20px] text-[#22324A] font-[400]   tracking-[-0.03em]">
-                    • If you are applying from a country other than your country of origin, provide a document confirming your <span className="font-[500]">residence permit</span> or <span className="font-[500]">long-term</span> visa in that country.
+                    {t("pages.immigrant.applyStep3")}
                 </p>
 
                 <div className="mt-8 md:mt-16 flex justify-center">
                     <button onClick={handleVisa}
                         className="w-[900px] h-[90px] bg-[#22324A] rounded-[15px] flex items-center justify-center hover:opacity-90 transition">
                         <span className="text-white text-[24px] md:text-[35px] font-gotham font-[500] tracking-[-0.03em]">
-                            Apply to Visa
+                            {t("pages.immigrant.applyButton")}
                         </span>
                     </button>
                 </div>

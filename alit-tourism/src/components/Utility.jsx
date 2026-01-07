@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { useLanguage } from "../utility/LanguageContext";
 
 const flagandstreet = "/flagandstreet.webp";
 const review = "/review.jpg";
@@ -25,18 +26,18 @@ import ReviewModal from "./modals/ReviewModal.jsx";
 import PhotoViewModal from "./modals/PhotoViewModal.jsx";
 
 const tours = [
-    { id: 1, img: kolsayImage, title: "Kolsay Lake", days: "5 days" },
-    { id: 8, img: charynImage, title: "Charyn Canyon", days: "3 days" },
-    { id: 6, img: biglakeImage, title: "Big Almaty Lake", days: "1 week" },
-    { id: 1, img: kainImage, title: "Kaindy Lake", days: "5 days" }]
+    { id: 1, img: kolsayImage, titleKey: "common.kolsayLake", daysKey: "common.days5" },
+    { id: 8, img: charynImage, titleKey: "common.charynCanyon", daysKey: "common.days3" },
+    { id: 6, img: biglakeImage, titleKey: "common.bigAlmatyLake", daysKey: "common.week1" },
+    { id: 1, img: kainImage, titleKey: "common.kaindyLake", daysKey: "common.days5" }]
 
 export default function Explore() {
+    const { t } = useLanguage();
     const [weather, setWeather] = useState({ temperature: 0, condition: "Sunny" });
     const [isOpen, setIsOpen] = useState(false);
     const [isOpenReview, setIsOpenReview] = useState(false);
     const [isOpenPhoto, setIsOpenPhoto] = useState(false);
     const navigate = useNavigate();
-    console.log("weather:", weather)
 
     useEffect(() => {
         fetch("https://api.open-meteo.com/v1/forecast?latitude=43.15&longitude=76.95&hourly=apparent_temperature&models=best_match&current=temperature_2m,relative_humidity_2m,rain,wind_speed_10m,apparent_temperature,snowfall&timezone=auto&forecast_days=2")
@@ -61,7 +62,7 @@ export default function Explore() {
 
     return (<section className="w-full py-0 sm:py-0 bg-white text-center text-gotham">
         <h2 className="font-medium text-[40px] sm:text-[80px] leading-[70px] sm:leading-[130px] text-gotham text-[#22324A]">
-            We Recommend
+            {t("pages.utility.weRecommend")}
         </h2>
 
         <div
@@ -90,12 +91,12 @@ export default function Explore() {
                 <div
                     className="absolute bottom-6 md:bottom-16 left-4 text-[#FFFFFF] leading-[100%] tracking-[-0.03em] text-left text-gotham">
                     <p className="font-normal text-[26px] sm:text-[28px] md:hidden">
-                        Travel Tips Blog
+                        {t("pages.utility.travelTipsBlog")}
                     </p>
 
                     <div className="hidden md:block">
-                        <p className="mb-4 font-normal text-[30px]">Travel Tips</p>
-                        <p className="font-normal text-[30px]">Blog</p>
+                        <p className="mb-4 font-normal text-[30px]">{t("pages.utility.travelTips")}</p>
+                        <p className="font-normal text-[30px]">{t("pages.utility.blog")}</p>
                     </div>
                 </div>
             </div>
@@ -122,7 +123,7 @@ export default function Explore() {
                     <span className="font-normal text-gotham md:font-bold text-[24px] md:text-[48px]">
                         {weather.temperature}°
                     </span>
-                    <span className="font-[500] text-[24px] ml-2">{weather.condition}</span>
+                    <span className="font-[500] text-[24px] ml-2">{t(`common.weather${weather.condition}`)}</span>
                 </div>
 
                 {/* Модалка с деталями */}
@@ -142,7 +143,7 @@ export default function Explore() {
                     alt="photo 2"
                     className="w-full h-full rounded-[17px] md:rounded-[30px] object-cover"
                 />
-                
+
                 <div
                     className="absolute top-3 right-4 w-[50px] h-[50px] rounded-full flex items-center justify-center bg-white/40 backdrop-blur-sm cursor-pointer"
                     onClick={() => setIsOpenReview(true)}
@@ -164,7 +165,7 @@ export default function Explore() {
                     </div>
 
                     <p className="font-[400] md:font-medium text-[11px] md:text-[20px]">
-                        The Most Enchanting Dive Destinations
+                        {t("pages.utility.enchantingDestinations")}
                     </p>
                 </div>
 
@@ -191,12 +192,12 @@ export default function Explore() {
                 <div
                     className="absolute bottom-6 md:bottom-14 left-4 text-[#f6fcf5] leading-[100%] tracking-[-0.03em] text-left text-gotham">
                     <p className="font-normal text-[26px] sm:text-[28px] md:hidden">
-                        Explore New Places
+                        {t("pages.utility.exploreNewPlaces")}
                     </p>
 
                     <div className="hidden md:block">
-                        <p className="mb-4 font-[500] text-[30px]">Explore</p>
-                        <p className="font-[500] text-[30px]">New Places</p>
+                        <p className="mb-4 font-[500] text-[30px]">{t("pages.utility.explore")}</p>
+                        <p className="font-[500] text-[30px]">{t("pages.utility.newPlaces")}</p>
                     </div>
                 </div>
                 {isOpenPhoto && (<PhotoViewModal onClose={() => setIsOpenPhoto(false)} />)}
@@ -205,7 +206,7 @@ export default function Explore() {
 
         <div className="mt-10 md:mt-32 flex items-center justify-center text-[#22324A]">
             <p className="font-[500] md:font-semibold text-[30px] md:text-[70px] tracking-[0.01em] leading-none flex items-center">
-                Visa Support
+                {t("pages.utility.visaSupport")}
                 <img
                     src={oiuIcon}
                     alt="Oiu Icon"
@@ -237,7 +238,7 @@ export default function Explore() {
                 </div>
 
                 <div className="flex justify-between w-full px-2 items-center">
-                    <span className="text-[#22324A] text-lg font-medium">Tourism</span>
+                    <span className="text-[#22324A] text-lg font-medium">{t("pages.utility.tourism")}</span>
                     <span className="bg-[#F4EBE2] text-[#22324A] text-sm font-semibold px-2 py-1 rounded-md">
                         B12
                     </span>
@@ -266,7 +267,7 @@ export default function Explore() {
                 </div>
 
                 <div className="flex justify-between w-full px-2 items-center">
-                    <span className="text-[#22324A] text-lg font-medium">Work</span>
+                    <span className="text-[#22324A] text-lg font-medium">{t("pages.utility.work")}</span>
                     <span className="bg-[#F4EBE2] text-[#22324A] text-sm font-semibold px-2 py-1 rounded-md">
                         C3
                     </span>
@@ -297,7 +298,7 @@ export default function Explore() {
                 </div>
 
                 <div className="flex justify-between w-full px-2 items-center">
-                    <span className="text-[#22324A] text-lg font-medium">Business</span>
+                    <span className="text-[#22324A] text-lg font-medium">{t("pages.utility.business")}</span>
                     <div className="flex gap-1">
                         {["B1", "B2", "B3"].map((code) => (<span
                             key={code}
@@ -333,7 +334,7 @@ export default function Explore() {
 
                 <div className="flex justify-between w-full px-2 items-center">
                     <span className="text-[#22324A] text-lg font-medium">
-                        Business Immigrant
+                        {t("pages.utility.businessImmigrant")}
                     </span>
                     <span className="bg-[#F4EBE2] text-[#22324A] text-sm font-semibold px-2 py-1 rounded-md">
                         C5
@@ -348,7 +349,7 @@ export default function Explore() {
                bg-[#22324A] text-[#F4EBE2] font-gotham rounded-[13px] md:rounded-[20px]
                hover:opacity-80 flex items-center justify-center"
             >
-                <span className="text-[20px] md:text-[40px]">Apply</span>
+                <span className="text-[20px] md:text-[40px]">{t("pages.utility.apply")}</span>
             </button>
         </div>
 
@@ -357,7 +358,7 @@ export default function Explore() {
             <div className="flex items-center justify-center gap-0 md:gap-2 mb-5 md:mb-10">
                 <span
                     className="text-[#22324A] text-[25px] md:text-[65px] font-[500] md:font-semibold text-left md:text-center">
-                    Top-Recommended Tours
+                    {t("pages.utility.topRecommendedTours")}
                 </span>
                 <img
                     src={oiuIcon}
@@ -383,14 +384,14 @@ export default function Explore() {
                             />
                             <div
                                 className="hidden md:flex absolute w-[100px] h-[35px] md:w-[110px] md:h-[40px] bottom-5 right-4 bg-[#F4EBE2] text-[#22324A] text-[16px] md:text-[20px] font-normal rounded-md flex items-center justify-center">
-                                {tour.days}
+                                {t(tour.daysKey)}
                             </div>
                         </div>
                         <p className="mt-3 text-[#22324A] text-[20px] md:text-[24px] font-medium">
-                            {tour.title}
+                            {t(tour.titleKey)}
                         </p>
                         <p className="text-[#C5C8CB] text-[16px] md:text-[20px]">
-                            Almaty
+                            {t("pages.utility.almaty")}
                         </p>
                     </div>))}
                 </div>
@@ -403,7 +404,7 @@ export default function Explore() {
                     className="w-[90%] md:w-[520px] h-[60px] md:h-[100px] bg-[#ffffff] md:bg-[#F4EBE2] text-[#22324A] text-[22px] md:text-[30px]
             font-[400] md:font-bold rounded-[10px] md:rounded-[18px] flex items-center justify-center hover:opacity-90 transition"
                 >
-                    Book Now
+                    {t("pages.utility.bookNow")}
                 </button>
             </div>
         </div>

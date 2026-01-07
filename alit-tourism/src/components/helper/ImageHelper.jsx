@@ -180,7 +180,7 @@ export const Tours = [
                 icon: flagPng,
                 title: "Total Distance",
                 texts: [
-                    "~660 km round trip"
+                    "660 km round trip"
                 ]
             },
             {
@@ -349,7 +349,7 @@ export const Tours = [
                 icon: flagPng,
                 title: "Total Distance",
                 texts: [
-                    "~660 km round trip"
+                    "660 km round trip"
                 ]
             },
             {
@@ -446,7 +446,7 @@ export const Tours = [
                 icon: flagPng,
                 title: "Total Distance",
                 texts: [
-                    "~240 km round trip"
+                    "240 km round trip"
                 ]
             },
             {

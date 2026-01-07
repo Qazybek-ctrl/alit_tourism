@@ -1,7 +1,10 @@
 import React from "react";
-import {User} from "lucide-react"
+import { User } from "lucide-react"
+import { useLanguage } from "../../utility/LanguageContext";
 
-const ReviewsModal = ({onClose}) => {
+const ReviewsModal = ({ onClose }) => {
+    const { t } = useLanguage();
+
     return (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 overflow-y-auto">
             <div className="bg-white w-full max-w-3xl rounded-xl shadow-lg relative p-6">
@@ -14,7 +17,7 @@ const ReviewsModal = ({onClose}) => {
                 </button>
 
                 {/* Header */}
-                <h2 className="text-center text-xl md:text-4xl font-bold mb-6 text-gotham text-[#22324A]">Reviews</h2>
+                <h2 className="text-center text-xl md:text-4xl font-bold mb-6 text-gotham text-[#22324A]">{t("modals.reviews.title")}</h2>
 
                 {/* Company info */}
                 <a
@@ -45,7 +48,7 @@ const ReviewsModal = ({onClose}) => {
                                                 viewBox="0 0 20 20"
                                             >
                                                 <path
-                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.955a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.37 2.448a1 1 0 00-.364 1.118l1.286 3.955c.3.921-.755 1.688-1.54 1.118l-3.37-2.448a1 1 0 00-1.176 0l-3.37 2.448c-.784.57-1.838-.197-1.539-1.118l1.285-3.955a1 1 0 00-.364-1.118L2.037 9.382c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69l1.286-3.955z"/>
+                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.955a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.37 2.448a1 1 0 00-.364 1.118l1.286 3.955c.3.921-.755 1.688-1.54 1.118l-3.37-2.448a1 1 0 00-1.176 0l-3.37 2.448c-.784.57-1.838-.197-1.539-1.118l1.285-3.955a1 1 0 00-.364-1.118L2.037 9.382c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69l1.286-3.955z" />
                                             </svg>
                                         );
                                     } else if (i === 4) {
@@ -57,8 +60,8 @@ const ReviewsModal = ({onClose}) => {
                                             >
                                                 <defs>
                                                     <linearGradient id="halfGrad">
-                                                        <stop offset="80%" stopColor="currentColor"/>
-                                                        <stop offset="80%" stopColor="transparent"/>
+                                                        <stop offset="80%" stopColor="currentColor" />
+                                                        <stop offset="80%" stopColor="transparent" />
                                                     </linearGradient>
                                                 </defs>
                                                 <path
@@ -81,7 +84,7 @@ const ReviewsModal = ({onClose}) => {
                     <div className="flex space-x-4 text-left">
                         <div
                             className="w-12 h-12 rounded-full bg-gray-300 flex-shrink-0 flex items-center justify-center">
-                            <User className="w-6 h-6 text-gray-500"/>
+                            <User className="w-6 h-6 text-gray-500" />
                         </div>
                         <div>
                             <p className="font-semibold">Yasitha Bogamuwa</p>
@@ -96,7 +99,7 @@ const ReviewsModal = ({onClose}) => {
                     <div className="flex space-x-4 text-left">
                         <div
                             className="w-12 h-12 rounded-full bg-gray-300 flex-shrink-0 flex items-center justify-center">
-                            <User className="w-6 h-6 text-gray-500"/>
+                            <User className="w-6 h-6 text-gray-500" />
                         </div>
                         <div>
                             <p className="font-semibold">Abdul Basith Azeez</p>

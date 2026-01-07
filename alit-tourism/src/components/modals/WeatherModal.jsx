@@ -1,6 +1,8 @@
 import React from "react";
+import { useLanguage } from "../../utility/LanguageContext";
 
-const WeatherModal = ({weather, hourly, city, onClose}) => {
+const WeatherModal = ({ weather, hourly, city, onClose }) => {
+    const { t } = useLanguage();
     // Получаем текущее время
     const now = new Date();
     const currentHour = now.getHours();
@@ -17,19 +19,19 @@ const WeatherModal = ({weather, hourly, city, onClose}) => {
         <div className="fixed inset-0 bg-black/50 z-50 flex items-start justify-center overflow-y-auto">
             <div className="bg-white rounded-2xl mt-10 mb-10 w-[95%] max-w-3xl p-6 md:p-8 flex flex-col">
                 {/* Заголовок */}
-                <h2 className="text-center text-[#22324A] text-3xl md:text-4xl font-bold mb-6">Weather</h2>
+                <h2 className="text-center text-[#22324A] text-3xl md:text-4xl font-bold mb-6">{t("modals.weather.title")}</h2>
 
                 {/* Верхний блок с текущей погодой и картой */}
                 <div className="bg-white rounded-xl p-4 md:p-6 flex flex-col md:flex-row mb-6 shadow-md">
                     {/* Левая часть */}
                     <div className="flex-1 mb-4 md:mb-0">
-                        <p className="text-sm text-gray-500">Today</p>
+                        <p className="text-sm text-gray-500">{t("modals.weather.today")}</p>
                         <h3 className="text-2xl md:text-3xl font-bold text-[#22324A]">{city}</h3>
-                        <p className="text-xl md:text-2xl text-[#22324A]">{weather.condition}</p>
-                        <p className="mt-2 text-[#22324A]">Temperature: {weather.temperature}°C</p>
-                        <p className="text-[#22324A]">Humidity: {weather.humidity}%</p>
-                        <p className="text-[#22324A]">Wind: {weather.wind} km/h</p>
-                        <p className="text-[#22324A]">Rain: {weather.rain} mm</p>
+                        <p className="text-xl md:text-2xl text-[#22324A]">{t(`common.weather${weather.condition}`)}</p>
+                        <p className="mt-2 text-[#22324A]">{t("modals.weather.temperature")}: {weather.temperature}°C</p>
+                        <p className="text-[#22324A]">{t("modals.weather.humidity")}: {weather.humidity}%</p>
+                        <p className="text-[#22324A]">{t("modals.weather.wind")}: {weather.wind} km/h</p>
+                        <p className="text-[#22324A]">{t("modals.weather.rain")}: {weather.rain} mm</p>
                     </div>
                     {/* Правая часть: карта */}
                     <div className="flex-1 md:ml-6 h-48 md:h-auto">
@@ -43,7 +45,7 @@ const WeatherModal = ({weather, hourly, city, onClose}) => {
 
                 {/* Нижний блок: прогноз на следующие 7 часов */}
                 <div className="bg-white rounded-xl p-4 md:p-6 shadow-md">
-                    <h3 className="text-xl font-bold mb-4 text-[#22324A]">Next 7 Hours</h3>
+                    <h3 className="text-xl font-bold mb-4 text-[#22324A]">{t("modals.weather.nextHours")}</h3>
                     <div className="flex overflow-x-auto space-x-4 pb-5">
                         {nextHours.map((hour, index) => {
                             const hourTime = new Date(hour.time).getHours();
@@ -65,7 +67,7 @@ const WeatherModal = ({weather, hourly, city, onClose}) => {
                     onClick={onClose}
                     className="mt-6 w-full md:w-auto px-6 py-3 bg-[#22324A] text-[#F4EBE2] font-[500] rounded-xl self-center"
                 >
-                    Close
+                    {t("modals.weather.close")}
                 </button>
             </div>
         </div>

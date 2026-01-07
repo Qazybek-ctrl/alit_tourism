@@ -5,8 +5,10 @@ import countryList from "react-select-country-list";
 import api from "../../../Api";
 import toast from "react-hot-toast";
 import { Tours } from "../../helper/ImageHelper.jsx"
+import { useLanguage } from "../../../utility/LanguageContext";
 
 export default function GuestForm() {
+    const { t } = useLanguage();
     const { search } = useLocation();
     const params = new URLSearchParams(search);
     const id = params.get("id");
@@ -27,9 +29,26 @@ export default function GuestForm() {
     const countries = countryList().getData();
     const navigate = useNavigate();
 
-    const languages = ["English", "Russian", "Arabic", "Chinese", "Other"];
-    const interests = ["City sightseeing", "Nature tours (mountains, lakes, canyons)", "Cultural attractions", "Local food & gastronomy", "Other"];
-    const dietaryOptions = ["Vegetarian", "Vegan", "Halal", "No Restrictions"];
+    const languages = [
+        t("forms.guestForm.languages.english"),
+        t("forms.guestForm.languages.russian"),
+        t("forms.guestForm.languages.arabic"),
+        t("forms.guestForm.languages.chinese"),
+        t("forms.guestForm.languages.other")
+    ];
+    const interests = [
+        t("forms.guestForm.interests.citySightseeing"),
+        t("forms.guestForm.interests.natureTours"),
+        t("forms.guestForm.interests.culturalAttractions"),
+        t("forms.guestForm.interests.localFood"),
+        t("forms.guestForm.interests.other")
+    ];
+    const dietaryOptions = [
+        t("forms.guestForm.dietary.vegetarian"),
+        t("forms.guestForm.dietary.vegan"),
+        t("forms.guestForm.dietary.halal"),
+        t("forms.guestForm.dietary.noRestrictions")
+    ];
     const [loading, setLoading] = useState(false);
 
     const handleChange = (e) => {
@@ -43,7 +62,7 @@ export default function GuestForm() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!id) {
-            toast.error("Tour ID is required to proceed with booking", { duration: 3000 });
+            toast.error(t("forms.guestForm.errors.tourIdRequired"), { duration: 3000 });
             return;
         }
 
@@ -63,7 +82,7 @@ export default function GuestForm() {
             );
 
             if (emptyField) {
-                toast.error(`Please fill out the empty fields`);
+                toast.error(t("forms.guestForm.errors.fillEmptyFields"));
                 setLoading(false);
                 return;
             }
@@ -81,15 +100,15 @@ export default function GuestForm() {
 
             toast.success(
                 <div>
-                    <p>Application submitted successfully!</p>
-                    <p className="text-sm text-gray-400">Our team will contact you soon, please wait.</p>
+                    <p>{t("forms.guestForm.success.submitted")}</p>
+                    <p className="text-sm text-gray-400">{t("forms.guestForm.success.contactSoon")}</p>
                 </div>,
                 { duration: 6000 }
             );
             navigate("/profile");
         } catch (error) {
             console.error(error);
-            toast.error("❌ Failed to submit application");
+            toast.error("❌ " + t("forms.guestForm.errors.fillEmptyFields"));
         } finally {
             setLoading(false);
         }
@@ -99,28 +118,28 @@ export default function GuestForm() {
         <form
             className="max-w-6xl mx-auto p-6 md:p-10 space-y-6 text-[#22324A] bg-[#FFFFFF] md:bg-[#F6F6F6] rounded-[30px] my-8">
             <h1 className="text-[#22324A] text-[30px] md:text-[38px] font-[500] text-left md:text-center mb-10">
-                Guest Information Form
+                {t("forms.guestForm.title")}
             </h1>
 
             <div className="md:flex md:gap-10 md:items-start">
                 {/* Левая часть — форма */}
                 <div className="flex-1 space-y-6">
                     <div>
-                        <label className="block font-medium mb-2">Tour Name</label>
+                        <label className="block font-medium mb-2">{t("forms.guestForm.tourName")}</label>
                         <input
                             name="fullName"
                             disabled={true}
                             value={currentTour.title}
                             className="input w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-1 focus:ring-[#22324A] outline-none"
-                            />
+                        />
                     </div>
                     {/* Full Name */}
 
                     <div>
-                        <label className="block font-medium mb-2">Full Name</label>
+                        <label className="block font-medium mb-2">{t("forms.guestForm.fullName")}</label>
                         <input
                             name="fullName"
-                            placeholder="Enter your full name"
+                            placeholder={t("forms.guestForm.fullNamePlaceholder")}
                             onChange={handleChange}
                             className="input w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-1 focus:ring-[#22324A] outline-none"
                         />
@@ -129,7 +148,7 @@ export default function GuestForm() {
                     {/* Country of Residence */}
                     <div>
                         <label className="block font-medium mb-2">
-                            Country of Residence
+                            {t("forms.guestForm.countryOfResidence")}
                         </label>
                         <Select
                             options={countries}
@@ -153,7 +172,7 @@ export default function GuestForm() {
                     {/* Preferred Language */}
                     <div>
                         <label className="block font-medium mb-2">
-                            Preferred Language of Communication
+                            {t("forms.guestForm.preferredLanguage")}
                         </label>
                         <div className="flex flex-col gap-2">
                             {languages.map((lang) => (
@@ -168,10 +187,10 @@ export default function GuestForm() {
                                     >
                                         {lang}
                                     </button>
-                                    {form.language === "Other" && lang === "Other" && (
+                                    {form.language === t("forms.guestForm.languages.other") && lang === t("forms.guestForm.languages.other") && (
                                         <input
                                             name="otherLanguage"
-                                            placeholder="Please specify"
+                                            placeholder={t("forms.guestForm.pleaseSpecify")}
                                             onChange={handleChange}
                                             className="input mt-2 border border-gray-300 rounded-xl px-4 py-2 w-full focus:ring-1 focus:ring-[#22324A] outline-none"
                                         />
@@ -184,7 +203,7 @@ export default function GuestForm() {
                     {/* Visit Plan */}
                     <div>
                         <label className="block font-medium mb-2">
-                            When are you planning to visit Almaty, Kazakhstan?
+                            {t("forms.guestForm.visitPlan")}
                         </label>
                         <textarea
                             name="visitPlan"
@@ -196,7 +215,7 @@ export default function GuestForm() {
                     {/* How many people */}
                     <div>
                         <label className="block font-medium mb-2">
-                            How many people will visit Kazakhstan with you?
+                            {t("forms.guestForm.peopleCount")}
                         </label>
                         <div className="flex flex-wrap gap-3">
                             {[1, 2, 3, 4, "5+"].map((num) => (
@@ -218,7 +237,7 @@ export default function GuestForm() {
                     {/* Interests */}
                     <div>
                         <label className="block font-medium mb-2">
-                            What interests you the most during your trip?
+                            {t("forms.guestForm.tripInterests")}
                         </label>
                         <div className="flex flex-col gap-2">
                             {interests.map((item) => (
@@ -233,10 +252,10 @@ export default function GuestForm() {
                                     >
                                         {item}
                                     </button>
-                                    {form.tripInterests === "Other" && item === "Other" && (
+                                    {form.tripInterests === t("forms.guestForm.interests.other") && item === t("forms.guestForm.interests.other") && (
                                         <input
                                             name="otherInterest"
-                                            placeholder="Please specify"
+                                            placeholder={t("forms.guestForm.pleaseSpecify")}
                                             onChange={handleChange}
                                             className="input mt-2 border border-gray-300 rounded-xl px-4 py-2 w-full focus:ring-1 focus:ring-[#22324A] outline-none"
                                         />
@@ -248,7 +267,7 @@ export default function GuestForm() {
 
                     <div>
                         <label className="block font-medium mb-2">
-                            Do you have any special requests or requirements?
+                            {t("forms.guestForm.specialRequests")}
                         </label>
                         <textarea
                             name="request"
@@ -260,7 +279,7 @@ export default function GuestForm() {
                     {/* Dietary */}
                     <div>
                         <label className="block font-medium mb-2">
-                            Special dietary preferences / requirements
+                            {t("forms.guestForm.dietaryPreferences")}
                         </label>
                         <div className="grid grid-cols-2 gap-3">
                             {dietaryOptions.map((option) => (
@@ -286,33 +305,28 @@ export default function GuestForm() {
                         onClick={handleSubmit}
                         disabled={loading}
                     >
-                        Apply
+                        {t("forms.guestForm.apply")}
                     </button>
                 </div>
 
                 {/* Правая часть — Booking Terms */}
                 <div className="flex-1 bg-white rounded-2xl shadow-md p-6 h-fit">
-                    <h2 className="text-xl font-semibold mb-4">Booking Terms</h2>
+                    <h2 className="text-xl font-semibold mb-4">{t("forms.guestForm.bookingTerms")}</h2>
                     <p className="text-sm leading-relaxed">
-                        To confirm your reservation, a <strong>30% deposit</strong> of the
-                        total tour cost is required. The <strong>remaining balance</strong> is payable at the
-                        start of the tour.
+                        {t("forms.guestForm.bookingTermsText")}
                     </p>
 
-                    <h3 className="mt-4 font-semibold text-lg"><strong>Cancellation Policy</strong></h3>
+                    <h3 className="mt-4 font-semibold text-lg"><strong>{t("forms.guestForm.cancellationPolicy")}</strong></h3>
                     <p className="text-sm leading-relaxed mt-2">
-                        Changes or cancellations must be made <strong>no later than 72 hours</strong> before
-                        the tour start time. In this case, a <strong>90% refund</strong> of the total cost
-                        will be provided. Cancellations made <strong>less than 72 hours</strong> before the
-                        tour start are <strong>non-refundable</strong>.
+                        {t("forms.guestForm.cancellationText1")}
                     </p>
 
                     <p className="text-sm leading-relaxed mt-3">
-                        Tours require a <strong>minimum number of participants</strong> and <strong>suitable weather conditions</strong>. If these requirements are not met, the tour will be canceled at least <strong>48 hours</strong> before the start. Customers will be offered an <strong>alternative date/tour</strong> or a <strong>full refund</strong>.
+                        {t("forms.guestForm.cancellationText2")}
                     </p>
 
                     <p className="text-sm leading-relaxed mt-3">
-                        In the event of <strong>force majeure</strong>, the tour may be canceled, and customers will receive a <strong>full refund</strong>.
+                        {t("forms.guestForm.cancellationText3")}
                     </p>
                 </div>
             </div>

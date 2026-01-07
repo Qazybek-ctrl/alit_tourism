@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useLanguage } from "../../utility/LanguageContext";
 
 // Images from public folder
 const Aktau = "/images/places/Aktau - Caspian Sea.webp";
@@ -24,6 +25,7 @@ const Shymbulak = "/images/places/Shymbulak Ski resort.webp";
 const Turkestan = "/images/places/Turkestan.webp";
 
 const PhotoViewModal = ({ onClose }) => {
+    const { t } = useLanguage();
     const photos = [
         KokTobe,
         Shymbulak,
@@ -70,7 +72,7 @@ const PhotoViewModal = ({ onClose }) => {
 
                 {/* Title */}
                 <h2 className="text-center text-xl md:text-3xl font-bold mb-4 text-[#22324A]">
-                    The Most Breathtaking Places
+                    {t("modals.photoView.title")}
                 </h2>
 
                 {/* Main image with arrows */}
@@ -107,8 +109,8 @@ const PhotoViewModal = ({ onClose }) => {
                                 alt={`thumb-${index}`}
                                 onClick={() => setCurrentIndex(index)}
                                 className={`w-20 h-16 object-cover rounded-md cursor-pointer border-2 flex-shrink-0 ${index === currentIndex
-                                        ? "border-blue-500"
-                                        : "border-transparent hover:border-gray-300"
+                                    ? "border-blue-500"
+                                    : "border-transparent hover:border-gray-300"
                                     }`}
                             />
                         ))}

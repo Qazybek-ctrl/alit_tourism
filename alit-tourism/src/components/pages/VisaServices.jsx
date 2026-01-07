@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useLanguage } from "../../utility/LanguageContext";
 
 const workImage = "/work.webp";
 const kokZhailauImage = "/images/places/Kok Zhailau Almaty.webp";
@@ -9,10 +10,10 @@ const ssIcon = "/blocks/ss.png";
 const businessImage = "/business.webp";
 const businessImmigrantImage = "/businessImmigrant.jpg";
 
-const visaBlocks = [
+const getVisaBlocks = (t) => [
     {
         img: kokZhailauImage,
-        title: "Tourism",
+        title: t("pages.visaServices.tourism"),
         type: "B12",
         link: "/visa/tourism",
         imgColor: "#F4EBE2F2",
@@ -20,7 +21,7 @@ const visaBlocks = [
     },
     {
         img: workImage,
-        title: "Work",
+        title: t("pages.visaServices.work"),
         type: "C3",
         link: "/visa/work",
         imgColor: "#795743F2",
@@ -28,7 +29,7 @@ const visaBlocks = [
     },
     {
         img: businessImage,
-        title: "Business",
+        title: t("pages.visaServices.business"),
         type: "B1, B2, B3",
         link: "/visa/business",
         imgColor: "#5C88CBF2",
@@ -36,7 +37,7 @@ const visaBlocks = [
     },
     {
         img: businessImmigrantImage,
-        title: "Business Immigrant",
+        title: t("pages.visaServices.businessImmigrant"),
         type: "C5",
         link: "/visa/immigrant",
         imgColor: "#22324AF2",
@@ -45,11 +46,14 @@ const visaBlocks = [
 ];
 
 export default function VisaServices() {
+    const { t } = useLanguage();
+    const visaBlocks = getVisaBlocks(t);
+
     return (
         <div className="min-h-screen flex flex-col items-center bg-white py-8 md:py-16 text-gotham">
             <div className="max-w-[1135px] w-full md:min-h-[2000px] bg-[#FFFFFF] md:bg-[#F6F6F6] rounded-[30px] px-6 md:px-12 py-2 md:py-16">
                 <h1 className="text-[#22324A] text-3xl md:text-6xl font-[500] md:font-normal text-left md:text-center mb-4 md:mb-16">
-                    Visa Services
+                    {t("pages.visaServices.title")}
                 </h1>
 
                 <div className="flex flex-col gap-0 md:gap-10">
@@ -143,7 +147,7 @@ export default function VisaServices() {
                                     to={block.link}
                                     className="bg-[#22324A] w-[250px] h-[50px] text-[#F4EBE2] text-[25px] font-semibold rounded-[10px] flex items-center justify-center hover:opacity-90 transition"
                                 >
-                                    <span className="-translate-y-0.5">Apply</span>
+                                    <span className="-translate-y-0.5">{t("pages.visaServices.apply")}</span>
                                 </Link>
                             </div>
                         </div>

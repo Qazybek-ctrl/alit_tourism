@@ -6,8 +6,10 @@ import toast from "react-hot-toast";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { AuthContext } from "../utility/AuthContext";
+import { useLanguage } from "../utility/LanguageContext";
 
 export default function AuthPage() {
+  const { t } = useLanguage();
   const navigate = useNavigate();
 
   const { user, setUser } = useContext(AuthContext);
@@ -38,7 +40,7 @@ export default function AuthPage() {
           password: formData.password,
         });
 
-        toast.success("Успешный вход!");
+        toast.success(t("auth.successLogin"));
       } else {
         res = await api.post("/register", {
           phone_number: formData.phoneNumber,
@@ -47,7 +49,7 @@ export default function AuthPage() {
           surname: formData.surname,
         });
 
-        toast.success("Регистрация прошла успешно!");
+        toast.success(t("auth.successRegister"));
       }
 
       localStorage.setItem("token", res.data.token);
@@ -83,7 +85,7 @@ export default function AuthPage() {
               }`}
             onClick={() => setIsLogin(true)}
           >
-            Authorization
+            {t("auth.authorization")}
           </button>
 
           <button
@@ -93,7 +95,7 @@ export default function AuthPage() {
               }`}
             onClick={() => setIsLogin(false)}
           >
-            Registration
+            {t("auth.registration")}
           </button>
         </div>
 
@@ -108,7 +110,7 @@ export default function AuthPage() {
                 <input
                   type="text"
                   name="firstname"
-                  placeholder="Ваше имя"
+                  placeholder={t("auth.firstNamePlaceholder")}
                   className="flex-1 p-2 outline-none"
                   value={formData.firstname}
                   onChange={handleChange}
@@ -120,7 +122,7 @@ export default function AuthPage() {
                 <input
                   type="text"
                   name="surname"
-                  placeholder="Ваша фамилия"
+                  placeholder={t("auth.lastNamePlaceholder")}
                   className="flex-1 p-2 outline-none"
                   value={formData.surname}
                   onChange={handleChange}
@@ -149,7 +151,7 @@ export default function AuthPage() {
             <input
               type="password"
               name="password"
-              placeholder="Пароль"
+              placeholder={t("auth.passwordPlaceholder")}
               className="flex-1 p-2 outline-none"
               value={formData.password}
               onChange={handleChange}
@@ -163,10 +165,10 @@ export default function AuthPage() {
             className="w-full bg-[#f4ebe2] text-black py-2 rounded-xl hover:bg-[#f4ebe2]/70 transition disabled:opacity-50"
           >
             {loading
-              ? "Подождите..."
+              ? t("auth.loading")
               : isLogin
-                ? "Войти"
-                : "Зарегистрироваться"}
+                ? t("auth.loginButton")
+                : t("auth.registerButton")}
           </button>
         </form>
       </div>

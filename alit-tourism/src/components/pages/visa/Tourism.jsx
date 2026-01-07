@@ -12,8 +12,10 @@ import { useNavigate } from "react-router-dom";
 const kokZhailauImage = "/images/places/Kok Zhailau Almaty.webp";
 
 import { Dot } from "lucide-react";
+import { useLanguage } from "../../../utility/LanguageContext";
 
 export default function Tourism() {
+    const { t } = useLanguage();
     const navigate = useNavigate();
     const isAuthenticated = !!localStorage.getItem("token");
 
@@ -21,7 +23,7 @@ export default function Tourism() {
         if (isAuthenticated) {
             navigate(`/form/questionnaire?visaInvitationType=tourism`);
         } else {
-            toast.error("Please authorize before booking", {
+            toast.error(t("pages.tourism.authError"), {
                 duration: 5000
             });
             localStorage.setItem("redirectAfterAuth", window.location.pathname);
@@ -33,7 +35,7 @@ export default function Tourism() {
             <div className="w-full md:w-[1135px] bg-[#F6F6F6] rounded-[20px] md:rounded-[30px] px-5 md:px-20 py-8 md:py-12 flex flex-col">
                 {/* Заголовок */}
                 <h1 className="mb-6 md:mb-8 text-[#22324A] text-[24px] md:text-[35px] font-[500] text-left">
-                    Tourist Visa (B12) to Kazakhstan
+                    {t("pages.tourism.title")}
                 </h1>
 
                 {/* Фото */}
@@ -44,36 +46,33 @@ export default function Tourism() {
                 />
 
                 <h1 className="text-[#22324A] text-[24px] md:text-[35px] font-[500] text-left">
-                    What is a Tourist Visa (B12)?
+                    {t("pages.tourism.whatIs")}
                 </h1>
 
                 <p className="mt-2 text-[#22324A] font-light text-[16px] md:text-[20px] leading-[20px] md:leading-[25px] tracking-[0.02em] max-w-full md:max-w-[1000px]">
-                    The <span className="font-[500]">B12 visa</span> is a short-term entry visa issued for foreigners who wish
-                    to visit Kazakhstan <span className="font-[500]">for tourism purposes</span> — sightseeing, cultural
-                    exploration, leisure, or visiting friends. It does not allow work or
-                    business activities.
+                    {t("pages.tourism.whatIsText")}
                 </p>
 
                 <h1 className="mt-8 md:mt-10 text-[#22324A] text-[24px] md:text-[35px] font-[500] text-left">
-                    Key Facts About the B12 Visa
+                    {t("pages.tourism.keyFacts")}
                 </h1>
 
                 <div className="mt-6 md:mt-10 flex flex-col md:flex-row justify-between gap-6">
                     {[
                         {
                             img: pointPng,
-                            title: "Purpose",
-                            text: "Tourism only (business, study, or work is not permitted)."
+                            title: t("pages.tourism.purpose"),
+                            text: t("pages.tourism.purposeText")
                         },
                         {
                             img: verifyPng,
-                            title: "Validity",
-                            text: "Issued for up to 90 days. Cannot be extended or converted to another visa type."
+                            title: t("pages.tourism.validity"),
+                            text: t("pages.tourism.validityText")
                         },
                         {
                             img: timePng,
-                            title: "Stay duration",
-                            text: "Maximum of 30 days per entry (extensions are generally not possible)."
+                            title: t("pages.tourism.stayDuration"),
+                            text: t("pages.tourism.stayDurationText")
                         }
                     ].map((item, i) => (
                         <div
@@ -103,10 +102,10 @@ export default function Tourism() {
                             className="w-[40px] h-[40px] md:w-[50px] md:h-[50px] mb-3"
                         />
                         <h3 className="text-[#22324A] text-[22px] md:text-[30px] font-[500]">
-                            Entries
+                            {t("pages.tourism.entries")}
                         </h3>
                         <p className="text-[#22324A] text-[16px] md:text-[20px] font-normal leading-tight">
-                            Usually issued as single-entry.
+                            {t("pages.tourism.entriesText")}
                         </p>
                     </div>
 
@@ -117,21 +116,19 @@ export default function Tourism() {
                             className="w-[40px] h-[40px] md:w-[50px] md:h-[50px] mb-3"
                         />
                         <h3 className="text-[#22324A] text-[22px] md:text-[30px] font-[500]">
-                            Visa-free countries
+                            {t("pages.tourism.visaFree")}
                         </h3>
                         <p className="text-[#22324A] text-[16px] md:text-[20px] font-normal leading-tight">
-                            Citizens of many countries (EU, UK, USA, etc.) may enter
-                            Kazakhstan visa-free for up to 30 days. Please check the list
-                            before applying: <a href="https://vmp.gov.kz/en/services/visa-service" target="_blank" rel="noopener noreferrer" className="text-[#22324A] font-[500]">https://vmp.gov.kz/en/services/visa-service</a>
+                            {t("pages.tourism.visaFreeText")} <a href="https://vmp.gov.kz/en/services/visa-service" target="_blank" rel="noopener noreferrer" className="text-[#22324A] font-[500]">https://vmp.gov.kz/en/services/visa-service</a>
                         </p>
                     </div>
                 </div>
 
                 <h1 className="mt-10 text-[#22324A] text-[24px] md:text-[35px] font-[500] text-left tracking-[-0.03em]">
-                    Who Needs a B12 Visa?
+                    {t("pages.tourism.whoNeeds")}
                 </h1>
 
-                <p className="mt-5 text-[15px] md:text-[20px] text-[#22324A] font-[400]   tracking-[-0.03em]">You must apply for a B12 visa if:</p>
+                <p className="mt-5 text-[15px] md:text-[20px] text-[#22324A] font-[400]   tracking-[-0.03em]">{t("pages.tourism.whoNeedsIntro")}</p>
                 <div className="flex flex-col gap-4 mt-5 text-[#22324A]">
                     <div className="flex items-center gap-3">
                         <img src={docPng} alt="icon" className="w-12 h-12 mt-1" />
@@ -143,124 +140,124 @@ export default function Tourism() {
                     <div className="flex items-center gap-3">
                         <img src={calendarPng} alt="icon" className="w-12 h-12 mt-1" />
                         <p className="text-[15px] md:text-[20px] font-[400]   tracking-[-0.03em]">
-                            You plan to stay <span className="font-[500]">longer</span> than the visa-free period allows.
+                            {t("pages.tourism.whoNeedsItem2")}
                         </p>
                     </div>
                 </div>
 
 
                 <h1 className="mt-10 text-[#22324A] text-[24px] md:text-[35px] font-[500] text-left tracking-[-0.03em]">
-                    Types of B12 Visa
+                    {t("pages.tourism.types")}
                 </h1>
                 <p className="mt-4 text-[15px] md:text-[20px] text-[#22324A] font-[400]   tracking-[-0.03em]">
-                    There are two options available: <strong>Sticker Visa</strong> and <strong>E-Visa</strong>
+                    {t("pages.tourism.typesIntro")}
                 </p>
 
                 <h1 className="mt-2 text-[#22324A] text-[20px] md:text-[30px] font-[500] text-left tracking-[-0.03em]">
-                    1. Sticker Visa
+                    {t("pages.tourism.stickerVisa")}
                 </h1>
                 <p className="mt-2 text-[15px] md:text-[20px] text-[#22324A] font-[400]   tracking-[-0.03em]">
-                    Apply through a Kazakhstan embassy or consulate
+                    {t("pages.tourism.stickerVisaApply")}
                 </p>
                 <p className="mt-2 text-[15px] md:text-[20px] text-[#22324A] font-[400]   tracking-[-0.03em]">
-                    Required documents:
+                    {t("pages.tourism.requiredDocs")}
                 </p>
                 <div className="mt-2 flex items-start gap-1">
                     <Dot className="w-8 h-8 flex-shrink-0" />
                     <p className="text-[15px] md:text-[20px] text-[#22324A] font-[400]   tracking-[-0.03em]">
-                        Completed visa application form
+                        {t("pages.tourism.stickerDoc1")}
                     </p>
                 </div>
                 <div className="mt-2 flex items-start gap-1">
                     <Dot className="w-8 h-8 flex-shrink-0" />
                     <p className="text-[15px] md:text-[20px] text-[#22324A] font-[400]   tracking-[-0.03em]">
-                        Valid passport (minimum 6 months validity after departure, 2 blank pages)
+                        {t("pages.tourism.stickerDoc2")}
                     </p>
                 </div>
                 <div className="mt-2 flex items-start gap-1">
                     <Dot className="w-8 h-8 flex-shrink-0" />
                     <p className="text-[15px] md:text-[20px] text-[#22324A] font-[400]   tracking-[-0.03em]">
-                        Recent passport-sized photo.
+                        {t("pages.tourism.stickerDoc3")}
                     </p>
                 </div>
                 <div className="mt-2 flex items-start gap-1">
                     <Dot className="w-8 h-8 flex-shrink-0" />
                     <p className="text-[15px] md:text-[20px] text-[#22324A] font-[400]   tracking-[-0.03em]">
-                        Invitation letter from a licensed tour operator in Kazakhstan
+                        {t("pages.tourism.stickerDoc4")}
                     </p>
                 </div>
                 <div className="mt-2 flex items-start gap-1">
                     <Dot className="w-8 h-8 flex-shrink-0" />
                     <p className="text-[15px] md:text-[20px] text-[#22324A] font-[400]   tracking-[-0.03em]">
-                        Visa fee payment receipt (USD 60)
+                        {t("pages.tourism.stickerDoc5")}
                     </p>
                 </div>
                 <div className="mt-2 flex items-start gap-1">
                     <Dot className="w-8 h-8 flex-shrink-0" />
                     <p className="text-[15px] md:text-[20px] text-[#22324A] font-[400]   tracking-[-0.03em]">
-                        Processing time: Up to 5 working days after submission
+                        {t("pages.tourism.stickerDoc6")}
                     </p>
                 </div>
                 <div className="mt-2 flex items-start gap-1">
                     <Dot className="w-8 h-8 flex-shrink-0" />
                     <p className="text-[15px] md:text-[20px] text-[#22324A] font-[400] tracking-[-0.03em]">
-                        Note: Sticker visas are required if you plan to enter Kazakhstan via land borders (car, train, or bus)
+                        {t("pages.tourism.stickerNote")}
                     </p>
                 </div>
 
                 <p className="mt-4 text-[15px] md:text-[20px] text-[#22324A] font-[400]   tracking-[-0.03em]">
-                    You must have an invitation letter from a licensed tour operator in Kazakhstan.
+                    {t("pages.tourism.invitationRequired")}
                 </p>
 
                 <h1 className="mt-4 text-[#22324A] text-[20px] md:text-[30px] font-[500] text-left tracking-[-0.03em]">
-                    2. E-Visa
+                    {t("pages.tourism.eVisa")}
                 </h1>
                 <p className="mt-2 text-[15px] md:text-[20px] text-[#22324A] font-[400]   tracking-[-0.03em]">
-                    Apply online via the official portal: https://vmp.gov.kz/en/services/visa-service
+                    {t("pages.tourism.eVisaApply")}
                 </p>
                 <p className="mt-2 text-[15px] md:text-[20px] text-[#22324A] font-[400]   tracking-[-0.03em]">
-                    Entry is allowed only through international airports (Almaty, Astana, Shymkent, etc.)
+                    {t("pages.tourism.eVisaEntry")}
                 </p>
                 <p className="mt-4 text-[15px] md:text-[20px] text-[#22324A] font-[400]   tracking-[-0.03em]">
-                    Required documents:
+                    {t("pages.tourism.requiredDocs")}
                 </p>
                 <div className="mt-2 flex items-start gap-1">
                     <Dot className="w-8 h-8 flex-shrink-0" />
                     <p className="text-[15px] md:text-[20px] text-[#22324A] font-[400]   tracking-[-0.03em]">
-                        Invitation letter from a licensed tour operator in Kazakhstan
+                        {t("pages.tourism.eVisaDoc1")}
                     </p>
                 </div>
                 <div className="mt-2 flex items-start gap-1">
                     <Dot className="w-8 h-8 flex-shrink-0" />
                     <p className="text-[15px] md:text-[20px] text-[#22324A] font-[400]   tracking-[-0.03em]">
-                        E-visa fee payment receipt (USD 60).
+                        {t("pages.tourism.eVisaDoc2")}
                     </p>
                 </div>
 
                 <p className="mt-4 text-[15px] md:text-[20px] text-[#22324A] font-[400]   tracking-[-0.03em]">
-                    Processing time: Usually issued within 5 minutes
+                    {t("pages.tourism.eVisaProcessing")}
                 </p>
                 <p className="mt-4 text-[15px] md:text-[20px] text-[#22324A] font-[400]   tracking-[-0.03em]">
-                    You must print out your e-visa and present it at border control upon arrival
+                    {t("pages.tourism.eVisaPrint")}
                 </p>
 
                 <h1 className="mt-12 text-[#22324A] text-[24px] md:text-[35px] font-[500] text-left tracking-[-0.03em]">
-                    How to Apply for an invitation from a licensed tour operator in Kazakhstan.
+                    {t("pages.tourism.howToApply")}
                 </h1>
                 <p className="mt-4 text-[15px] md:text-[20px] text-[#22324A] font-[400]   tracking-[-0.03em]">
-                    For a <span className="font-[500]">B12 single-entry visa</span>, the processing period is <span className="font-[500]">7–14 working days</span> (excluding Saturdays and Sundays). In some cases, at the request of the National Security Committee of Kazakhstan, the process may be extended up to <span className="font-[500]">30 days</span>.
+                    {t("pages.tourism.processingTime")}
                 </p>
                 <p className="mt-4 text-[15px] md:text-[20px] text-[#22324A] font-[400]   tracking-[-0.03em]">
-                    To apply, please:
+                    {t("pages.tourism.toApply")}
                 </p>
                 <p className="mt-2 ml-4 text-[15px] md:text-[20px] text-[#22324A] font-[400]   tracking-[-0.03em]">
-                    • Fill out the provided questionnaire.
+                    {t("pages.tourism.applyStep1")}
                 </p>
                 <p className="mt-2 ml-4 text-[15px] md:text-[20px] text-[#22324A] font-[400]   tracking-[-0.03em]">
-                    • Submit a <span className="font-[500]">high-quality</span> scan or photo of your passport (all pages with stamps and visas).
+                    {t("pages.tourism.applyStep2")}
                 </p>
                 <p className="mt-2 ml-4 text-[15px] md:text-[20px] text-[#22324A] font-[400]   tracking-[-0.03em]">
-                    • If you are applying from a country other than your country of origin, provide a document confirming your <span className="font-[500]">residence permit</span> or <span className="font-[500]">long-term</span> visa in that country.
+                    {t("pages.tourism.applyStep3")}
                 </p>
 
                 <div className="mt-12 w-full max-w-[975px] bg-white rounded-[20px] mx-auto flex flex-col px-6 md:px-10 py-8">
@@ -269,22 +266,22 @@ export default function Tourism() {
                         {/* Левая колонка — текст */}
                         <div className="flex flex-col gap-3 max-w-full text-left order-1 md:order-1 text-[#22324A]">
                             <h1 className="text-[#22324A] text-[24px] md:text-[35px] font-[500] tracking-[-0.03em] mb-4">
-                                Important Tips for Tourists
+                                {t("pages.tourism.importantTips")}
                             </h1>
                             <p className="text-[15px] md:text-[20px] font-[400]   tracking-[-0.03em] leading-tight">
-                                <span className="font-[500]">Carry your passport at all times.</span> You may be asked to show identification by authorities.
+                                {t("pages.tourism.tip1")}
                             </p>
                             <p className="text-[15px] md:text-[20px] font-[400]   tracking-[-0.03em] leading-tight">
-                                <span className="font-[500]">Mandatory registration:</span> Within 3 business days of arrival, you must register with local authorities. To make this process easy, please send us your hotel booking and flight details before arrival. We will complete the registration free of charge. Failure to comply may result in fines or even deportation.
+                                {t("pages.tourism.tip2")}
                             </p>
                             <p className="text-[15px] md:text-[20px] font-[400]   tracking-[-0.03em]">
-                                <span className="font-[500]">Do not overstay.</span> The maximum stay allowed is 30 days per entry, but never longer than the validity of your visa. Overstays may lead to fines and entry bans.
+                                {t("pages.tourism.tip3")}
                             </p>
                             <p className="text-[15px] md:text-[20px] font-[400]   tracking-[-0.03em]">
-                                <span className="font-[500]">Get travel insurance.</span> Strongly recommended to cover medical and travel-related expenses.
+                                {t("pages.tourism.tip4")}
                             </p>
                             <p className="text-[15px] md:text-[20px] font-[400]   tracking-[-0.03em] leading-tight">
-                                <span className="font-[500]">Currency:</span> The official currency is the Kazakhstani Tenge (KZT). Credit cards are widely accepted in major cities.
+                                {t("pages.tourism.tip5")}
                             </p>
                         </div>
                     </div>
@@ -294,7 +291,7 @@ export default function Tourism() {
                     <button onClick={handleVisa}
                         className="w-[900px] h-[90px] bg-[#22324A] rounded-[15px] flex items-center justify-center hover:opacity-90 transition">
                         <span className="text-white text-[24px] md:text-[35px]   font-[500] tracking-[-0.03em]">
-                            Apply to Visa
+                            {t("pages.tourism.applyButton")}
                         </span>
                     </button>
                 </div>
