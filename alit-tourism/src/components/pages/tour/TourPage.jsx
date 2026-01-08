@@ -187,15 +187,15 @@ export default function TourPage() {
                     <p className="text-[#22324A] text-xl sm:text-[32px] font-semibold sm:w-[580px] leading-tight">
                         {currentTour.title}
                     </p>
-
-                    <div className="flex flex-col items-center sm:items-start">
+                     
+                    {/* <div className="flex flex-col items-center sm:items-start">
                         <span className="text-[#22324A]/50 text-[16px] sm:text-[20px] text-gotham">
                             {t("tourPage.price")}
                         </span>
                         <span className="text-[#22324A] text-[24px] sm:text-[32px] text-gotham font-[500]">
                             {t("tourPage.from")} {currentTour.price}
                         </span>
-                    </div>
+                    </div> */}
 
                     <button
                         onClick={handleBook}
@@ -270,17 +270,15 @@ export default function TourPage() {
                     </div>
                 </div>
 
-                {currentTour?.prices && (
+                {/* {currentTour?.prices && (
                     <div className="mt-10">
                         <div className="bg-white rounded-[15px] overflow-hidden">
-                            {/* Table Header */}
                             <div className="bg-[#22324A] py-6">
                                 <h1 className="text-white text-2xl sm:text-[38px] font-[500] text-gotham text-center">
                                     {t("tourPage.priceList")}
                                 </h1>
                             </div>
 
-                            {/* Table Body */}
                             <table className="w-full">
                                 <thead>
                                     <tr className="border-b border-gray-200">
@@ -307,12 +305,11 @@ export default function TourPage() {
                             </table>
                         </div>
                     </div>
-                )}
+                )}  */}
 
-                {currentTour?.priceList && currentTour.priceList.map((item, i) => (
+                {/* {currentTour?.priceList && currentTour.priceList.map((item, i) => (
                     <div className="mt-10">
                         <div className="bg-white rounded-[15px] overflow-hidden">
-                            {/* Table Header */}
                             {item.type && <div className='bg-[#22324A] p-6'>
                                 <h1 className="text-white text-2xl sm:text-[38px] font-[500] text-gotham text-left">
                                     {translateTourCommon(item.type, language)}
@@ -326,7 +323,6 @@ export default function TourPage() {
                                 </p>
                             </div>}
 
-                            {/* Table Body */}
                             <table className="w-full">
                                 <thead>
                                     <tr className="border-b border-gray-200">
@@ -367,7 +363,7 @@ export default function TourPage() {
                             </table>
                         </div>
                     </div>
-                ))}
+                ))} */}
 
                 {/* Highlights */}
                 {currentTour.highlightsTitle &&
